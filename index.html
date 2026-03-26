@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快消行业户外广告 - 小红书内容分析</title>
+<style>
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --card: #22222e;
+    --border: #2e2e3e;
+    --accent: #6c5ce7;
+    --accent2: #00cec9;
+    --accent3: #fd79a8;
+    --accent4: #fdcb6e;
+    --text: #e8e8f0;
+    --text2: #a0a0b8;
+    --text3: #6c6c82;
+    --red: #ff6b6b;
+    --green: #51cf66;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 40px 0 30px; text-align: center; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 50%, rgba(108,92,231,0.08) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(0,206,201,0.06) 0%, transparent 50%); }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; position: relative; }
+  .header h1 span { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .header p { color: var(--text2); margin-top: 8px; font-size: 14px; position: relative; }
+  .header .badge { display: inline-block; background: rgba(108,92,231,0.2); color: var(--accent); border: 1px solid rgba(108,92,231,0.3); border-radius: 20px; padding: 2px 14px; font-size: 12px; margin-top: 10px; position: relative; }
+
+  /* Tabs */
+  .tab-bar { display: flex; justify-content: center; gap: 4px; padding: 16px 20px 0; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+  .tab { padding: 10px 24px; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text2); border-bottom: 2px solid transparent; transition: all .2s; user-select: none; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab .num { background: var(--card); color: var(--text3); border-radius: 10px; padding: 1px 7px; font-size: 11px; margin-left: 4px; }
+  .tab.active .num { background: rgba(108,92,231,0.2); color: var(--accent); }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Section */
+  .section-title { font-size: 20px; font-weight: 700; margin: 32px 0 16px; padding-left: 12px; border-left: 3px solid var(--accent); }
+  .section-title:first-child { margin-top: 0; }
+  .section-desc { color: var(--text2); font-size: 13px; margin: -8px 0 16px 15px; }
+
+  /* Case Card */
+  .case-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .case-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; transition: border-color .2s; }
+  .case-card:hover { border-color: var(--accent); }
+  .case-head { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .case-num { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .case-head h3 { font-size: 15px; font-weight: 600; flex: 1; }
+  .case-head .brand-tag { background: rgba(253,203,110,0.15); color: var(--accent4); border-radius: 6px; padding: 2px 10px; font-size: 12px; white-space: nowrap; }
+  .case-head .type-tag { background: rgba(0,206,201,0.12); color: var(--accent2); border-radius: 6px; padding: 2px 10px; font-size: 12px; white-space: nowrap; }
+  .case-body { padding: 16px 20px; }
+  .case-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .meta-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text2); }
+  .meta-item .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .case-text { font-size: 13px; color: var(--text2); line-height: 1.8; white-space: pre-wrap; max-height: 120px; overflow: hidden; position: relative; transition: max-height .4s; }
+  .case-text.expanded { max-height: 2000px; }
+  .case-text-mask { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(transparent, var(--card)); pointer-events: none; }
+  .case-text.expanded + .case-text-mask { display: none; }
+  .expand-btn { display: inline-block; margin-top: 8px; color: var(--accent); font-size: 12px; cursor: pointer; user-select: none; }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .tag { background: rgba(108,92,231,0.1); color: rgba(108,92,231,0.8); border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+  .case-stats { display: flex; gap: 16px; margin-top: 12px; }
+  .stat { display: flex; align-items: center; gap: 4px; font-size: 12px; }
+  .stat svg { width: 14px; height: 14px; }
+  .stat-like { color: var(--red); }
+  .stat-fav { color: var(--accent4); }
+  .stat-comment { color: var(--accent2); }
+  .case-comments { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .case-comments h4 { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+  .comment { background: rgba(255,255,255,0.02); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 12px; color: var(--text2); }
+  .comment .author { color: var(--accent); font-weight: 500; }
+
+  /* Analysis Cards */
+  .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .a-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 20px; }
+  .a-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .a-card h3 .icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .a-item { margin-bottom: 14px; }
+  .a-item:last-child { margin-bottom: 0; }
+  .a-item .label { font-size: 13px; font-weight: 600; color: var(--accent2); margin-bottom: 4px; }
+  .a-item .example { font-size: 12px; color: var(--text3); font-style: italic; margin-top: 2px; }
+  .a-item p { font-size: 13px; color: var(--text2); }
+  .a-card ul { list-style: none; }
+  .a-card li { font-size: 13px; color: var(--text2); padding: 4px 0; padding-left: 16px; position: relative; }
+  .a-card li::before { content: ''; position: absolute; left: 0; top: 12px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* Framework box */
+  .framework-box { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 14px; margin: 10px 0; font-size: 12px; color: var(--text2); border-left: 3px solid var(--accent); }
+  .framework-box .step { margin: 4px 0; }
+  .framework-box .arrow { color: var(--accent); margin: 0 4px; }
+
+  /* Tag cloud */
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .tag-cloud .hot-tag { padding: 4px 12px; border-radius: 16px; font-size: 12px; cursor: default; }
+
+  /* Post Cards */
+  .post-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px; overflow: hidden; }
+  .post-header { padding: 20px 24px 12px; display: flex; align-items: center; gap: 12px; }
+  .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+  .post-account { font-size: 14px; font-weight: 600; }
+  .post-account span { font-size: 11px; color: var(--text3); font-weight: 400; margin-left: 6px; }
+  .post-type { margin-left: auto; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .type-story { background: rgba(108,92,231,0.15); color: var(--accent); }
+  .type-visual { background: rgba(253,121,168,0.15); color: var(--accent3); }
+  .type-guide { background: rgba(0,206,201,0.15); color: var(--accent2); }
+  .post-title { padding: 0 24px; font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .post-body { padding: 0 24px 16px; font-size: 14px; color: var(--text2); line-height: 2; white-space: pre-wrap; }
+  .post-images { padding: 0 24px 16px; }
+  .post-images h4 { font-size: 13px; color: var(--text3); margin-bottom: 8px; }
+  .img-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .img-slot { background: rgba(255,255,255,0.03); border: 1px dashed var(--border); border-radius: 8px; padding: 12px 10px; text-align: center; font-size: 11px; color: var(--text3); min-height: 60px; display: flex; align-items: center; justify-content: center; }
+  .post-tags { padding: 0 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .post-tags .tag { font-size: 12px; padding: 3px 10px; }
+  .post-footer { padding: 16px 24px; margin-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 20px; }
+  .post-footer .cta { margin-left: auto; font-size: 12px; color: var(--accent3); font-style: italic; }
+
+  /* Summary bar */
+  .summary-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .s-item { background: var(--card); border-radius: 10px; padding: 16px; text-align: center; border: 1px solid var(--border); }
+  .s-item .num { font-size: 28px; font-weight: 800; }
+  .s-item .lbl { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .data-table th { background: rgba(108,92,231,0.1); color: var(--accent); padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; }
+  .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 640px) {
+    .tab { padding: 8px 14px; font-size: 13px; }
+    .analysis-grid { grid-template-columns: 1fr; }
+    .img-grid { grid-template-columns: repeat(2, 1fr); }
+    .summary-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>快消行业户外广告</span> 小红书内容分析</h1>
+  <p>全球星榜 | 基于8个代表性案例的深度拆解与仿写</p>
+  <div class="badge">2026.03.26</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab(0)">案例收集 <span class="num">8</span></div>
+  <div class="tab" onclick="switchTab(1)">内容拆解 <span class="num">5</span></div>
+  <div class="tab" onclick="switchTab(2)">仿写帖子 <span class="num">3</span></div>
+</div>
+
+<!-- ==================== PANEL 1: 案例收集 ==================== -->
+<div class="container">
+<div class="panel active" id="p0">
+
+  <div class="summary-bar">
+    <div class="s-item"><div class="num" style="color:var(--accent)">8</div><div class="lbl">收集案例</div></div>
+    <div class="s-item"><div class="num" style="color:var(--accent2)">7</div><div class="lbl">户外形式</div></div>
+    <div class="s-item"><div class="num" style="color:var(--accent3)">6</div><div class="lbl">品牌覆盖</div></div>
+    <div class="s-item"><div class="num" style="color:var(--accent4)">1,449</div><div class="lbl">总点赞</div></div>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>#</th><th>品牌</th><th>户外形式</th><th>点赞</th><th>收藏</th><th>内容类型</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>百事可乐</td><td>无人机灯光秀</td><td style="color:var(--red)">76</td><td style="color:var(--accent4)">61</td><td>案例解读</td></tr>
+      <tr><td>2</td><td>喜力啤酒</td><td>外滩灯光秀</td><td style="color:var(--red)">23</td><td style="color:var(--accent4)">23</td><td>投放实拍</td></tr>
+      <tr><td>3</td><td>脉动</td><td>立体广告牌</td><td style="color:var(--red)">10</td><td style="color:var(--accent4)">4</td><td>街头实拍</td></tr>
+      <tr><td>4</td><td>国货快消(出海)</td><td>曼谷CBD LED屏</td><td style="color:var(--red)">13</td><td style="color:var(--accent4)">2</td><td>案例分享</td></tr>
+      <tr><td>5</td><td>天猫/赫莲娜/吉列</td><td>地标矩阵屏</td><td style="color:var(--red)">1,052</td><td style="color:var(--accent4)">229</td><td>创意解读</td></tr>
+      <tr><td>6</td><td>劲酒</td><td>裸眼3D大屏</td><td style="color:var(--red)">62</td><td style="color:var(--accent4)">59</td><td>效果展示</td></tr>
+      <tr><td>7</td><td>拉夫劳伦</td><td>无人机灯光秀</td><td style="color:var(--red)">555</td><td style="color:var(--accent4)">171</td><td>图文打卡</td></tr>
+      <tr><td>8</td><td>Nike</td><td>楼体Mapping</td><td style="color:var(--red)">158</td><td style="color:var(--accent4)">81</td><td>效果展示</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">案例详情</div>
+  <div class="case-grid">
+
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(108,92,231,0.15);color:var(--accent)">1</div>
+        <h3>原来品牌搞事件营销，还能这么"上天"！</h3>
+        <span class="brand-tag">百事可乐</span>
+        <span class="type-tag">无人机灯光秀</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>无人机表演-林森</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>视频帖</span>
+        </div>
+        <div class="case-text" id="ct1">不是传统广告的硬广轰炸，而是让千架无人机在夜空中变魔术，这波操作真的太会了！
+
+表演一开场，无人机群就从闪烁的星星慢慢拼成了超大的百事标志性红蓝logo，在夜色里亮得超醒目，连几百米外的观众都忍不住掏出手机拍。更绝的是，中间还穿插着品牌slogan的动态文字，配合现场的音乐节奏。
+
+最戳品牌心的是这波操作的"传播魔力"：在场观众随手拍的视频，发朋友圈、抖音、小红书都自带"高级感滤镜"。评论区全是问"这是在哪办的""百事太会玩了"，无形中就帮品牌做了二次传播。
+
+比起砸钱投硬广，这种让观众主动"追着看、愿意发"的营销，才是真的"把钱花在刀刃上"！</div>
+        <div class="case-text-mask"></div>
+        <span class="expand-btn" onclick="toggleText('ct1',this)">展开全文</span>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 76</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 61</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 6</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#无人机表演</span><span class="tag">#无人机灯光秀</span><span class="tag">#事件营销</span><span class="tag">#品牌策划</span>
+        </div>
+        <div class="case-comments">
+          <h4>热门评论</h4>
+          <div class="comment"><span class="author">我叫羡羡：</span>这是真的嘛，能做应援嘛</div>
+          <div class="comment"><span class="author">作者回复：</span>当然了，虞书欣和檀健次的开机应援都是我们公司做的，战绩可查</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(0,206,201,0.15);color:var(--accent2)">2</div>
+        <h3>喜力点亮外滩</h3>
+        <span class="brand-tag">喜力啤酒</span>
+        <span class="type-tag">外滩灯光秀</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>为之所行 SuperStar</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>视频帖</span>
+        </div>
+        <div class="case-text">展示喜力啤酒在上海外滩的灯光秀投放效果，正文以话题标签为主，视频内容为核心信息载体。属于典型的"效果展示型"内容，让视觉说话，文字极简。</div>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 23</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 23</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 1</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#喜力啤酒</span><span class="tag">#外滩</span><span class="tag">#品牌宣传</span><span class="tag">#灯光秀</span><span class="tag">#户外大屏</span><span class="tag">#户外媒体投放</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(253,121,168,0.15);color:var(--accent3)">3</div>
+        <h3>脉动广告牌好有创意～</h3>
+        <span class="brand-tag">脉动</span>
+        <span class="type-tag">立体广告牌</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>盛夏的风</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>图文帖 约4张图</span>
+        </div>
+        <div class="case-text">偶然发现了脉动立体广告牌，石家庄街头实拍。展示脉动饮料品牌的立体户外广告创意效果。内容简洁，以实拍图片为主，用户自发分享街头见闻式内容。</div>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 10</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 4</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 0</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#脉动</span><span class="tag">#广告牌</span><span class="tag">#科技感大屏</span><span class="tag">#饮料</span><span class="tag">#石家庄</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 4 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(253,203,110,0.15);color:var(--accent4)">4</div>
+        <h3>帮客户抢下曼谷CBD大屏 中国品牌出海</h3>
+        <span class="brand-tag">国货快消(出海)</span>
+        <span class="type-tag">海外LED屏</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>喂喂喂 卫女士</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>图文帖 约7张图</span>
+        </div>
+        <div class="case-text" id="ct4">帮某国货快消品牌洽谈曼谷Central World路口LED屏，日均人流量10w+，和奢侈品同框曝光！
+
+关键步骤：
+1. 提前锁定档期：热门点位竞争激烈
+2. 本地媒体直签：跳过中间商，直接和泰国media owner谈判，成本节省
+3. 文化适配：泰国人爱"高饱和度视觉"，优化了广告画面！
+
+中国品牌出海，线下曝光才是信任感的王牌！
+评论区留言你的行业，帮你查查目标城市的黄金点位！</div>
+        <div class="case-text-mask"></div>
+        <span class="expand-btn" onclick="toggleText('ct4',this)">展开全文</span>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 13</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 2</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 3</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#中国品牌出海</span><span class="tag">#海外户外广告</span><span class="tag">#OOH媒体采购</span><span class="tag">#泰国广告</span><span class="tag">#东南亚市场推广</span>
+        </div>
+        <div class="case-comments">
+          <h4>热门评论</h4>
+          <div class="comment"><span class="author">tony郑：</span>太牛了</div>
+          <div class="comment"><span class="author">作者回复：</span>哈哈哈哈你好 泰国等小伙伴</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 5 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(255,107,107,0.15);color:var(--red)">5</div>
+        <h3>天猫市场部有高人指点？这波户外广告赢麻了</h3>
+        <span class="brand-tag">天猫/赫莲娜/吉列</span>
+        <span class="type-tag">地标矩阵屏</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>创意研究社</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>图文帖 约8张图</span>
+          <span class="meta-item" style="color:var(--red);font-weight:600">TOP 1 互动量</span>
+        </div>
+        <div class="case-text" id="ct5">今年双旦，营销圈又被天猫惊喜盒的创意刷屏了。
+
+当所有品牌都在卷促销、讲故事时，天猫惊喜盒却另辟蹊径，在杭州街头把「大牌排面」玩明白了～
+
+所谓"大牌"，到底能有多大？天猫给出的答案是：大到屏幕快要装不下。
+
+它携手HR赫莲娜、吉列等品牌，巧妙地玩了一字双关的文字梗——既然要送"大牌礼"，那就干脆立起巨型的"大广告牌"——
+
+选用城市地标级超大广告牌与「圣诞树造型」矩阵屏，利用户外媒介的大尺寸与视觉冲击力，物理定义"大牌"的排场与气势。
+
+"一屏装不下，就来十屏"的炫耀式文案，这是只有年轻人才能秒懂的网感表达；更狠的是0.01元就能抽千元大牌礼，把"玩梗"和"实在"焊死在一块。</div>
+        <div class="case-text-mask"></div>
+        <span class="expand-btn" onclick="toggleText('ct5',this)">展开全文</span>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 1,052</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 229</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 10</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#天猫惊喜盒</span><span class="tag">#品牌营销</span><span class="tag">#营销案例</span><span class="tag">#户外广告也很有意思啊</span><span class="tag">#创意</span>
+        </div>
+        <div class="case-comments">
+          <h4>热门评论</h4>
+          <div class="comment"><span class="author">要减20斤的李土豆：</span>果真"大牌""大牌"上"大牌"广告，有一语双关的味了</div>
+          <div class="comment"><span class="author">天线宝宝死于谋杀：</span>视觉垄断</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 6 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(108,92,231,0.15);color:var(--accent)">6</div>
+        <h3>劲酒贺新年裸眼3D创意</h3>
+        <span class="brand-tag">劲酒</span>
+        <span class="type-tag">裸眼3D大屏</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>凤凰都市传媒王军</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>视频帖</span>
+        </div>
+        <div class="case-text">展示劲酒在户外大屏上的裸眼3D新年创意广告效果。媒体公司账号发布，属于典型的B端投放展示内容，正文以标签为主，视频为核心载体。高收藏率说明业内人士在"收藏学习"。</div>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 62</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 59</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 1</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#凤凰都市传媒</span><span class="tag">#户外大屏幕</span><span class="tag">#裸眼3D</span><span class="tag">#户外大屏广告</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 7 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(0,206,201,0.15);color:var(--accent2)">7</div>
+        <h3>深圳马年限定无人机秀！拉夫劳伦也太会了</h3>
+        <span class="brand-tag">拉夫劳伦</span>
+        <span class="type-tag">无人机灯光秀</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>深圳看展指南</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>图文帖 7张图</span>
+        </div>
+        <div class="case-text" id="ct7">好震撼的一幕！4000架无人机点亮深圳人才公园上空，汇聚成一匹威风凛凛的巨马！
+
+巨马奔腾变化，最终定格为拉夫劳伦经典Polo Pony标识，恰如这座城市里每个策马驰骋、日夜兼程的追梦人。
+
+深圳以「梦想之城」闻名，而拉夫劳伦的故事，同样是一部关于梦想、勇气与矢志不渝的传奇，品牌选择在此落地生根，正是源于这份精神的共鸣。
+
+此次「策马逐梦」光影大秀，既是对深圳城市精神的深情礼赞，也是对每位追梦者的温暖致意。</div>
+        <div class="case-text-mask"></div>
+        <span class="expand-btn" onclick="toggleText('ct7',this)">展开全文</span>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 555</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 171</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 52</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#灯光秀</span><span class="tag">#拉夫劳伦</span><span class="tag">#深圳夜景</span><span class="tag">#无人机表演</span><span class="tag">#深圳人才公园</span>
+        </div>
+        <div class="case-comments">
+          <h4>热门评论</h4>
+          <div class="comment"><span class="author">melonwater：</span>很不错的效果</div>
+          <div class="comment"><span class="author">Everglow-：</span>几点呀</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 8 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background:rgba(253,203,110,0.15);color:var(--accent4)">8</div>
+        <h3>Mapping丨德胜门被Nike"点燃"！</h3>
+        <span class="brand-tag">Nike</span>
+        <span class="type-tag">楼体Mapping</span>
+      </div>
+      <div class="case-body">
+        <div class="case-meta">
+          <span class="meta-item"><span class="dot" style="background:var(--accent)"></span>北极光的小日记</span>
+          <span class="meta-item"><span class="dot" style="background:var(--accent3)"></span>视频帖</span>
+        </div>
+        <div class="case-text">Nike在德胜门打造楼体Mapping大秀，以中国风元素呈现LeBron 18。裸眼3D效果震撼呈现詹姆斯传奇战靴演变，传统地标碰撞前沿科技，瞬间引爆夜空。</div>
+        <div class="case-stats">
+          <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 158</span>
+          <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 81</span>
+          <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 12</span>
+        </div>
+        <div class="case-tags">
+          <span class="tag">#新媒体艺术</span><span class="tag">#北京打卡</span><span class="tag">#潮流艺术</span><span class="tag">#科技与艺术融合</span><span class="tag">#公共艺术</span>
+        </div>
+        <div class="case-comments">
+          <h4>热门评论</h4>
+          <div class="comment"><span class="author">我叫希希呀：</span>我记得当时还有人喷这个创意，论点好像是见她文物尊严之类的</div>
+          <div class="comment"><span class="author">匿名用户：</span>这鞋我350拿下的 很舒服很软</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== PANEL 2: 内容拆解 ==================== -->
+<div class="panel" id="p1">
+
+  <div class="section-title">标题套路：5种高频模式</div>
+  <div class="analysis-grid">
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(255,107,107,0.15);color:var(--red)">!</span> 惊叹反问型</h3>
+      <div class="a-item">
+        <p>用感叹号、问号制造悬念，激发好奇心点击。适合UGC自发分享的内容，让人觉得"这也太酷了吧"。</p>
+        <div class="example">"脉动广告牌好有创意～" / "我的天呀！这还是西安！？"</div>
+      </div>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(108,92,231,0.15);color:var(--accent)">+</span> 品牌+动作+效果型</h3>
+      <div class="a-item">
+        <p>品牌名+地标+动词，三要素齐全，画面感强。最适合媒介公司展示案例。</p>
+        <div class="example">"喜力点亮外滩" / "德胜门被Nike点燃！"</div>
+      </div>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(0,206,201,0.15);color:var(--accent2)">vs</span> 行业干货型</h3>
+      <div class="a-item">
+        <p>对比结构+痛点数字，精准吸引B端决策者。标题直接说出"选错会怎样"。</p>
+        <div class="example">"15秒轮播 vs 包屏投放：选错损失一半预算"</div>
+      </div>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,203,110,0.15);color:var(--accent4)">?</span> 揭秘/解读型</h3>
+      <div class="a-item">
+        <p>暗示有内幕洞察，"原来""揭秘""高人"等词触发求知欲。</p>
+        <div class="example">"天猫市场部有高人指点？" / "原来品牌搞事件营销，还能这么上天！"</div>
+      </div>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,121,168,0.15);color:var(--accent3)">G</span> 出海/国际化叙事型</h3>
+      <div class="a-item">
+        <p>地域+动作+使命感，对全球化诉求的品牌方极有吸引力。</p>
+        <div class="example">"帮客户抢下曼谷CBD大屏 中国品牌出海"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">正文框架：3种主流结构</div>
+  <div class="analysis-grid">
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(108,92,231,0.15);color:var(--accent)">A</span> 案例故事型</h3>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">适合：高互动，收藏率高，用户愿意转发学习</p>
+      <div class="framework-box">
+        <div class="step">场景引入（一句话描绘震撼画面）</div>
+        <div class="step"><span class="arrow">&darr;</span> 品牌做了什么（具体操作细节）</div>
+        <div class="step"><span class="arrow">&darr;</span> 为什么有效（策略拆解2-3点，用emoji分段）</div>
+        <div class="step"><span class="arrow">&darr;</span> 行业启发 / 总结金句</div>
+      </div>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">代表案例：百事无人机、天猫矩阵屏</p>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,121,168,0.15);color:var(--accent3)">B</span> 效果展示型</h3>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">适合：视觉冲击力强的投放实拍，图片说话</p>
+      <div class="framework-box">
+        <div class="step">一句话点题</div>
+        <div class="step"><span class="arrow">&darr;</span> 实拍图/视频为核心内容载体</div>
+        <div class="step"><span class="arrow">&darr;</span> 话题标签堆叠引流</div>
+      </div>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">代表案例：喜力外滩、劲酒裸眼3D</p>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(0,206,201,0.15);color:var(--accent2)">C</span> 干货获客型</h3>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">适合：直接获客转化，吸引品牌方私信咨询</p>
+      <div class="framework-box">
+        <div class="step">痛点提问（"很多客户问..."）</div>
+        <div class="step"><span class="arrow">&darr;</span> 数据对比 / 表格（价格、转化率）</div>
+        <div class="step"><span class="arrow">&darr;</span> 实操建议分步骤 1/2/3</div>
+        <div class="step"><span class="arrow">&darr;</span> CTA引导互动（"评论区留言你的行业"）</div>
+      </div>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">代表案例：出海LED屏、轮播vs包屏</p>
+    </div>
+  </div>
+
+  <div class="section-title">图片排版逻辑</div>
+  <div class="analysis-grid">
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,121,168,0.15);color:var(--accent3)">1</span> 封面图规律</h3>
+      <ul>
+        <li>实拍大场景优先（远景展示投放规模感）</li>
+        <li>夜景效果 > 白天效果（LED/灯光秀天然优势）</li>
+        <li>品牌logo清晰可见</li>
+        <li>带地标建筑增加信任感（外滩、德胜门）</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(0,206,201,0.15);color:var(--accent2)">N</span> 图片序列逻辑</h3>
+      <ul>
+        <li>第1张：全景效果图（勾起兴趣）</li>
+        <li>第2-4张：不同角度/近景细节</li>
+        <li>第5-7张：品牌元素特写、文案特写</li>
+        <li>最后1-2张：观众围观 / 数据图表</li>
+      </ul>
+      <p style="font-size:12px;color:var(--accent4);margin-top:10px">高互动帖子普遍7-15张图，越多越好</p>
+    </div>
+  </div>
+
+  <div class="section-title">话题标签策略：三层结构</div>
+  <div class="a-card" style="margin-bottom:16px">
+    <div class="a-item">
+      <div class="label">第一层：品牌标签</div>
+      <p>精准搜索，让搜索该品牌的人找到你</p>
+      <div class="tag-cloud">
+        <span class="hot-tag" style="background:rgba(253,203,110,0.15);color:var(--accent4)">#品牌名</span>
+        <span class="hot-tag" style="background:rgba(253,203,110,0.15);color:var(--accent4)">#产品名</span>
+        <span class="hot-tag" style="background:rgba(253,203,110,0.15);color:var(--accent4)">#活动名</span>
+      </div>
+    </div>
+    <div class="a-item">
+      <div class="label">第二层：行业标签</div>
+      <p>进入行业流量池，覆盖同行和潜在客户</p>
+      <div class="tag-cloud">
+        <span class="hot-tag" style="background:rgba(108,92,231,0.15);color:var(--accent)">#户外广告</span>
+        <span class="hot-tag" style="background:rgba(108,92,231,0.15);color:var(--accent)">#品牌营销</span>
+        <span class="hot-tag" style="background:rgba(108,92,231,0.15);color:var(--accent)">#营销案例</span>
+        <span class="hot-tag" style="background:rgba(108,92,231,0.15);color:var(--accent)">#户外大屏</span>
+        <span class="hot-tag" style="background:rgba(108,92,231,0.15);color:var(--accent)">#品牌推广</span>
+      </div>
+    </div>
+    <div class="a-item">
+      <div class="label">第三层：场景标签</div>
+      <p>细分场景长尾词，精准触达有需求的客户</p>
+      <div class="tag-cloud">
+        <span class="hot-tag" style="background:rgba(0,206,201,0.15);color:var(--accent2)">#灯光秀</span>
+        <span class="hot-tag" style="background:rgba(0,206,201,0.15);color:var(--accent2)">#裸眼3D</span>
+        <span class="hot-tag" style="background:rgba(0,206,201,0.15);color:var(--accent2)">#地铁广告</span>
+        <span class="hot-tag" style="background:rgba(0,206,201,0.15);color:var(--accent2)">#无人机表演</span>
+        <span class="hot-tag" style="background:rgba(0,206,201,0.15);color:var(--accent2)">#品牌出海</span>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">标签数量建议：5-10个，混合大流量词和精准长尾词</p>
+  </div>
+
+  <div class="section-title">评论区互动方式</div>
+  <div class="analysis-grid">
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(108,92,231,0.15);color:var(--accent)">R</span> 作者主动互动</h3>
+      <ul>
+        <li>回复每条评论，语气轻松（"哈哈哈"开头）</li>
+        <li>用回复补充信息（"战绩可查"）</li>
+        <li>评论区成为第二个"正文区"</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,121,168,0.15);color:var(--accent3)">C</span> CTA引导互动</h3>
+      <ul>
+        <li>"评论区留言你的行业，帮你查目标城市黄金点位"</li>
+        <li>"你的产品目前处于什么阶段？"</li>
+        <li>精准筛选出有需求的用户，直接私信转化</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <h3><span class="icon" style="background:rgba(253,203,110,0.15);color:var(--accent4)">U</span> 高赞评论特征</h3>
+      <ul>
+        <li>用户自发打卡经历（"我在XX看到过"）</li>
+        <li>吐槽式互动（反向也是传播）</li>
+        <li>追问价格/合作方式（精准客户信号）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PANEL 3: 仿写帖子 ==================== -->
+<div class="panel" id="p2">
+
+  <div class="section-desc" style="margin:0 0 20px;font-size:13px;color:var(--text2)">基于拆解结果，为全球星榜设计3篇不同策略定位的帖子，分别对应案例故事型、效果展示型、干货获客型</div>
+
+  <!-- Post 1 -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">星</div>
+      <div class="post-account">全球星榜 <span>户外媒体投放</span></div>
+      <span class="post-type type-story">案例故事型</span>
+    </div>
+    <div class="post-title">某饮料品牌新品上市，一夜"霸屏"5座城市是什么体验？</div>
+    <div class="post-body">当你走出地铁，迎面是一块30米高的LED巨幕正在播放同一款饮料的广告
+当你路过商场，入口处的裸眼3D大屏上，一瓶饮料正从屏幕里"飞"出来
+当你刷朋友圈，三个朋友分别在北京、上海、成都拍到了同一个画面
+
+这不是巧合，这是我们帮某头部饮料品牌做的一次「五城联投」
+
+📍 北京：国贸CBD楼体LED屏
+📍 上海：南京路步行街裸眼3D大屏
+📍 广州：天河城商圈灯光秀
+📍 成都：春熙路地标大屏
+📍 深圳：华强北巨幕屏
+
+从创意设计到点位锁定到全国同步上刊，15天完成
+
+品牌方最满意的不是曝光量（虽然5城合计日均触达800万人次），而是上线当晚社交媒体自发传播量超过预期3倍
+
+用户拍照发朋友圈的时候，品牌就已经赢了
+
+这就是户外大屏的核心价值：不只是「被看见」，而是「被拍下来，被分享出去」
+
+全球星榜，23种户外媒体资源，覆盖全球核心城市
+楼体LED/灯光秀/机场/地铁/高铁/影院/无人机/商场内屏/公交站牌...
+你的品牌，值得被整座城市看见 ✨</div>
+    <div class="post-images">
+      <h4>配图建议 (9张)</h4>
+      <div class="img-grid">
+        <div class="img-slot">1. 夜景城市地标+LED大屏（封面）</div>
+        <div class="img-slot">2. 北京国贸投放实拍</div>
+        <div class="img-slot">3. 上海南京路裸眼3D</div>
+        <div class="img-slot">4. 成都春熙路大屏</div>
+        <div class="img-slot">5. 深圳华强北巨幕</div>
+        <div class="img-slot">6. 屏幕品牌画面特写</div>
+        <div class="img-slot">7. 路人围观/拍照场景</div>
+        <div class="img-slot">8. 五城点位地图示意</div>
+        <div class="img-slot">9. 全球星榜logo+联系方式</div>
+      </div>
+    </div>
+    <div class="post-tags">
+      <span class="tag">#户外广告</span><span class="tag">#品牌投放</span><span class="tag">#LED大屏</span><span class="tag">#新品上市</span><span class="tag">#五城联投</span><span class="tag">#户外媒体</span><span class="tag">#裸眼3D</span><span class="tag">#灯光秀</span><span class="tag">#全球星榜</span>
+    </div>
+    <div class="post-footer">
+      <span class="stat stat-like"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> 预估高传播</span>
+      <span class="cta">目标：建立行业认知，品牌方种草</span>
+    </div>
+  </div>
+
+  <!-- Post 2 -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar" style="background:linear-gradient(135deg,var(--accent3),var(--accent4))">星</div>
+      <div class="post-account">全球星榜 <span>户外媒体投放</span></div>
+      <span class="post-type type-visual">效果展示型</span>
+    </div>
+    <div class="post-title">快消品牌投户外大屏能有多震撼？实拍合集来了</div>
+    <div class="post-body">帮快消品牌做户外投放这些年，攒了不少"哇塞"时刻
+
+从纽约时代广场到东京涩谷，从迪拜哈利法塔到上海外滩
+每次看到客户的产品出现在城市最亮眼的位置，都觉得这份工作太值了
+
+今天分享一组实拍合集 👇
+
+🥤 饮料品牌 × 外滩灯光秀
+整栋楼变成了一瓶巨大的饮料，路人全在拍
+
+🧴 日化品牌 × 机场到达大厅LED
+旅客落地第一眼看到的就是你的品牌
+
+🍫 零食品牌 × 地铁通道包站
+3000万日均客流，沉浸式品牌体验
+
+💄 美妆品牌 × 商场裸眼3D
+口红从屏幕里伸出来的效果，女生走过去都忍不住停下
+
+全球星榜，专注户外媒体投放
+23种媒体类型，覆盖国内+海外核心城市
+想看你的品牌出现在哪座城市？评论区告诉我 💬</div>
+    <div class="post-images">
+      <h4>配图建议 (9张)</h4>
+      <div class="img-grid">
+        <div class="img-slot">1. 最震撼大屏实拍（封面）</div>
+        <div class="img-slot">2-3. 灯光秀/楼体投影</div>
+        <div class="img-slot">4-5. 地铁包站效果</div>
+        <div class="img-slot">6. 机场大屏实拍</div>
+        <div class="img-slot">7. 商场裸眼3D效果</div>
+        <div class="img-slot">8. 海外投放（时代广场）</div>
+        <div class="img-slot">9. 媒体资源一览+二维码</div>
+      </div>
+    </div>
+    <div class="post-tags">
+      <span class="tag">#户外广告实拍</span><span class="tag">#LED大屏</span><span class="tag">#品牌投放</span><span class="tag">#灯光秀</span><span class="tag">#裸眼3D</span><span class="tag">#地铁广告</span><span class="tag">#快消品牌</span><span class="tag">#品牌出海</span><span class="tag">#全球星榜</span>
+    </div>
+    <div class="post-footer">
+      <span class="stat stat-fav"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg> 预估高收藏</span>
+      <span class="cta">目标：视觉冲击，被收藏转发</span>
+    </div>
+  </div>
+
+  <!-- Post 3 -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar" style="background:linear-gradient(135deg,var(--accent2),#20bf6b)">星</div>
+      <div class="post-account">全球星榜 <span>户外媒体投放</span></div>
+      <span class="post-type type-guide">干货获客型</span>
+    </div>
+    <div class="post-title">快消品牌第一次投户外大屏？这份避坑指南请收好</div>
+    <div class="post-body">做了6年快消品牌户外投放，发现90%的品牌方第一次投大屏都会踩这3个坑 👇
+
+❌ 坑1：只看价格，不看点位人流动线
+同一条商业街，A屏正对人流方向，B屏在人流背后
+价格差30%，但A屏的实际触达是B屏的5倍
+选点位不是选最便宜的，是选「最多人会抬头看到的」
+
+❌ 坑2：把线上素材直接搬到大屏
+手机上好看的竖版视频，放到30米宽的横屏上就是灾难
+户外大屏的设计原则：3秒看懂、50米外能认出品牌、动态比静态强10倍
+
+❌ 坑3：投完就结束，没有二次传播
+投100万的大屏，花0元做社交传播 = 浪费80%的价值
+聪明的做法：投放当天安排摄影团队拍摄，产出短视频+图文素材
+在小红书/抖音做二次扩散，把一次投放变成一个月的内容资产
+
+✅ 我们的服务流程：
+1️⃣ 需求沟通：了解品牌调性、目标人群、预算区间
+2️⃣ 点位推荐：从23种媒体中匹配最优组合
+3️⃣ 创意适配：根据屏幕尺寸和场景定制素材
+4️⃣ 执行监播：上刊实拍+数据报告
+5️⃣ 传播赋能：提供社交媒体二次传播素材包
+
+预算从5万到500万，都能找到合适的方案
+👉 评论区留下你的品牌品类+预算区间，帮你做个初步方案
+
+全球星榜 | 楼体LED/灯光秀/机场/地铁/高铁/影院/无人机/商场内屏/公交站牌等23种媒体</div>
+    <div class="post-images">
+      <h4>配图建议 (6张)</h4>
+      <div class="img-grid">
+        <div class="img-slot">1. "避坑指南"信息图封面</div>
+        <div class="img-slot">2. 三个坑对比图</div>
+        <div class="img-slot">3. 设计原则示意图</div>
+        <div class="img-slot">4. 二次传播案例数据</div>
+        <div class="img-slot">5. 服务流程可视化</div>
+        <div class="img-slot">6. 23种媒体+联系方式</div>
+      </div>
+    </div>
+    <div class="post-tags">
+      <span class="tag">#户外广告投放</span><span class="tag">#LED大屏</span><span class="tag">#品牌营销干货</span><span class="tag">#快消品牌</span><span class="tag">#广告投放攻略</span><span class="tag">#营销避坑</span><span class="tag">#全球星榜</span>
+    </div>
+    <div class="post-footer">
+      <span class="stat stat-comment"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 预估高转化</span>
+      <span class="cta">目标：直接获客，引导私信咨询</span>
+    </div>
+  </div>
+
+  <div class="a-card" style="margin-top:8px;border-left:3px solid var(--accent)">
+    <h3 style="margin-bottom:8px">发布策略建议</h3>
+    <ul>
+      <li><strong>发布频率：</strong>每周2-3篇，案例故事型和效果展示型交替发，每两周穿插一篇干货获客型</li>
+      <li><strong>发布时间：</strong>工作日上午10-11点（品牌方市场部在线时间），或晚上8-9点（休闲浏览时段）</li>
+      <li><strong>封面图风格统一：</strong>建议所有帖子封面用同一色系模板（深色底+亮色品牌元素），形成账号视觉识别</li>
+      <li><strong>评论区运营：</strong>发布后2小时内回复所有评论，用轻松语气补充案例细节，把评论区变成"第二个正文"</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function toggleText(id, btn) {
+  const el = document.getElementById(id);
+  const expanded = el.classList.toggle('expanded');
+  btn.textContent = expanded ? '收起' : '展开全文';
+}
+</script>
+</body>
+</html>
