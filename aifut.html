@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIFUT 2025 北京大会攻略</title>
+<style>
+:root {
+  --indigo-50: #EEF2FF; --indigo-200: #C7D2FE; --indigo-400: #818CF8; --indigo-600: #4F46E5; --indigo-800: #3730A3;
+  --emerald-50: #ECFDF5; --emerald-200: #A7F3D0; --emerald-400: #34D399; --emerald-600: #059669; --emerald-800: #065F46;
+  --amber-50: #FFFBEB; --amber-200: #FDE68A; --amber-400: #FBBF24; --amber-600: #D97706; --amber-800: #92400E;
+  --sky-50: #F0F9FF; --sky-200: #BAE6FD; --sky-400: #38BDF8; --sky-600: #0284C7; --sky-800: #075985;
+  --rose-50: #FFF1F2; --rose-200: #FECDD3; --rose-400: #FB7185; --rose-600: #E11D48; --rose-800: #9F1239;
+  --slate-50: #F8FAFC; --slate-100: #F1F5F9; --slate-200: #E2E8F0; --slate-400: #94A3B8; --slate-600: #64748B; --slate-800: #334155;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
+.container { max-width: 480px; margin: 0 auto; padding: 16px; }
+.hero { background: linear-gradient(135deg, var(--indigo-600), var(--sky-600)); border-radius: 16px; padding: 28px 24px; color: white; margin-bottom: 20px; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+.hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.hero .sub { font-size: 14px; opacity: 0.9; margin-bottom: 12px; }
+.hero .date-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 13px; backdrop-filter: blur(4px); }
+.card { background: white; border-radius: 14px; margin-bottom: 16px; overflow: hidden; border: 0.5px solid var(--slate-200); }
+.card-header { padding: 14px 18px; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+.card-header .icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.card-body { padding: 0 18px 16px; }
+.route-step { display: flex; gap: 12px; position: relative; padding-bottom: 16px; }
+.route-step:last-child { padding-bottom: 0; }
+.route-step::before { content: ''; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: var(--slate-200); }
+.route-step:last-child::before { display: none; }
+.step-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: white; flex-shrink: 0; z-index: 1; }
+.step-content { flex: 1; padding-top: 4px; }
+.step-title { font-size: 14px; font-weight: 500; color: var(--slate-800); }
+.step-desc { font-size: 12px; color: var(--slate-600); margin-top: 2px; }
+.step-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+.tag-line { background: var(--indigo-50); color: var(--indigo-600); }
+.tag-walk { background: var(--emerald-50); color: var(--emerald-600); }
+.tag-bus { background: var(--amber-50); color: var(--amber-600); }
+.tag-time { background: var(--sky-50); color: var(--sky-600); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.info-item { background: var(--slate-50); border-radius: 10px; padding: 12px; }
+.info-item .label { font-size: 11px; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.5px; }
+.info-item .value { font-size: 15px; font-weight: 500; color: var(--slate-800); margin-top: 2px; }
+.info-item .value small { font-size: 12px; font-weight: 400; color: var(--slate-600); }
+.timeline { padding: 0; }
+.t-day { margin-bottom: 14px; }
+.t-day-header { font-size: 13px; font-weight: 500; color: var(--indigo-600); background: var(--indigo-50); padding: 6px 12px; border-radius: 8px; margin-bottom: 8px; }
+.t-item { display: flex; gap: 10px; padding: 6px 0; align-items: flex-start; }
+.t-time { font-size: 12px; color: var(--slate-400); width: 50px; flex-shrink: 0; padding-top: 1px; }
+.t-content { font-size: 13px; color: var(--slate-800); }
+.t-content .note { font-size: 12px; color: var(--slate-600); }
+.tip-list { list-style: none; }
+.tip-list li { padding: 8px 0; border-bottom: 0.5px solid var(--slate-100); font-size: 13px; color: var(--slate-600); display: flex; gap: 8px; }
+.tip-list li:last-child { border-bottom: none; }
+.tip-list .bullet { color: var(--indigo-400); flex-shrink: 0; }
+.compare { display: flex; gap: 10px; margin-top: 10px; }
+.compare-item { flex: 1; background: var(--slate-50); border-radius: 10px; padding: 12px; text-align: center; }
+.compare-item .mode { font-size: 13px; font-weight: 500; color: var(--slate-800); }
+.compare-item .time { font-size: 20px; font-weight: 500; color: var(--indigo-600); margin: 4px 0; }
+.compare-item .cost { font-size: 12px; color: var(--slate-400); }
+.compare-item.rec { border: 1.5px solid var(--indigo-200); background: var(--indigo-50); }
+.compare-item.rec .mode::after { content: ' 推荐'; font-size: 11px; color: var(--indigo-400); }
+.section-note { font-size: 12px; color: var(--slate-400); padding: 8px 0 4px; font-style: italic; }
+.footer { text-align: center; padding: 20px 0 40px; font-size: 12px; color: var(--slate-400); }
+.exh-card { padding: 10px 0; border-bottom: 0.5px solid var(--slate-100); }
+.exh-card:last-child { border-bottom: none; }
+.exh-name { font-size: 14px; font-weight: 500; color: var(--slate-800); }
+.exh-meta { font-size: 11px; color: var(--indigo-600); margin-top: 2px; }
+.exh-desc { font-size: 12px; color: var(--slate-600); margin-top: 4px; line-height: 1.5; }
+.exh-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-top: 4px; }
+.must { background: var(--rose-50); color: var(--rose-600); }
+.ending { background: var(--amber-50); color: var(--amber-600); }
+.eco { background: var(--emerald-50); color: var(--emerald-600); }
+.tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 0.5px solid var(--slate-200); background: white; color: var(--slate-600); transition: all 0.2s; }
+.tab.active { background: var(--indigo-600); color: white; border-color: var(--indigo-600); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <h1>AIFUT 2025 北京</h1>
+  <div class="sub">中科院植物所 → 亦庄会场 出行攻略</div>
+  <span class="date-badge">4月8-9日 | 北京智慧电竞赛事中心</span>
+</div>
+
+<!-- 快速信息 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--sky-50);color:var(--sky-600);">i</div>
+    大会速览
+  </div>
+  <div class="card-body">
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="label">日期</div>
+        <div class="value">4月8-9日 <small>周三/周四</small></div>
+      </div>
+      <div class="info-item">
+        <div class="label">规模</div>
+        <div class="value">万人级 <small>1518主论坛席</small></div>
+      </div>
+      <div class="info-item">
+        <div class="label">地点</div>
+        <div class="value">亦庄 <small>嘉创二路6号</small></div>
+      </div>
+      <div class="info-item">
+        <div class="label">展区</div>
+        <div class="value">3500m² <small>30+互动展位</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 交通路线 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--indigo-50);color:var(--indigo-600);">→</div>
+    从植物所出发
+  </div>
+  <div class="card-body">
+    <div class="compare">
+      <div class="compare-item rec">
+        <div class="mode">地铁</div>
+        <div class="time">109min</div>
+        <div class="cost">约8元 | 换乘2次</div>
+      </div>
+      <div class="compare-item">
+        <div class="mode">驾车</div>
+        <div class="time">55min</div>
+        <div class="cost">约56公里 | 打车约130元</div>
+      </div>
+    </div>
+    <p class="section-note">推荐地铁，时间可控不堵车，早高峰驾车时间翻倍</p>
+
+    <div style="margin-top:12px">
+      <div class="route-step">
+        <div class="step-dot" style="background:var(--emerald-400);">1</div>
+        <div class="step-content">
+          <div class="step-title">步行到国家植物园站</div>
+          <div class="step-desc">沿香山路向东走135米</div>
+          <span class="step-tag tag-walk">步行 2分钟</span>
+        </div>
+      </div>
+      <div class="route-step">
+        <div class="step-dot" style="background:var(--amber-400);">2</div>
+        <div class="step-content">
+          <div class="step-title">西郊线 → 巴沟</div>
+          <div class="step-desc">经万安、茶棚、颐和园西门，4站</div>
+          <span class="step-tag tag-bus">有轨电车 26分钟</span>
+        </div>
+      </div>
+      <div class="route-step">
+        <div class="step-dot" style="background:var(--indigo-400);">3</div>
+        <div class="step-content">
+          <div class="step-title">10号线内环 → 太阳宫</div>
+          <div class="step-desc">巴沟上车，经海淀黄庄、芍药居等，12站</div>
+          <span class="step-tag tag-line">地铁 28分钟</span>
+        </div>
+      </div>
+      <div class="route-step">
+        <div class="step-dot" style="background:var(--sky-400);">4</div>
+        <div class="step-content">
+          <div class="step-title">17号线 → 北神树</div>
+          <div class="step-desc">经工人体育场、永安里、十里河等，10站</div>
+          <span class="step-tag tag-line">地铁 39分钟</span>
+        </div>
+      </div>
+      <div class="route-step">
+        <div class="step-dot" style="background:var(--rose-400);">5</div>
+        <div class="step-content">
+          <div class="step-title">北神树站B口出 → 会场</div>
+          <div class="step-desc">沿兴光五街左转嘉创二路，步行611米</div>
+          <span class="step-tag tag-walk">步行 8分钟</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 时间建议 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--amber-50);color:var(--amber-600);">⏰</div>
+    时间建议
+  </div>
+  <div class="card-body">
+    <ul class="tip-list">
+      <li><span class="bullet">·</span>大会预计9:00签到，7:00从植物所出发最稳妥</li>
+      <li><span class="bullet">·</span>西郊线首班车6:00，巴沟换乘10号线注意方向（内环）</li>
+      <li><span class="bullet">·</span>17号线是新线，车厢宽敞不挤，可以路上吃早餐</li>
+      <li><span class="bullet">·</span>返程晚高峰17号线不算挤（亦庄→市区方向人少）</li>
+      <li><span class="bullet">·</span>如果赶时间，可打车到巴沟（约15min），再坐地铁</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 大会议程 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--emerald-50);color:var(--emerald-600);">📋</div>
+    两天议程亮点
+  </div>
+  <div class="card-body">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(this,0)">Day 1 · 4/8</div>
+      <div class="tab" onclick="switchTab(this,1)">Day 2 · 4/9</div>
+    </div>
+    <div class="tab-panel active" id="tp0">
+      <div class="timeline">
+        <div class="t-item"><div class="t-time">上午</div><div class="t-content">AI时代，人还能做什么？<div class="note">开场主题，探讨人类角色重新定位</div></div></div>
+        <div class="t-item"><div class="t-time">上午</div><div class="t-content">基座Agent的大模型究竟什么样？<div class="note">技术前沿：Agent架构与能力边界</div></div></div>
+        <div class="t-item"><div class="t-time">下午</div><div class="t-content">人人都要coding？软件会消失？<div class="note">AI编程对各行业的影响</div></div></div>
+        <div class="t-item"><div class="t-time">下午</div><div class="t-content">人与AI，到底是什么关系？<div class="note">哲学层面的思考</div></div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="tp1">
+      <div class="timeline">
+        <div class="t-item"><div class="t-time">上午</div><div class="t-content">有了AI，人人都能独跑世界？<div class="note">个体创业者与AI协作的可能性</div></div></div>
+        <div class="t-item"><div class="t-time">上午</div><div class="t-content">后AI创作手法<div class="note">AI时代的内容创作方法论</div></div></div>
+        <div class="t-item"><div class="t-time">下午</div><div class="t-content">5v5 Prompt Battle 电竞赛<div class="note">提示词对抗赛，看高手过招</div></div></div>
+        <div class="t-item"><div class="t-time">下午</div><div class="t-content">AI时代的新规工作<div class="note">未来职业形态展望</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 展区 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--rose-50);color:var(--rose-600);">🎪</div>
+    3500m² 展区
+  </div>
+  <div class="card-body">
+    <ul class="tip-list">
+      <li><span class="bullet">·</span>30+ 互动展位，覆盖AI应用各方向</li>
+      <li><span class="bullet">·</span>重点关注：AI+科研、AI+内容创作、Agent工具链</li>
+      <li><span class="bullet">·</span>游戏化互动设计，体验感强</li>
+      <li><span class="bullet">·</span>建议上午听主论坛，下午逛展区</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 生态学博士的彩蛋：国博推荐 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--emerald-50);color:var(--emerald-600);">🏛</div>
+    如果有空：国博正在展
+  </div>
+  <div class="card-body">
+    <div class="exh-card">
+      <div class="exh-name">双星耀世：三星堆-金沙遗址古蜀文明展</div>
+      <div class="exh-meta">南8/9展厅 | 至2026年8月</div>
+      <div class="exh-desc">青铜面具、金面具、神树，从地层中读出3000年前的文明。考古地层学的视角看，这个展的信息密度极高。</div>
+      <span class="exh-tag must">必看</span>
+    </div>
+    <div class="exh-card">
+      <div class="exh-name">叩问永恒：庞贝的探索与发掘</div>
+      <div class="exh-meta">南1/2展厅 | 2026年2月起</div>
+      <div class="exh-desc">105件意大利文物，81件首次来华。火山灰层下保存的生态快照，植物花粉、种子遗存也是展品亮点。</div>
+      <span class="exh-tag must">必看</span>
+    </div>
+    <div class="exh-card">
+      <div class="exh-name">遇见考烈王：武王墩一号墓考古成果</div>
+      <div class="exh-meta">北1/2展厅 | 至2026年4月</div>
+      <div class="exh-desc">安徽淮南最新考古发现，4月底撤展。</div>
+      <span class="exh-tag ending">即将结束</span>
+    </div>
+    <div class="exh-card">
+      <div class="exh-name">国家植物园就在你家门口</div>
+      <div class="exh-meta">海淀区香山 | 常年开放</div>
+      <div class="exh-desc">这条不用我说了吧 :)</div>
+      <span class="exh-tag eco">生态学主场</span>
+    </div>
+  </div>
+</div>
+
+<!-- 实用信息 -->
+<div class="card">
+  <div class="card-header">
+    <div class="icon" style="background:var(--slate-100);color:var(--slate-600);">✓</div>
+    实用信息
+  </div>
+  <div class="card-body">
+    <ul class="tip-list">
+      <li><span class="bullet">·</span><strong>会场地址：</strong>北京经济技术开发区嘉创二路6号，北京智慧电竞赛事中心</li>
+      <li><span class="bullet">·</span><strong>最近地铁：</strong>17号线北神树站B口</li>
+      <li><span class="bullet">·</span><strong>午餐：</strong>会场内有餐饮区，建议自带水和零食</li>
+      <li><span class="bullet">·</span><strong>充电：</strong>带充电宝，全天逛展手机耗电快</li>
+      <li><span class="bullet">·</span><strong>穿着：</strong>舒适运动鞋，展区面积大走路多</li>
+      <li><span class="bullet">·</span><strong>国博预约：</strong>提前7天在"国家博物馆"微信公众号抢票，每日17:00放票</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated with AI · 祝逛展愉快 🌿
+</div>
+
+</div>
+
+<script>
+function switchTab(el, idx) {
+  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  var panels = el.closest('.card-body').querySelectorAll('.tab-panel');
+  panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+}
+</script>
+</body>
+</html>
