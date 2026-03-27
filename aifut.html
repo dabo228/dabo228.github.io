@@ -2,400 +2,349 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北京两日攻略 · 4月5-6日</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>北京两日攻略 4.5-4.6</title>
 <style>
-:root {
-  --indigo-50: #EEF2FF; --indigo-200: #C7D2FE; --indigo-400: #818CF8; --indigo-600: #4F46E5; --indigo-800: #3730A3;
-  --emerald-50: #ECFDF5; --emerald-200: #A7F3D0; --emerald-400: #34D399; --emerald-600: #059669; --emerald-800: #065F46;
-  --amber-50: #FFFBEB; --amber-200: #FDE68A; --amber-400: #FBBF24; --amber-600: #D97706; --amber-800: #92400E;
-  --sky-50: #F0F9FF; --sky-200: #BAE6FD; --sky-400: #38BDF8; --sky-600: #0284C7; --sky-800: #075985;
-  --rose-50: #FFF1F2; --rose-200: #FECDD3; --rose-400: #FB7185; --rose-600: #E11D48; --rose-800: #9F1239;
-  --slate-50: #F8FAFC; --slate-100: #F1F5F9; --slate-200: #E2E8F0; --slate-400: #94A3B8; --slate-600: #64748B; --slate-800: #334155;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--slate-50); color: var(--slate-800); line-height: 1.6; }
-.container { max-width: 480px; margin: 0 auto; padding: 16px; }
-.hero { background: linear-gradient(135deg, var(--emerald-600), var(--sky-600)); border-radius: 16px; padding: 28px 24px; color: white; margin-bottom: 20px; position: relative; overflow: hidden; }
-.hero::after { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.08); border-radius: 50%; }
-.hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-.hero .sub { font-size: 14px; opacity: 0.9; margin-bottom: 12px; }
-.hero .date-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 13px; }
-.hero .date-badge+.date-badge { margin-left: 6px; }
-.card { background: white; border-radius: 14px; margin-bottom: 16px; overflow: hidden; border: 0.5px solid var(--slate-200); }
-.card-header { padding: 14px 18px; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
-.card-header .icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.card-body { padding: 0 18px 16px; }
-.route-step { display: flex; gap: 12px; position: relative; padding-bottom: 16px; }
-.route-step:last-child { padding-bottom: 0; }
-.route-step::before { content: ''; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: var(--slate-200); }
-.route-step:last-child::before { display: none; }
-.step-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: white; flex-shrink: 0; z-index: 1; }
-.step-content { flex: 1; padding-top: 4px; }
-.step-title { font-size: 14px; font-weight: 500; color: var(--slate-800); }
-.step-desc { font-size: 12px; color: var(--slate-600); margin-top: 2px; }
-.step-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
-.tag-line { background: var(--indigo-50); color: var(--indigo-600); }
-.tag-walk { background: var(--emerald-50); color: var(--emerald-600); }
-.tag-bus { background: var(--amber-50); color: var(--amber-600); }
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.info-item { background: var(--slate-50); border-radius: 10px; padding: 12px; }
-.info-item .label { font-size: 11px; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.5px; }
-.info-item .value { font-size: 15px; font-weight: 500; color: var(--slate-800); margin-top: 2px; }
-.info-item .value small { font-size: 12px; font-weight: 400; color: var(--slate-600); }
-.tip-list { list-style: none; }
-.tip-list li { padding: 8px 0; border-bottom: 0.5px solid var(--slate-100); font-size: 13px; color: var(--slate-600); display: flex; gap: 8px; }
-.tip-list li:last-child { border-bottom: none; }
-.tip-list .bullet { color: var(--indigo-400); flex-shrink: 0; }
-.section-note { font-size: 12px; color: var(--slate-400); padding: 8px 0 4px; font-style: italic; }
-.footer { text-align: center; padding: 20px 0 40px; font-size: 12px; color: var(--slate-400); }
-.exh-card { padding: 10px 0; border-bottom: 0.5px solid var(--slate-100); }
-.exh-card:last-child { border-bottom: none; }
-.exh-name { font-size: 14px; font-weight: 500; color: var(--slate-800); }
-.exh-meta { font-size: 11px; color: var(--indigo-600); margin-top: 2px; }
-.exh-desc { font-size: 12px; color: var(--slate-600); margin-top: 4px; line-height: 1.5; }
-.exh-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-top: 4px; }
-.must { background: var(--rose-50); color: var(--rose-600); }
-.ending { background: var(--amber-50); color: var(--amber-600); }
-.eco { background: var(--emerald-50); color: var(--emerald-600); }
-.classic { background: var(--sky-50); color: var(--sky-600); }
-.tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 0.5px solid var(--slate-200); background: white; color: var(--slate-600); transition: all 0.2s; }
-.tab.active { background: var(--indigo-600); color: white; border-color: var(--indigo-600); }
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-.day-divider { background: linear-gradient(90deg, var(--indigo-400), var(--sky-400)); color: white; text-align: center; padding: 10px; border-radius: 10px; margin-bottom: 16px; font-size: 15px; font-weight: 500; }
-.t-item { display: flex; gap: 10px; padding: 6px 0; align-items: flex-start; }
-.t-time { font-size: 12px; color: var(--slate-400); width: 56px; flex-shrink: 0; padding-top: 1px; }
-.t-content { font-size: 13px; color: var(--slate-800); }
-.t-content .note { font-size: 12px; color: var(--slate-600); }
-.spot-card { background: var(--slate-50); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
-.spot-card:last-child { margin-bottom: 0; }
-.spot-name { font-size: 14px; font-weight: 500; color: var(--slate-800); }
-.spot-info { font-size: 12px; color: var(--slate-600); margin-top: 4px; line-height: 1.5; }
-.spot-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#0a0a0a;color:#e8e4df;min-height:100vh}
+.container{max-width:420px;margin:0 auto;min-height:100vh}
+/* Nav tabs */
+.nav{position:sticky;top:0;z-index:100;display:flex;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-btn{flex:1;padding:14px 0;text-align:center;font-size:14px;font-weight:500;color:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s;border-bottom:2px solid transparent;letter-spacing:0.5px}
+.nav-btn.active{color:#fff;border-bottom-color:#c9a96e}
+.nav-btn .day{font-size:11px;opacity:0.6;display:block;margin-top:2px}
+/* Pages */
+.page{display:none;padding:0 16px 40px}
+.page.active{display:block}
+/* Day 1 theme: museum bronze/gold */
+.d1-hero{background:linear-gradient(180deg,#1a1510 0%,#0d0b08 100%);padding:32px 20px;margin:0 -16px 20px;text-align:center;border-bottom:1px solid rgba(201,169,110,0.15)}
+.d1-hero h1{font-size:24px;font-weight:300;color:#c9a96e;letter-spacing:4px;margin-bottom:6px}
+.d1-hero .sub{font-size:13px;color:rgba(201,169,110,0.6);letter-spacing:1px}
+.d1-hero .date{display:inline-block;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.5);border:1px solid rgba(201,169,110,0.2);padding:4px 14px;border-radius:20px}
+/* Day 2 theme: spring green/pink */
+.d2-hero{background:linear-gradient(180deg,#0d1510 0%,#0a0a0a 100%);padding:32px 20px;margin:0 -16px 20px;text-align:center;border-bottom:1px solid rgba(134,194,143,0.15)}
+.d2-hero h1{font-size:24px;font-weight:300;color:#86c28f;letter-spacing:4px;margin-bottom:6px}
+.d2-hero .sub{font-size:13px;color:rgba(134,194,143,0.6);letter-spacing:1px}
+.d2-hero .date{display:inline-block;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.5);border:1px solid rgba(134,194,143,0.2);padding:4px 14px;border-radius:20px}
+/* Cards */
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;margin-bottom:16px;overflow:hidden}
+.card-h{padding:14px 18px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.card-h .ic{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.card-b{padding:14px 18px}
+/* Exhibition cards */
+.exh{padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.exh:last-child{border-bottom:none}
+.exh-num{font-size:32px;font-weight:200;color:rgba(201,169,110,0.3);float:right;line-height:1;margin-left:10px}
+.exh-name{font-size:15px;font-weight:500;color:#e8e4df}
+.exh-meta{font-size:11px;color:rgba(201,169,110,0.7);margin-top:3px}
+.exh-desc{font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px;line-height:1.6}
+.exh-tags{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 8px;border-radius:3px;letter-spacing:0.5px}
+.tag-must{background:rgba(201,169,110,0.15);color:#c9a96e}
+.tag-end{background:rgba(235,134,100,0.15);color:#eb8664}
+.tag-classic{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5)}
+.tag-paid{background:rgba(168,130,200,0.15);color:#a882c8}
+/* Route */
+.route{position:relative;padding-left:28px}
+.route::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:rgba(255,255,255,0.08)}
+.r-step{position:relative;padding-bottom:14px}
+.r-step:last-child{padding-bottom:0}
+.r-step:last-child~.route::before{display:none}
+.r-dot{position:absolute;left:-23px;top:4px;width:10px;height:10px;border-radius:50%;border:1.5px solid}
+.r-title{font-size:13px;font-weight:500;color:#e8e4df}
+.r-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.r-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-top:3px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5)}
+/* Timeline */
+.tl-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.tl-item:last-child{border-bottom:none}
+.tl-time{font-size:11px;color:rgba(255,255,255,0.3);width:48px;flex-shrink:0;padding-top:1px}
+.tl-text{font-size:13px;color:#e8e4df}
+.tl-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px}
+/* Tips */
+.tip{padding:6px 0;font-size:12px;color:rgba(255,255,255,0.45);border-bottom:1px solid rgba(255,255,255,0.03);display:flex;gap:8px}
+.tip:last-child{border-bottom:none}
+.tip b{color:rgba(255,255,255,0.7);font-weight:500}
+.dot{color:#c9a96e;flex-shrink:0}
+.dot2{color:#86c28f;flex-shrink:0}
+/* Spot cards */
+.spot{background:rgba(134,194,143,0.04);border:1px solid rgba(134,194,143,0.1);border-radius:10px;padding:14px;margin-bottom:10px}
+.spot:last-child{margin-bottom:0}
+.spot-name{font-size:14px;font-weight:500;color:#86c28f}
+.spot-info{font-size:12px;color:rgba(255,255,255,0.45);margin-top:6px;line-height:1.6}
+.spot-info strong{color:rgba(255,255,255,0.6)}
+.stag{font-size:10px;padding:2px 8px;border-radius:3px;display:inline-block;margin-top:6px;margin-right:4px}
+.stag-must{background:rgba(134,194,143,0.15);color:#86c28f}
+.stag-flower{background:rgba(235,167,183,0.15);color:#eba7b7}
+.stag-alt{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4)}
+/* Flower */
+.flower-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.flower-item:last-child{border-bottom:none}
+.flower-name{font-size:13px;color:#eba7b7;font-weight:500;width:48px;flex-shrink:0}
+.flower-desc{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5}
+/* Info grid */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-box{background:rgba(255,255,255,0.03);border-radius:8px;padding:10px}
+.info-box .label{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px}
+.info-box .val{font-size:14px;font-weight:500;color:#e8e4df;margin-top:2px}
+.info-box .val small{font-size:11px;font-weight:400;color:rgba(255,255,255,0.4)}
+.note{font-size:11px;color:rgba(255,255,255,0.25);font-style:italic;padding:8px 0 2px}
+.footer{text-align:center;padding:30px 0;font-size:11px;color:rgba(255,255,255,0.15)}
 </style>
 </head>
 <body>
 <div class="container">
-
-<div class="hero">
-  <h1>北京两日游攻略</h1>
-  <div class="sub">中科院植物所出发 · 国博 + 圆明园/颐和园</div>
-  <span class="date-badge">4月5日 国博</span>
-  <span class="date-badge">4月6日 圆明园+</span>
+<div class="nav">
+  <div class="nav-btn active" onclick="go(0)">国家博物馆<span class="day">4月5日 周六</span></div>
+  <div class="nav-btn" onclick="go(1)">圆明园 + 颐和园<span class="day">4月6日 周一</span></div>
+  <div class="nav-btn" onclick="go(2)">实用信息<span class="day">交通 / 门票</span></div>
 </div>
 
-<!-- ===== DAY 1: 国博 ===== -->
-<div class="day-divider">DAY 1 · 4月5日（周六）· 国家博物馆</div>
+<!-- ========== PAGE 0: 国博 ========== -->
+<div class="page active" id="p0">
+<div class="d1-hero">
+  <h1>国家博物馆</h1>
+  <div class="sub">三星堆 · 庞贝 · 武王墩 · 古代中国</div>
+  <div class="date">4月5日 周六 · 13:30 下午场</div>
+</div>
 
-<!-- 国博基本信息 -->
 <div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--sky-50);color:var(--sky-600);">i</div>
-    国博速览
+  <div class="card-h"><div class="ic" style="background:rgba(201,169,110,0.1);color:#c9a96e">01</div>三星堆-金沙遗址古蜀文明展</div>
+  <div class="card-b">
+    <div class="exh">
+      <div class="exh-name">双星耀世</div>
+      <div class="exh-meta">南8/9展厅 · 至2026年8月 · 建议60分钟</div>
+      <div class="exh-desc">200余件来自三星堆和金沙遗址的文物。两件戴冠纵目面具自1986年出土以来首次同台亮相。37件金沙文物从未外展过，包括青铜立人、兽首饰玉璋。展览分"惊世秘藏""人神共舞""崇祀天地""互融共鉴"四个单元。设有可触摸展品和NFC语音导览。</div>
+      <div class="exh-desc" style="margin-top:8px;color:rgba(201,169,110,0.5)">植物考古发现：四号坑灰烬以竹子为主，还含楠属、棕榈科、芦苇、碳化稻等，证明当时成都平原气候温暖湿润。三星堆时期已形成集约化湿地稻作农业。</div>
+      <div class="exh-tags">
+        <span class="tag tag-must">必看</span>
+        <span class="tag tag-classic">免费</span>
+      </div>
+    </div>
   </div>
-  <div class="card-body">
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(168,130,200,0.1);color:#a882c8">02</div>庞贝的探索与发掘</div>
+  <div class="card-b">
+    <div class="exh">
+      <div class="exh-name">叩问永恒</div>
+      <div class="exh-meta">南1/2展厅 · 至2026年10月 · 建议45分钟</div>
+      <div class="exh-desc">105件来自意大利的文物，81件首次来华，7件在意大利也未公开展示过。涵盖大理石雕塑、壁画、陶器、青铜器、金饰。亮点包括洛瓦泰利型维纳斯雕像（表面残留古代彩绘痕迹）、庞贝遇难者石膏铸像、西塔拉琴师之家的精美壁画。3组沉浸式体验空间采用环形巨幕LED。</div>
+      <div class="exh-desc" style="margin-top:8px;color:rgba(168,130,200,0.5)">火山灰层下不只有建筑遗存，还有碳化种子、花粉沉积、植物印痕。维苏威火山喷发在公元79年创造了一个完整的生态快照，对古环境研究极有价值。</div>
+      <div class="exh-tags">
+        <span class="tag tag-must">必看</span>
+        <span class="tag tag-paid">需购票 120元/人</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(235,134,100,0.1);color:#eb8664">03</div>武王墩一号墓考古成果</div>
+  <div class="card-b">
+    <div class="exh">
+      <div class="exh-name">遇见考烈王</div>
+      <div class="exh-meta">北1/2展厅 · 至2026年4月底 · 建议30分钟</div>
+      <div class="exh-desc">安徽淮南最新考古发现，楚国考烈王墓葬出土文物。4月底撤展，之后不确定是否还有机会看到。</div>
+      <div class="exh-tags">
+        <span class="tag tag-end">即将结束</span>
+        <span class="tag tag-classic">免费</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4)">04</div>古代中国（常设展）</div>
+  <div class="card-b">
+    <div class="exh">
+      <div class="exh-name">从远古到明清的通史陈列</div>
+      <div class="exh-meta">负一层 · 常设 · 建议45分钟（快速版）</div>
+      <div class="exh-desc">后母戊鼎、四羊方尊等镇馆之宝。内容量极大，如果前面三个展看完还有时间，挑几个标志性文物重点看。</div>
+      <div class="exh-tags">
+        <span class="tag tag-classic">经典常设</span>
+        <span class="tag tag-classic">免费</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(201,169,110,0.1);color:#c9a96e">⏰</div>时间安排</div>
+  <div class="card-b">
+    <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-text">从植物所出发<div class="tl-note">西郊线→10号线→1号线，约72分钟</div></div></div>
+    <div class="tl-item"><div class="tl-time">12:45</div><div class="tl-text">到达天安门西站<div class="tl-note">前门大街或大栅栏午餐</div></div></div>
+    <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-text">入馆<div class="tl-note">北门西侧，刷身份证进馆</div></div></div>
+    <div class="tl-item"><div class="tl-time">13:40</div><div class="tl-text">三星堆展（60min）<div class="tl-note">直奔南8/9，这个展人气最高</div></div></div>
+    <div class="tl-item"><div class="tl-time">14:40</div><div class="tl-text">庞贝展（45min）<div class="tl-note">从南8出来顺路到南1/2</div></div></div>
+    <div class="tl-item"><div class="tl-time">15:25</div><div class="tl-text">武王墩展（30min）<div class="tl-note">转到北1/2，快速看完</div></div></div>
+    <div class="tl-item"><div class="tl-time">16:00</div><div class="tl-text">古代中国（选看）<div class="tl-note">下到负一层看镇馆之宝</div></div></div>
+    <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-text">出馆<div class="tl-note">天安门广场走走看夕阳，或直接晚饭</div></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ========== PAGE 1: 圆明园+颐和园 ========== -->
+<div class="page" id="p1">
+<div class="d2-hero">
+  <h1>圆明园 + 颐和园</h1>
+  <div class="sub">遗址春花 · 皇家园林 · 昆明湖</div>
+  <div class="date">4月6日 周一 · 全天</div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(134,194,143,0.1);color:#86c28f">上</div>圆明园（9:00-12:00）</div>
+  <div class="card-b">
+    <div class="spot">
+      <div class="spot-name">万园之园的断壁残垣与春日花海</div>
+      <div class="spot-info">
+        圆明园由圆明园、长春园、绮春园三园组成，占地350公顷，相当于8.5个紫禁城。1860年英法联军一把火将其化为灰烬。如今残垣断壁在春花映衬下，既有历史的厚重，又有春天的温柔。
+      </div>
+    </div>
+    <div class="spot">
+      <div class="spot-name">核心看点</div>
+      <div class="spot-info">
+        <strong>大水法遗址</strong>：圆明园的标志，原为巨型喷泉群，石狮吐水、十只猎狗逐鹿喷水。如今仅存残拱，是历史课本的封面<br><br>
+        <strong>桃花坞（武陵春色）</strong>：千株桃花临水盛放，落英缤纷逐溪流，溪中锦鲤穿行花影之间。4月初正是盛花期<br><br>
+        <strong>黄花阵</strong>：欧式迷宫，可登顶俯瞰全貌<br><br>
+        <strong>正觉寺</strong>：马首铜像回归展，圆明园唯一保存完整的建筑群<br><br>
+        <strong>福海</strong>：园区中心湖面，春日水面倒影，可租船
+      </div>
+      <div class="stag stag-must">联票25元（含遗址区）</div>
+      <div class="stag stag-flower">桃花盛花期</div>
+    </div>
+    <p class="note">路线：南门进 → 绮春园 → 桃花坞 → 福海 → 西洋楼遗址（大水法）→ 黄花阵 → 东门出</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(134,194,143,0.1);color:#86c28f">下</div>颐和园（13:30-17:00）</div>
+  <div class="card-b">
+    <div class="spot">
+      <div class="spot-name">中国最完整的皇家园林</div>
+      <div class="spot-info">
+        昆明湖占颐和园四分之三面积，万寿山上佛香阁俯瞰全园。西堤仿杭州苏堤修建，六桥相连，4月初山桃花沿堤盛放，粉白花海与碧波古建相映，是北京春天公认的"顶流"打卡地。
+      </div>
+    </div>
+    <div class="spot">
+      <div class="spot-name">核心看点</div>
+      <div class="spot-info">
+        <strong>西堤六桥</strong>：镜桥是最佳观赏点，以桥为前景、佛香阁为背景，山桃花最繁盛<br><br>
+        <strong>佛香阁</strong>：登顶万寿山俯瞰昆明湖全景，需联票<br><br>
+        <strong>长廊</strong>：世界最长画廊，14000余幅彩画<br><br>
+        <strong>苏州街</strong>：仿苏州水乡的宫廷商业街<br><br>
+        <strong>画中游</strong>：廊边一株山桃掩映琉璃瓦，俯瞰昆明湖的秘境机位
+      </div>
+      <div class="stag stag-must">建议买联票60元（含佛香阁）</div>
+      <div class="stag stag-flower">西堤桃花盛放</div>
+    </div>
+    <p class="note">路线：北宫门进 → 苏州街 → 万寿山/佛香阁 → 长廊 → 西堤赏花 → 东宫门出</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3)">⏰</div>时间安排</div>
+  <div class="card-b">
+    <div class="tl-item"><div class="tl-time">9:00</div><div class="tl-text">圆明园南门集合<div class="tl-note">地铁4号线圆明园站B口出即到</div></div></div>
+    <div class="tl-item"><div class="tl-time">9:00</div><div class="tl-text">圆明园（3小时）<div class="tl-note">桃花坞→福海→西洋楼→黄花阵</div></div></div>
+    <div class="tl-item"><div class="tl-time">12:00</div><div class="tl-text">午餐<div class="tl-note">五道口/成府路，步行10分钟</div></div></div>
+    <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-text">颐和园北宫门入园<div class="tl-note">从圆明园步行15分钟或地铁一站</div></div></div>
+    <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-text">颐和园（3.5小时）<div class="tl-note">苏州街→佛香阁→长廊→西堤</div></div></div>
+    <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-text">东宫门出，结束</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(235,167,183,0.1);color:#eba7b7">🌸</div>4月初花期</div>
+  <div class="card-b">
+    <div class="flower-item"><div class="flower-name">桃花</div><div class="flower-desc">盛花期。圆明园桃花坞、颐和园西堤，粉白如云</div></div>
+    <div class="flower-item"><div class="flower-name">玉兰</div><div class="flower-desc">盛花期。颐和园乐寿堂前紫玉兰，每年4月初最美</div></div>
+    <div class="flower-item"><div class="flower-name">山桃</div><div class="flower-desc">尾声到盛放。西堤"山桃探水"，花瓣随风落入昆明湖</div></div>
+    <div class="flower-item"><div class="flower-name">海棠</div><div class="flower-desc">初花期。4月中旬才盛放，这次可能只见零星初绽</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3)">?</div>备选：清华/北大校园</div>
+  <div class="card-b">
+    <div class="spot" style="background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.06)">
+      <div class="spot-name" style="color:rgba(255,255,255,0.5)">如果圆明园逛完还有精力</div>
+      <div class="spot-info">圆明园南侧步行可达。清华近春园是朱自清《荷塘月色》原型，北大未名湖博雅塔。部分时段需预约。</div>
+      <div class="stag stag-alt">顺路可选</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========== PAGE 2: 实用信息 ========== -->
+<div class="page" id="p2">
+<div style="padding:24px 0 16px;text-align:center">
+  <div style="font-size:20px;font-weight:300;color:rgba(255,255,255,0.8);letter-spacing:2px">实用信息</div>
+  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">交通 · 门票 · 预约 · 穿着</div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(201,169,110,0.1);color:#c9a96e">→</div>植物所 → 国博</div>
+  <div class="card-b">
+    <div class="route">
+      <div class="r-step"><div class="r-dot" style="border-color:#86c28f"></div><div class="r-title">步行到国家植物园站</div><div class="r-desc">沿香山路东走135米</div><div class="r-tag">2分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#c9a96e"></div><div class="r-title">西郊线 → 巴沟（4站）</div><div class="r-desc">经万安、茶棚、颐和园西门</div><div class="r-tag">26分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#818CF8"></div><div class="r-title">10号线外环 → 公主坟（6站）</div><div class="r-desc">经火器营、长春桥、慈寿寺</div><div class="r-tag">18分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#38BDF8"></div><div class="r-title">1号线 → 天安门西（6站）</div><div class="r-desc">经军博、复兴门、西单</div><div class="r-tag">15分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#FB7185"></div><div class="r-title">天安门西B口 → 国博北门</div><div class="r-desc">过地下通道，含安检</div><div class="r-tag">10分钟</div></div>
+    </div>
+    <p class="note">全程约72分钟</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(134,194,143,0.1);color:#86c28f">→</div>植物所 → 圆明园</div>
+  <div class="card-b">
+    <div class="route">
+      <div class="r-step"><div class="r-dot" style="border-color:#86c28f"></div><div class="r-title">步行到国家植物园站</div><div class="r-tag">2分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#c9a96e"></div><div class="r-title">西郊线 → 巴沟（4站）</div><div class="r-tag">26分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#818CF8"></div><div class="r-title">换乘至圆明园站</div><div class="r-desc">巴沟→苏州街换4号线→圆明园站</div><div class="r-tag">约10分钟</div></div>
+      <div class="r-step"><div class="r-dot" style="border-color:#FB7185"></div><div class="r-title">B口出即到南门</div><div class="r-tag">2分钟</div></div>
+    </div>
+    <p class="note">全程约40-45分钟</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-h"><div class="ic" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4)">🎫</div>门票汇总</div>
+  <div class="card-b">
     <div class="info-grid">
-      <div class="info-item">
-        <div class="label">开放时间</div>
-        <div class="value">9:00-17:00 <small>16:00停止入馆</small></div>
-      </div>
-      <div class="info-item">
-        <div class="label">门票</div>
-        <div class="value">免费 <small>需提前7天预约</small></div>
-      </div>
-      <div class="info-item">
-        <div class="label">预约时段</div>
-        <div class="value">13:30-16:00 <small>建议约下午场</small></div>
-      </div>
-      <div class="info-item">
-        <div class="label">抢票时间</div>
-        <div class="value">3月29日 <small>17:00准时抢</small></div>
-      </div>
+      <div class="info-box"><div class="label">国博</div><div class="val">免费 <small>需预约</small></div></div>
+      <div class="info-box"><div class="label">庞贝展</div><div class="val">120元 <small>特展票</small></div></div>
+      <div class="info-box"><div class="label">圆明园</div><div class="val">25元 <small>联票含遗址</small></div></div>
+      <div class="info-box"><div class="label">颐和园</div><div class="val">60元 <small>联票含佛香阁</small></div></div>
     </div>
-    <p class="section-note">每个账号每周限约1次，最多约5人。入馆需刷身份证。</p>
   </div>
 </div>
 
-<!-- 植物所→国博 交通 -->
 <div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--indigo-50);color:var(--indigo-600);">→</div>
-    植物所 → 国博（约72分钟）
-  </div>
-  <div class="card-body">
-    <div style="margin-top:4px">
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--emerald-400);">1</div>
-        <div class="step-content">
-          <div class="step-title">步行到国家植物园站</div>
-          <div class="step-desc">沿香山路向东走135米</div>
-          <span class="step-tag tag-walk">步行 2分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--amber-400);">2</div>
-        <div class="step-content">
-          <div class="step-title">西郊线 → 巴沟</div>
-          <div class="step-desc">经万安、茶棚、颐和园西门，4站</div>
-          <span class="step-tag tag-bus">有轨电车 26分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--indigo-400);">3</div>
-        <div class="step-content">
-          <div class="step-title">10号线外环 → 公主坟</div>
-          <div class="step-desc">巴沟上车，经火器营、长春桥、慈寿寺等，6站</div>
-          <span class="step-tag tag-line">地铁 18分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--sky-400);">4</div>
-        <div class="step-content">
-          <div class="step-title">1号线 → 天安门西</div>
-          <div class="step-desc">经军事博物馆、复兴门、西单，6站</div>
-          <span class="step-tag tag-line">地铁 15分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--rose-400);">5</div>
-        <div class="step-content">
-          <div class="step-title">天安门西B口出 → 国博</div>
-          <div class="step-desc">过地下通道到天安门广场东侧，北门入馆</div>
-          <span class="step-tag tag-walk">步行 10分钟（含安检）</span>
-        </div>
-      </div>
-    </div>
+  <div class="card-h"><div class="ic" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4)">✓</div>注意事项</div>
+  <div class="card-b">
+    <div class="tip"><span class="dot">·</span><b>国博抢票：</b>3月29日17:00准时抢4月5日票。微信搜"国家博物馆"公众号，每周限约1次</div>
+    <div class="tip"><span class="dot">·</span><b>入馆：</b>北门西侧入口刷身份证，双肩包需存包，禁闪光灯</div>
+    <div class="tip"><span class="dot">·</span><b>圆明园：</b>无需预约，现场购票或扫码入园</div>
+    <div class="tip"><span class="dot">·</span><b>颐和园：</b>通过"颐和园"公众号提前预约购票</div>
+    <div class="tip"><span class="dot">·</span><b>天气：</b>4月初白天15-20度，早晚10度以下，带薄外套</div>
+    <div class="tip"><span class="dot">·</span><b>穿着：</b>两天走路多，穿舒适运动鞋</div>
+    <div class="tip"><span class="dot">·</span><b>干燥：</b>北京空气干，带水和润唇膏</div>
+    <div class="tip"><span class="dot">·</span><b>充电宝：</b>全天拍照耗电快</div>
   </div>
 </div>
-
-<!-- 5号时间线 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--amber-50);color:var(--amber-600);">⏰</div>
-    建议时间安排
-  </div>
-  <div class="card-body">
-    <div class="t-item"><div class="t-time">11:30</div><div class="t-content">从植物所出发</div></div>
-    <div class="t-item"><div class="t-time">12:45</div><div class="t-content">到达天安门西站，附近午餐<div class="note">前门大街、大栅栏有不少选择</div></div></div>
-    <div class="t-item"><div class="t-time">13:30</div><div class="t-content">入馆参观<div class="note">直奔重点展览，3小时看4个展</div></div></div>
-    <div class="t-item"><div class="t-time">16:30</div><div class="t-content">出馆<div class="note">可以在天安门广场走走，看看夕阳</div></div></div>
-    <div class="t-item"><div class="t-time">17:00</div><div class="t-content">晚餐或各回各家</div></div>
-  </div>
 </div>
 
-<!-- 推荐展览 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--rose-50);color:var(--rose-600);">🏛</div>
-    推荐展览（按优先级）
-  </div>
-  <div class="card-body">
-    <div class="exh-card">
-      <div class="exh-name">1. 双星耀世：三星堆-金沙遗址古蜀文明展</div>
-      <div class="exh-meta">南8/9展厅 | 展期至2026年8月 | 建议60分钟</div>
-      <div class="exh-desc">青铜面具、金面具、青铜神树。从地层沉积学的视角看，这个展的信息密度极高。三星堆埋藏坑的形成过程本身就是一个考古地层学的经典案例。</div>
-      <span class="exh-tag must">必看</span>
-    </div>
-    <div class="exh-card">
-      <div class="exh-name">2. 叩问永恒：庞贝的探索与发掘</div>
-      <div class="exh-meta">南1/2展厅 | 2026年2月起 | 建议45分钟</div>
-      <div class="exh-desc">105件意大利文物，81件首次来华。火山灰层下保存的不只是建筑，还有碳化种子、花粉遗存、植物印痕。维苏威火山喷发创造了一个两千年前的生态快照。</div>
-      <span class="exh-tag must">必看</span>
-    </div>
-    <div class="exh-card">
-      <div class="exh-name">3. 遇见考烈王：武王墩一号墓考古成果</div>
-      <div class="exh-meta">北1/2展厅 | 展期至2026年4月底 | 建议30分钟</div>
-      <div class="exh-desc">安徽淮南最新考古发现。4月撤展，错过就没了。</div>
-      <span class="exh-tag ending">即将结束</span>
-    </div>
-    <div class="exh-card">
-      <div class="exh-name">4. 古代中国（常设展）</div>
-      <div class="exh-meta">负一层 | 常设 | 建议45分钟（快速版）</div>
-      <div class="exh-desc">从远古到明清的通史陈列。后母戊鼎、四羊方尊等镇馆之宝。内容量极大，时间紧可以挑几个标志性文物重点看。</div>
-      <span class="exh-tag classic">经典常设</span>
-    </div>
-    <p class="section-note">建议路线：进馆 → 南8/9三星堆 → 南1/2庞贝 → 北1/2武王墩 → 负一层古代中国</p>
-  </div>
-</div>
-
-<!-- ===== DAY 2: 圆明园 ===== -->
-<div class="day-divider">DAY 2 · 4月6日（周一）· 圆明园 + 颐和园</div>
-
-<!-- 6号推荐 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--emerald-50);color:var(--emerald-600);">🌸</div>
-    为什么选这个组合
-  </div>
-  <div class="card-body">
-    <ul class="tip-list">
-      <li><span class="bullet">·</span>4月初正值桃花、玉兰盛花期，圆明园桃花坞和颐和园西堤都是赏花热门</li>
-      <li><span class="bullet">·</span>两个园区紧挨着，步行或骑车15分钟可达，不浪费路上时间</li>
-      <li><span class="bullet">·</span>上午圆明园看遗址+春花，下午颐和园看皇家园林+昆明湖，节奏刚好</li>
-      <li><span class="bullet">·</span>从植物所出发都很近，西郊线直达颐和园西门，或563路到北宫门</li>
-    </ul>
-  </div>
-</div>
-
-<!-- 景点详情 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--sky-50);color:var(--sky-600);">📍</div>
-    景点详情
-  </div>
-  <div class="card-body">
-    <div class="spot-card">
-      <div class="spot-name">圆明园遗址公园</div>
-      <div class="spot-info">
-        <strong>门票：</strong>10元（西洋楼遗址区另15元，建议买联票25元）<br>
-        <strong>开放：</strong>7:00-19:30（4月）<br>
-        <strong>交通：</strong>地铁4号线圆明园站B口，或从植物所坐563路到北宫门再步行<br>
-        <strong>看点：</strong>大水法遗址（西洋楼核心）、福海（春日水面倒影）、桃花坞（4月盛花期）、绮春园残荷区（新绿初发）
-      </div>
-      <div class="spot-tags">
-        <span class="exh-tag must">遗址震撼</span>
-        <span class="exh-tag eco">桃花盛花期</span>
-      </div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-name">颐和园</div>
-      <div class="spot-info">
-        <strong>门票：</strong>30元（联票60元，含佛香阁、苏州街等）<br>
-        <strong>开放：</strong>6:30-18:00（4月，17:00停止入园）<br>
-        <strong>交通：</strong>地铁4号线北宫门站D口，或从圆明园步行15分钟<br>
-        <strong>看点：</strong>昆明湖（中国最大皇家湖泊）、西堤六桥（仿杭州西湖，4月山桃盛开）、万寿山佛香阁（俯瞰全园）、长廊（世界最长画廊，14000余幅彩画）
-      </div>
-      <div class="spot-tags">
-        <span class="exh-tag must">皇家园林</span>
-        <span class="exh-tag eco">西堤春花</span>
-      </div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-name">备选：清华/北大校园</div>
-      <div class="spot-info">
-        <strong>门票：</strong>免费，部分时段需预约<br>
-        <strong>位置：</strong>圆明园南侧，步行可达<br>
-        <strong>看点：</strong>清华近春园（朱自清《荷塘月色》原型）、北大未名湖博雅塔。如果圆明园逛完还有精力，顺路走一走。
-      </div>
-      <div class="spot-tags">
-        <span class="exh-tag classic">顺路可选</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 6号时间安排 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--amber-50);color:var(--amber-600);">⏰</div>
-    建议时间安排
-  </div>
-  <div class="card-body">
-    <div class="t-item"><div class="t-time">9:00</div><div class="t-content">圆明园南门集合<div class="note">地铁4号线圆明园站B口出就是南门</div></div></div>
-    <div class="t-item"><div class="t-time">9:00-12:00</div><div class="t-content">圆明园（3小时）<div class="note">路线：南门进 → 绮春园 → 福海 → 西洋楼遗址区 → 桃花坞 → 东门出</div></div></div>
-    <div class="t-item"><div class="t-time">12:00</div><div class="t-content">午餐<div class="note">五道口/成府路有很多餐厅，步行10分钟</div></div></div>
-    <div class="t-item"><div class="t-time">13:30</div><div class="t-content">颐和园北宫门入园<div class="note">从圆明园步行15分钟，或地铁一站</div></div></div>
-    <div class="t-item"><div class="t-time">13:30-17:00</div><div class="t-content">颐和园（3.5小时）<div class="note">路线：北宫门进 → 苏州街 → 万寿山/佛香阁 → 长廊 → 西堤赏花 → 东宫门出</div></div></div>
-    <div class="t-item"><div class="t-time">17:00</div><div class="t-content">结束，各回各家<div class="note">颐和园东宫门出可坐4号线西苑站</div></div></div>
-  </div>
-</div>
-
-<!-- 从植物所出发 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--indigo-50);color:var(--indigo-600);">→</div>
-    植物所 → 圆明园南门
-  </div>
-  <div class="card-body">
-    <div style="margin-top:4px">
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--emerald-400);">1</div>
-        <div class="step-content">
-          <div class="step-title">步行到国家植物园站</div>
-          <div class="step-desc">沿香山路向东走135米</div>
-          <span class="step-tag tag-walk">步行 2分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--amber-400);">2</div>
-        <div class="step-content">
-          <div class="step-title">西郊线 → 巴沟</div>
-          <div class="step-desc">经万安、茶棚、颐和园西门，4站</div>
-          <span class="step-tag tag-bus">有轨电车 26分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--indigo-400);">3</div>
-        <div class="step-content">
-          <div class="step-title">巴沟换16号线 → 西苑</div>
-          <div class="step-desc">或步行到苏州街站换4号线到圆明园站</div>
-          <span class="step-tag tag-line">地铁 约10分钟</span>
-        </div>
-      </div>
-      <div class="route-step">
-        <div class="step-dot" style="background:var(--rose-400);">4</div>
-        <div class="step-content">
-          <div class="step-title">圆明园站B口出即到南门</div>
-          <div class="step-desc">全程约40-45分钟</div>
-          <span class="step-tag tag-walk">步行 2分钟</span>
-        </div>
-      </div>
-    </div>
-    <p class="section-note">也可以直接坐563路公交到北宫门，再步行到圆明园东门，约50分钟</p>
-  </div>
-</div>
-
-<!-- 4月花期 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--emerald-50);color:var(--emerald-600);">🌷</div>
-    4月初花期情报
-  </div>
-  <div class="card-body">
-    <ul class="tip-list">
-      <li><span class="bullet">·</span><strong>桃花</strong>（盛花期）：圆明园桃花坞、颐和园西堤。品霞桃和品虹桃是国家植物园自主培育品种</li>
-      <li><span class="bullet">·</span><strong>玉兰</strong>（盛花期）：颐和园乐寿堂前的紫玉兰，每年4月初最美</li>
-      <li><span class="bullet">·</span><strong>山桃</strong>（尾声）：颐和园西堤"山桃探水"，3月底到4月初</li>
-      <li><span class="bullet">·</span><strong>海棠</strong>（初花期）：4月中旬盛放，去早了可能还没开</li>
-      <li><span class="bullet">·</span><strong>郁金香</strong>：4月中旬才到，这次可能看不到</li>
-    </ul>
-    <p class="section-note">生态学博士应该比这份花期表更懂花 :)</p>
-  </div>
-</div>
-
-<!-- 实用信息 -->
-<div class="card">
-  <div class="card-header">
-    <div class="icon" style="background:var(--slate-100);color:var(--slate-600);">✓</div>
-    两天通用提示
-  </div>
-  <div class="card-body">
-    <ul class="tip-list">
-      <li><span class="bullet">·</span><strong>天气：</strong>4月初北京白天15-20度，早晚10度以下，带一件薄外套</li>
-      <li><span class="bullet">·</span><strong>穿着：</strong>两天都走路多，穿舒适运动鞋</li>
-      <li><span class="bullet">·</span><strong>国博预约：</strong>3月29日17:00抢4月5日票，微信搜"国家博物馆"公众号</li>
-      <li><span class="bullet">·</span><strong>国博入馆：</strong>北门西侧入口，刷身份证，双肩包需存包</li>
-      <li><span class="bullet">·</span><strong>圆明园：</strong>现场买票即可，不用预约</li>
-      <li><span class="bullet">·</span><strong>颐和园：</strong>建议买联票60元（含佛香阁，登顶看全景值回票价）</li>
-      <li><span class="bullet">·</span><strong>干燥：</strong>北京空气干，带水和润唇膏</li>
-    </ul>
-  </div>
-</div>
-
-<div class="footer">
-  Generated with AI · 祝两天玩得开心 🌿
-</div>
-
+<div class="footer">Generated with AI</div>
 </div>
 
 <script>
-function switchTab(el, idx) {
-  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  var panels = el.closest('.card-body').querySelectorAll('.tab-panel');
-  panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+function go(i){
+  document.querySelectorAll('.nav-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('active',j===i));
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
