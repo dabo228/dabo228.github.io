@@ -42,7 +42,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 .progress-bar .row b{color:#1E293B}
 .bar{height:8px;background:#E2E8F0;border-radius:4px;margin-top:8px;overflow:hidden}
 .bar-fill{height:100%;background:linear-gradient(90deg,#818CF8,#4F46E5);border-radius:4px;transition:width .3s}
-/* 记账 */
 .exp-section{padding:12px 16px}
 .exp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F8FAFC}
 .exp-row:last-child{border-bottom:none}
@@ -56,7 +55,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 .reimb{display:flex;justify-content:space-between;padding:12px 16px;background:white;border-radius:12px;margin-top:12px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 .reimb .label{color:#64748B}
 .reimb .val{font-weight:600;color:#059669}
-/* 行程tab */
 .day-card{background:white;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 .day-header{padding:12px 16px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
 .day-header .date{font-size:12px;font-weight:400;color:#64748B;margin-left:auto}
@@ -71,7 +69,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 <body>
 <div class="header">
   <h1>北京行程 4.4 - 4.11</h1>
-  <p>4号深夜到 → 5-6自由 → 7公司 → 8-9大会 → 10公司 → 11回</p>
+  <p>4号深夜到 → 5圆明园 → 6中轴线 → 7公司 → 8-9大会 → 10公司 → 11回</p>
   <div class="tabs">
     <div class="tab active" onclick="sw(0)">清单<span class="badge" id="badge0"></span></div>
     <div class="tab" onclick="sw(1)">记账<span class="badge" id="badge1"></span></div>
@@ -97,10 +95,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="card">
-  <div class="card-header ch-amber"><span class="icon">2</span>出发前可选<span class="cnt" id="c2"></span></div>
+  <div class="card-header ch-amber"><span class="icon">2</span>出发前预约<span class="cnt" id="c2"></span></div>
   <div class="items" id="g2">
-    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t8"><label>预约国博门票（5号，13:30-16:00场）<span class="tag tag-tip">29号17:00抢</span></label></div>
-    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t9"><label>预约颐和园门票（6号，公众号或畅游公园）</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t8"><label>预约自然博物馆门票（6号）<span class="tag tag-tip">4月3日11:00抢</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t9"><label>预约颐和园门票（5号下午，公众号或畅游公园）</label></div>
     <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t10"><label>约北京朋友确认时间</label></div>
   </div>
 </div>
@@ -166,10 +164,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
   <div class="card-header ch-amber"><span class="icon">🎫</span>门票/活动</div>
   <div class="exp-section">
     <div class="exp-row"><span class="name">AIFUT大会门票</span><input class="exp-input" data-exp="e7" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="exp-row"><span class="name">国博庞贝展门票</span><input class="exp-input" data-exp="e8" value="120" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="exp-row"><span class="name">圆明园联票</span><input class="exp-input" data-exp="e9" value="25" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="exp-row"><span class="name">颐和园门票</span><input class="exp-input" data-exp="e10" value="30" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="subtotal"><span>门票小计</span><span id="s3">175元</span></div>
+    <div class="exp-row"><span class="name">圆明园联票</span><input class="exp-input" data-exp="e8" value="25" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">天坛联票</span><input class="exp-input" data-exp="e9" value="34" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">景山公园</span><input class="exp-input" data-exp="e10" value="2" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>门票小计</span><span id="s3">61元</span></div>
   </div>
 </div>
 
@@ -185,13 +183,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 
 <div class="total-card">
   <div class="sub">总花费</div>
-  <div class="amount" id="totalAll">573元</div>
+  <div class="amount" id="totalAll">459元</div>
   <div class="sub">数据自动保存，刷新不丢失</div>
 </div>
 
 <div class="reimb">
   <span class="label">可报销部分（交通+住宿+门票）</span>
-  <span class="val" id="reimb">573元</span>
+  <span class="val" id="reimb">459元</span>
 </div>
 
 </div>
@@ -208,31 +206,33 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-free">🏛️ 4月5日 · 国博<span class="date">周六</span></div>
+  <div class="day-header dh-free">🌸 4月5日 · 圆明园<span class="date">周六</span></div>
   <div class="day-detail">
     <b>09:00</b> 自然醒，机场酒店退房<br>
     <b>10:00-11:30</b> 机场→上地，酒店入住放行李<br>
     <b>11:30-12:30</b> 午饭<br>
-    <b>12:30</b> 出发去国博（地铁约45分钟）<br>
-    <b>13:30-16:30</b> 国博参观<br>
-    → 三星堆展（60分钟）→ 庞贝展（45分钟）→ 武王墩展（30分钟）→ 古代中国（45分钟）<br>
-    <b>17:00</b> 返回上地 / 约朋友晚饭
+    <b>13:00</b> 出发去圆明园（地铁2站）<br>
+    <b>13:30-17:00</b> 圆明园（大水法→桃花坞→福海→黄花阵）<br>
+    <b>17:30</b> 返回上地 / 约朋友晚饭
   </div>
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-free">🌸 4月6日 · 圆明园+颐和园<span class="date">周日</span></div>
+  <div class="day-header dh-free">🏛️ 4月6日 · 自然博物馆+中轴线<span class="date">周一（清明假）</span></div>
   <div class="day-detail">
-    <b>08:30</b> 出发，上地→圆明园（地铁2站）<br>
-    <b>09:00-12:00</b> 圆明园（大水法→长春园→桃花坞）<br>
-    <b>12:00-13:00</b> 五道口午饭<br>
-    <b>13:30-17:00</b> 颐和园（东宫门→长廊→佛香阁→西堤）<br>
-    <b>17:30</b> 返回上地
+    <b>08:30</b> 出发去自然博物馆（地铁约50分钟）<br>
+    <b>09:00-12:00</b> 自然博物馆（鲸·奇特展最后一天→恐龙厅→植物厅）<br>
+    <b>12:00-13:00</b> 步行到天坛附近午餐<br>
+    <b>13:00-15:30</b> 天坛公园（圜丘→祈年殿→古柏林）<br>
+    <b>15:45-16:30</b> 天安门广场 + 人民英雄纪念碑<br>
+    <b>16:30-17:15</b> 景山公园（登顶看故宫全景）<br>
+    <b>17:15-18:30</b> 前门大街晚餐<br>
+    <b>19:00</b> 返回上地
   </div>
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-work">💼 4月7日 · 公司<span class="date">周一</span></div>
+  <div class="day-header dh-work">💼 4月7日 · 公司<span class="date">周二</span></div>
   <div class="day-detail">
     <b>11:00</b> 到公司（上地三街·金隅嘉华大厦C座）<br>
     核心议题：微信机器人方案 / 飞书知识库优先级 / 快消案例包装策略<br>
@@ -241,7 +241,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-conf">🤖 4月8日 · AIFUT大会 Day1<span class="date">周二</span></div>
+  <div class="day-header dh-conf">🤖 4月8日 · AIFUT大会 Day1<span class="date">周三</span></div>
   <div class="day-detail">
     <b>07:15</b> 从上地出发<br>
     <b>08:40</b> 到达亦庄·北京智慧电竞赛事中心<br>
@@ -251,7 +251,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-conf">🤖 4月9日 · AIFUT大会 Day2<span class="date">周三</span></div>
+  <div class="day-header dh-conf">🤖 4月9日 · AIFUT大会 Day2<span class="date">周四</span></div>
   <div class="day-detail">
     <b>07:15</b> 从上地出发（同Day1路线）<br>
     关注：Agent+Skill生态 / 群聊自动化<br>
@@ -260,7 +260,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-work">💼 4月10日 · 公司跟进<span class="date">周四</span></div>
+  <div class="day-header dh-work">💼 4月10日 · 公司跟进<span class="date">周五</span></div>
   <div class="day-detail">
     <b>11:00</b> 到公司<br>
     带大会信息和老板讨论落地方向<br>
@@ -269,7 +269,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 </div>
 
 <div class="day-card">
-  <div class="day-header dh-travel">✈️ 4月11日 · 返程<span class="date">周五</span></div>
+  <div class="day-header dh-travel">✈️ 4月11日 · 返程<span class="date">周六</span></div>
   <div class="day-detail">
     <b>上午</b> 退房，收拾行李<br>
     <b>11:30</b> 从上地出发去首都机场（约1h15m）<br>
@@ -289,15 +289,12 @@ function loadData(){
 }
 function saveData(d){localStorage.setItem(STORE_KEY,JSON.stringify(d))}
 
-// 初始化
 function init(){
   var d=loadData();
-  // 恢复勾选
   document.querySelectorAll('input[data-key]').forEach(function(cb){
     var k=cb.dataset.key;
     if(d[k]){cb.checked=true;cb.closest('.item').classList.add('checked')}
   });
-  // 恢复金额
   document.querySelectorAll('input[data-exp]').forEach(function(inp){
     var k=inp.dataset.exp;
     if(d[k]!==undefined)inp.value=d[k];
