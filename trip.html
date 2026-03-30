@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>北京行程 4.4-4.11</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#334155;min-height:100vh}
+.header{background:linear-gradient(135deg,#1E293B 0%,#334155 100%);color:white;padding:20px 16px 16px;position:sticky;top:0;z-index:100}
+.header h1{font-size:18px;font-weight:600}
+.header p{font-size:12px;color:#94A3B8;margin-top:4px}
+.tabs{display:flex;gap:6px;margin-top:12px}
+.tab{flex:1;text-align:center;padding:8px 0;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;background:rgba(255,255,255,0.08);color:#94A3B8}
+.tab.active{background:white;color:#1E293B}
+.tab .badge{display:inline-block;font-size:11px;background:rgba(255,255,255,0.2);padding:1px 6px;border-radius:10px;margin-left:4px}
+.tab.active .badge{background:#EEF2FF;color:#4F46E5}
+.main{padding:12px}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:white;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.card-header{padding:12px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.card-header .icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.card-header .cnt{margin-left:auto;font-size:12px;font-weight:400;color:#94A3B8}
+.ch-purple{color:#4F46E5}.ch-purple .icon{background:#EEF2FF}
+.ch-green{color:#059669}.ch-green .icon{background:#ECFDF5}
+.ch-amber{color:#D97706}.ch-amber .icon{background:#FFFBEB}
+.ch-blue{color:#0284C7}.ch-blue .icon{background:#F0F9FF}
+.ch-rose{color:#E11D48}.ch-rose .icon{background:#FFF1F2}
+.items{padding:4px 12px 8px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:10px 4px;border-bottom:1px solid #F8FAFC}
+.item:last-child{border-bottom:none}
+.item input[type=checkbox]{margin-top:2px;width:18px;height:18px;accent-color:#4F46E5;flex-shrink:0;cursor:pointer}
+.item label{font-size:13px;line-height:1.5;cursor:pointer;flex:1}
+.item.checked label{color:#CBD5E1;text-decoration:line-through}
+.tag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:4px;font-weight:500;vertical-align:middle}
+.tag-done{background:#ECFDF5;color:#059669}
+.tag-urgent{background:#FFF1F2;color:#E11D48}
+.tag-tip{background:#EEF2FF;color:#4F46E5}
+.progress-bar{margin:12px;padding:14px 16px;background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.progress-bar .row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#64748B}
+.progress-bar .row b{color:#1E293B}
+.bar{height:8px;background:#E2E8F0;border-radius:4px;margin-top:8px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#818CF8,#4F46E5);border-radius:4px;transition:width .3s}
+/* 记账 */
+.exp-section{padding:12px 16px}
+.exp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F8FAFC}
+.exp-row:last-child{border-bottom:none}
+.exp-row .name{font-size:13px;color:#334155;flex:1}
+.exp-input{width:80px;border:1.5px solid #E2E8F0;border-radius:8px;padding:6px 8px;font-size:14px;text-align:right;font-family:inherit;color:#1E293B;background:#F8FAFC;transition:border .2s}
+.exp-input:focus{outline:none;border-color:#818CF8;background:white}
+.subtotal{display:flex;justify-content:space-between;padding:10px 0;border-top:2px solid #EEF2FF;margin-top:4px;font-weight:600;font-size:14px;color:#4F46E5}
+.total-card{background:linear-gradient(135deg,#4F46E5,#7C3AED);color:white;border-radius:12px;padding:16px;margin:12px 0;text-align:center}
+.total-card .amount{font-size:28px;font-weight:700;margin:8px 0}
+.total-card .sub{font-size:12px;color:rgba(255,255,255,0.7)}
+.reimb{display:flex;justify-content:space-between;padding:12px 16px;background:white;border-radius:12px;margin-top:12px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.reimb .label{color:#64748B}
+.reimb .val{font-weight:600;color:#059669}
+/* 行程tab */
+.day-card{background:white;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.day-header{padding:12px 16px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.day-header .date{font-size:12px;font-weight:400;color:#64748B;margin-left:auto}
+.day-detail{padding:0 16px 12px;font-size:13px;color:#64748B;line-height:1.7}
+.day-detail b{color:#334155;font-weight:500}
+.dh-free{background:#F0F9FF;color:#0284C7}
+.dh-work{background:#ECFDF5;color:#059669}
+.dh-conf{background:#FFF7ED;color:#EA580C}
+.dh-travel{background:#F5F3FF;color:#7C3AED}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>北京行程 4.4 - 4.11</h1>
+  <p>4号深夜到 → 5-6自由 → 7公司 → 8-9大会 → 10公司 → 11回</p>
+  <div class="tabs">
+    <div class="tab active" onclick="sw(0)">清单<span class="badge" id="badge0"></span></div>
+    <div class="tab" onclick="sw(1)">记账<span class="badge" id="badge1"></span></div>
+    <div class="tab" onclick="sw(2)">行程</div>
+  </div>
+</div>
+
+<!-- 清单 -->
+<div class="main">
+<div class="panel active" id="p0">
+
+<div class="card">
+  <div class="card-header ch-purple"><span class="icon">1</span>出发前必做<span class="cnt" id="c1"></span></div>
+  <div class="items" id="g1">
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t1"><label>回复老板确认7号去公司<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t2"><label>订去程机票（23:50到首都机场）<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t3"><label>订返程机票（11号下午3点，首都机场）<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t4"><label>订机场酒店（4号晚，1晚）<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t5"><label>订上地酒店（5-10号，6晚）<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t6"><label>快消行业AI内容分析<span class="tag tag-done">已完成</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t7"><label>微信机器人技术可行性调研<span class="tag tag-tip">7号前</span></label></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-amber"><span class="icon">2</span>出发前可选<span class="cnt" id="c2"></span></div>
+  <div class="items" id="g2">
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t8"><label>预约国博门票（5号，13:30-16:00场）<span class="tag tag-tip">29号17:00抢</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t9"><label>预约颐和园门票（6号，公众号或畅游公园）</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t10"><label>约北京朋友确认时间</label></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-green"><span class="icon">3</span>7号公司（核心议题）<span class="cnt" id="c3"></span></div>
+  <div class="items" id="g3">
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t11"><label>微信机器人方案：下单碎片化 + 价格变动</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t12"><label>飞书知识库：定第一批内容优先级</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t13"><label>快消案例包装：邻里、原主怎么吸引同类客户</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t14"><label>当面提差旅报销</label></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-blue"><span class="icon">4</span>8-9号大会关注<span class="cnt" id="c4"></span></div>
+  <div class="items" id="g4">
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t15"><label>AI+营销工具和案例（展区重点）</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t16"><label>微信机器人/群聊自动化方案</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t17"><label>新型户外媒体形态（带回知识库）</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t18"><label>Agent+Skill生态前沿</label></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-rose"><span class="icon">5</span>10号公司跟进<span class="cnt" id="c5"></span></div>
+  <div class="items" id="g5">
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t19"><label>带大会信息和老板讨论落地方向</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t20"><label>推进微信机器人下一步</label></div>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="row"><span>总进度</span><b id="pp"></b></div>
+  <div class="bar"><div class="bar-fill" id="pf"></div></div>
+</div>
+</div>
+
+<!-- 记账 -->
+<div class="panel" id="p1">
+
+<div class="card">
+  <div class="card-header ch-purple"><span class="icon">🚄</span>交通</div>
+  <div class="exp-section">
+    <div class="exp-row"><span class="name">去程机票</span><input class="exp-input" data-exp="e1" value="199" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">返程机票</span><input class="exp-input" data-exp="e2" value="199" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">北京地铁/公交</span><input class="exp-input" data-exp="e3" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">打车</span><input class="exp-input" data-exp="e4" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>交通小计</span><span id="s1">398元</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-green"><span class="icon">🏨</span>住宿</div>
+  <div class="exp-section">
+    <div class="exp-row"><span class="name">机场酒店（4号晚，1晚）</span><input class="exp-input" data-exp="e5" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">上地酒店（5-10号，6晚）</span><input class="exp-input" data-exp="e6" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>住宿小计</span><span id="s2">0元</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-amber"><span class="icon">🎫</span>门票/活动</div>
+  <div class="exp-section">
+    <div class="exp-row"><span class="name">AIFUT大会门票</span><input class="exp-input" data-exp="e7" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">国博庞贝展门票</span><input class="exp-input" data-exp="e8" value="120" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">圆明园联票</span><input class="exp-input" data-exp="e9" value="25" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">颐和园门票</span><input class="exp-input" data-exp="e10" value="30" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>门票小计</span><span id="s3">175元</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header ch-blue"><span class="icon">🍜</span>餐饮/其他</div>
+  <div class="exp-section">
+    <div class="exp-row"><span class="name">餐饮（8天）</span><input class="exp-input" data-exp="e11" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">朋友聚餐</span><input class="exp-input" data-exp="e12" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">其他</span><input class="exp-input" data-exp="e13" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>餐饮小计</span><span id="s4">0元</span></div>
+  </div>
+</div>
+
+<div class="total-card">
+  <div class="sub">总花费</div>
+  <div class="amount" id="totalAll">573元</div>
+  <div class="sub">数据自动保存，刷新不丢失</div>
+</div>
+
+<div class="reimb">
+  <span class="label">可报销部分（交通+住宿+门票）</span>
+  <span class="val" id="reimb">573元</span>
+</div>
+
+</div>
+
+<!-- 行程 -->
+<div class="panel" id="p2">
+
+<div class="day-card">
+  <div class="day-header dh-travel">✈️ 4月4日 · 出发<span class="date">周五</span></div>
+  <div class="day-detail">
+    <b>23:50</b> 到达首都机场<br>
+    机场附近酒店休息，睡饱再进城
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-free">🏛️ 4月5日 · 国博<span class="date">周六</span></div>
+  <div class="day-detail">
+    <b>09:00</b> 自然醒，机场酒店退房<br>
+    <b>10:00-11:30</b> 机场→上地，酒店入住放行李<br>
+    <b>11:30-12:30</b> 午饭<br>
+    <b>12:30</b> 出发去国博（地铁约45分钟）<br>
+    <b>13:30-16:30</b> 国博参观<br>
+    → 三星堆展（60分钟）→ 庞贝展（45分钟）→ 武王墩展（30分钟）→ 古代中国（45分钟）<br>
+    <b>17:00</b> 返回上地 / 约朋友晚饭
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-free">🌸 4月6日 · 圆明园+颐和园<span class="date">周日</span></div>
+  <div class="day-detail">
+    <b>08:30</b> 出发，上地→圆明园（地铁2站）<br>
+    <b>09:00-12:00</b> 圆明园（大水法→长春园→桃花坞）<br>
+    <b>12:00-13:00</b> 五道口午饭<br>
+    <b>13:30-17:00</b> 颐和园（东宫门→长廊→佛香阁→西堤）<br>
+    <b>17:30</b> 返回上地
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-work">💼 4月7日 · 公司<span class="date">周一</span></div>
+  <div class="day-detail">
+    <b>11:00</b> 到公司（上地三街·金隅嘉华大厦C座）<br>
+    核心议题：微信机器人方案 / 飞书知识库优先级 / 快消案例包装策略<br>
+    走之前顺口提差旅报销
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-conf">🤖 4月8日 · AIFUT大会 Day1<span class="date">周二</span></div>
+  <div class="day-detail">
+    <b>07:15</b> 从上地出发<br>
+    <b>08:40</b> 到达亦庄·北京智慧电竞赛事中心<br>
+    路线：13号线→望京西换17号线→北神树C口<br>
+    关注：AI+营销 / 微信机器人方案 / 户外媒体新形态
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-conf">🤖 4月9日 · AIFUT大会 Day2<span class="date">周三</span></div>
+  <div class="day-detail">
+    <b>07:15</b> 从上地出发（同Day1路线）<br>
+    关注：Agent+Skill生态 / 群聊自动化<br>
+    收集一手信息，带回10号跟老板聊
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-work">💼 4月10日 · 公司跟进<span class="date">周四</span></div>
+  <div class="day-detail">
+    <b>11:00</b> 到公司<br>
+    带大会信息和老板讨论落地方向<br>
+    推进微信机器人下一步
+  </div>
+</div>
+
+<div class="day-card">
+  <div class="day-header dh-travel">✈️ 4月11日 · 返程<span class="date">周五</span></div>
+  <div class="day-detail">
+    <b>上午</b> 退房，收拾行李<br>
+    <b>11:30</b> 从上地出发去首都机场（约1h15m）<br>
+    <b>15:00</b> 航班起飞<br>
+    <b>约17:30</b> 到达福州
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+var STORE_KEY='bj_trip_v2';
+
+function loadData(){
+  try{var d=JSON.parse(localStorage.getItem(STORE_KEY));return d||{}}catch(e){return{}}
+}
+function saveData(d){localStorage.setItem(STORE_KEY,JSON.stringify(d))}
+
+// 初始化
+function init(){
+  var d=loadData();
+  // 恢复勾选
+  document.querySelectorAll('input[data-key]').forEach(function(cb){
+    var k=cb.dataset.key;
+    if(d[k]){cb.checked=true;cb.closest('.item').classList.add('checked')}
+  });
+  // 恢复金额
+  document.querySelectorAll('input[data-exp]').forEach(function(inp){
+    var k=inp.dataset.exp;
+    if(d[k]!==undefined)inp.value=d[k];
+  });
+  updateProgress();
+  calcExp();
+}
+
+function toggle(el){
+  var d=loadData();
+  d[el.dataset.key]=el.checked;
+  el.closest('.item').classList.toggle('checked',el.checked);
+  saveData(d);
+  updateProgress();
+}
+
+function sw(i){
+  document.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('active',j===i)});
+  document.querySelectorAll('.panel').forEach(function(p,j){p.classList.toggle('active',j===i)});
+}
+
+function updateProgress(){
+  var groups=[['g1','c1'],['g2','c2'],['g3','c3'],['g4','c4'],['g5','c5']];
+  var total=0,done=0;
+  groups.forEach(function(g){
+    var items=document.querySelectorAll('#'+g[0]+' input[type=checkbox]');
+    var dd=0;
+    items.forEach(function(cb){total++;if(cb.checked){done++;dd++}});
+    document.getElementById(g[1]).textContent=dd+'/'+items.length;
+  });
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('pp').textContent=done+'/'+total+' ('+pct+'%)';
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('badge0').textContent=done+'/'+total;
+}
+
+function calcExp(){
+  var d=loadData();
+  var subs=[[['e1','e2','e3','e4'],'s1'],[['e5','e6'],'s2'],[['e7','e8','e9','e10'],'s3'],[['e11','e12','e13'],'s4']];
+  var grand=0,reimb=0;
+  subs.forEach(function(s,i){
+    var sum=0;
+    s[0].forEach(function(k){
+      var inp=document.querySelector('[data-exp="'+k+'"]');
+      var v=parseFloat(inp.value)||0;
+      d[k]=inp.value;
+      sum+=v;
+    });
+    document.getElementById(s[1]).textContent=sum+'元';
+    grand+=sum;
+    if(i<3)reimb+=sum;
+  });
+  document.getElementById('totalAll').textContent=grand+'元';
+  document.getElementById('reimb').textContent=reimb+'元';
+  document.getElementById('badge1').textContent=grand+'元';
+  saveData(d);
+}
+
+init();
+</script>
+</body>
+</html>
