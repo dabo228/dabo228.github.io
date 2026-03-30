@@ -69,7 +69,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
 <body>
 <div class="header">
   <h1>北京行程 4.4 - 4.11</h1>
-  <p>4号深夜到 → 5圆明园 → 6中轴线 → 7公司 → 8-9大会 → 10公司 → 11回</p>
+  <p>4号深夜到 → 5圆明园 → 6中轴线+德云社 → 7公司 → 8-9大会 → 10公司+大剧院 → 11回</p>
   <div class="tabs">
     <div class="tab active" onclick="sw(0)">清单<span class="badge" id="badge0"></span></div>
     <div class="tab" onclick="sw(1)">记账<span class="badge" id="badge1"></span></div>
@@ -98,7 +98,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
   <div class="card-header ch-amber"><span class="icon">2</span>出发前预约<span class="cnt" id="c2"></span></div>
   <div class="items" id="g2">
     <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t8"><label>预约自然博物馆门票（6号）<span class="tag tag-tip">4月3日11:00抢</span></label></div>
-    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t9"><label>预约颐和园门票（5号下午，公众号或畅游公园）</label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t21"><label>购买德云社广德楼门票（6号晚）<span class="tag tag-tip">大麦网/现场</span></label></div>
+    <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t22"><label>购买国家大剧院门票（10号晚19:30，二楼中区）<span class="tag tag-tip">官网/APP</span></label></div>
     <div class="item"><input type="checkbox" onchange="toggle(this)" data-key="t10"><label>约北京朋友确认时间</label></div>
   </div>
 </div>
@@ -167,17 +168,22 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
     <div class="exp-row"><span class="name">圆明园联票</span><input class="exp-input" data-exp="e8" value="25" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
     <div class="exp-row"><span class="name">天坛联票</span><input class="exp-input" data-exp="e9" value="34" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
     <div class="exp-row"><span class="name">景山公园</span><input class="exp-input" data-exp="e10" value="2" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="subtotal"><span>门票小计</span><span id="s3">61元</span></div>
+    <div class="exp-row"><span class="name">德云社广德楼（6号晚）</span><input class="exp-input" data-exp="e14" value="150" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">国家大剧院（10号晚）</span><input class="exp-input" data-exp="e15" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>门票小计</span><span id="s3">211元</span></div>
   </div>
 </div>
 
 <div class="card">
   <div class="card-header ch-blue"><span class="icon">🍜</span>餐饮/其他</div>
   <div class="exp-section">
-    <div class="exp-row"><span class="name">餐饮（8天）</span><input class="exp-input" data-exp="e11" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="exp-row"><span class="name">朋友聚餐</span><input class="exp-input" data-exp="e12" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="exp-row"><span class="name">其他</span><input class="exp-input" data-exp="e13" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
-    <div class="subtotal"><span>餐饮小计</span><span id="s4">0元</span></div>
+    <div class="exp-row"><span class="name">东来顺涮肉（5号晚）</span><input class="exp-input" data-exp="e11" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">同和居（6号午）</span><input class="exp-input" data-exp="e12" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">都一处烧麦（6号晚）</span><input class="exp-input" data-exp="e16" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">日常餐饮（8天）</span><input class="exp-input" data-exp="e13" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">247健身房</span><input class="exp-input" data-exp="e17" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="exp-row"><span class="name">其他</span><input class="exp-input" data-exp="e18" value="0" oninput="calcExp()"><span style="font-size:12px;color:#94A3B8;margin-left:4px">元</span></div>
+    <div class="subtotal"><span>餐饮/其他小计</span><span id="s4">0元</span></div>
   </div>
 </div>
 
@@ -213,7 +219,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
     <b>11:30-12:30</b> 午饭<br>
     <b>13:00</b> 出发去圆明园（地铁2站）<br>
     <b>13:30-17:00</b> 圆明园（大水法→桃花坞→福海→黄花阵）<br>
-    <b>17:30</b> 返回上地 / 约朋友晚饭
+    <b>18:00</b> 🍲 东来顺涮肉（和朋友）<br>
+    <b style="color:#94A3B8">点单：手切鲜羊肉×2、芝麻酱小料×2、糖蒜、蒿子杆、芝麻烧饼</b>
   </div>
 </div>
 
@@ -221,19 +228,23 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
   <div class="day-header dh-free">🏛️ 4月6日 · 自然博物馆+中轴线<span class="date">周一（清明假）</span></div>
   <div class="day-detail">
     <b>08:30</b> 出发去自然博物馆（地铁约50分钟）<br>
-    <b>09:00-12:00</b> 自然博物馆（鲸·奇特展最后一天→恐龙厅→植物厅）<br>
-    <b>12:00-13:00</b> 步行到天坛附近午餐<br>
-    <b>13:00-15:30</b> 天坛公园（圜丘→祈年殿→古柏林）<br>
-    <b>15:45-16:30</b> 天安门广场 + 人民英雄纪念碑<br>
-    <b>16:30-17:15</b> 景山公园（登顶看故宫全景）<br>
-    <b>17:15-18:30</b> 前门大街晚餐<br>
-    <b>19:00</b> 返回上地
+    <b>09:00-11:30</b> 自然博物馆（鲸·奇特展最后一天→恐龙厅→植物厅）<br>
+    <b>12:00-13:30</b> 🍽️ 同和居午餐（地铁到南礼士路）<br>
+    <b style="color:#94A3B8">点单：葱烧海参→糟溜鳕鱼→银丝卷→三不粘收尾</b><br>
+    <b>14:00-16:00</b> 天坛公园（圜丘→祈年殿→古柏林）<br>
+    <b>16:15-16:45</b> 天安门广场 + 人民英雄纪念碑<br>
+    <b>16:45-17:30</b> 景山公园（登顶看故宫全景）<br>
+    <b>17:45-18:30</b> 🥟 都一处烧麦（前门大街）<br>
+    <b style="color:#94A3B8">点单：三鲜烧麦（必点）+ 猪肉烧麦</b><br>
+    <b>19:30-21:30</b> 😄 德云社广德楼（前门大栅栏街，步行3分钟）<br>
+    <b>22:00</b> 返回上地
   </div>
 </div>
 
 <div class="day-card">
   <div class="day-header dh-work">💼 4月7日 · 公司<span class="date">周二</span></div>
   <div class="day-detail">
+    <b>上午</b> 💪 247健身房（酒店附近找一家）<br>
     <b>11:00</b> 到公司（上地三街·金隅嘉华大厦C座）<br>
     核心议题：微信机器人方案 / 飞书知识库优先级 / 快消案例包装策略<br>
     走之前顺口提差旅报销
@@ -264,7 +275,9 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#F8FAFC;color:#33
   <div class="day-detail">
     <b>11:00</b> 到公司<br>
     带大会信息和老板讨论落地方向<br>
-    推进微信机器人下一步
+    推进微信机器人下一步<br>
+    <b>19:30</b> 🎵 国家大剧院（海德利希与国家大剧院管弦乐团）<br>
+    <b style="color:#94A3B8">二楼中区，声学甜区，声场均衡视野好</b>
   </div>
 </div>
 
@@ -333,7 +346,7 @@ function updateProgress(){
 
 function calcExp(){
   var d=loadData();
-  var subs=[[['e1','e2','e3','e4'],'s1'],[['e5','e6'],'s2'],[['e7','e8','e9','e10'],'s3'],[['e11','e12','e13'],'s4']];
+  var subs=[[['e1','e2','e3','e4'],'s1'],[['e5','e6'],'s2'],[['e7','e8','e9','e10','e14','e15'],'s3'],[['e11','e12','e16','e13','e17','e18'],'s4']];
   var grand=0,reimb=0;
   subs.forEach(function(s,i){
     var sum=0;
