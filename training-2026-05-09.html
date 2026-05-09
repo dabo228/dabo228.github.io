@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>训练计划 · 2026年5月9日</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0c0c18;
+  --card: #161625;
+  --card-hover: #1e1e32;
+  --accent: #00e5a0;
+  --accent-dim: rgba(0,229,160,0.15);
+  --blue: #4a9eff;
+  --orange: #ff9f43;
+  --red: #ff6b6b;
+  --text: #e8e8ec;
+  --text2: #8888a0;
+  --text3: #555568;
+  --radius: 14px;
+  --tab-h: 62px;
+}
+html, body {
+  font-family: -apple-system, "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== 页面容器 ===== */
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== 首页 ===== */
+.home {
+  height: 100%;
+  overflow-y: auto;
+  padding: 20px 18px calc(var(--tab-h) + 24px);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s;
+}
+.home.hidden {
+  transform: scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+}
+.home-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.home-date {
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.home-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.home-duration {
+  font-size: 14px;
+  color: var(--text2);
+}
+.home-duration span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* 卡片网格 */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.section-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.section-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+.section-card:nth-child(1)::before { background: var(--accent); }
+.section-card:nth-child(2)::before { background: #7c5cfc; }
+.section-card:nth-child(3)::before { background: var(--blue); }
+.section-card:nth-child(4)::before { background: var(--orange); }
+.section-card:nth-child(5)::before { background: var(--red); }
+.section-card:nth-child(6)::before { background: #ff85c8; }
+.section-card:nth-child(7)::before { background: #ffd93d; }
+.section-card:nth-child(8)::before { background: #6bcb77; }
+
+.section-card:active {
+  transform: scale(0.97);
+  border-color: var(--accent);
+}
+.card-num {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.card-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.card-time {
+  font-size: 13px;
+  color: var(--text2);
+}
+.card-time span {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* 今日主题 */
+.today-theme {
+  background: linear-gradient(135deg, #161625 0%, #1a1a30 100%);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(0,229,160,0.12);
+}
+.theme-label {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.theme-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.core-moves {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.core-move {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.core-move .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* 90分钟精简提示 */
+.trim-tip {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+.trim-tip-title {
+  font-size: 13px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+.trim-tip-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* ===== 详情页 ===== */
+.detail {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 18px calc(var(--tab-h) + 20px);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+  pointer-events: none;
+}
+.detail.active {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 详情页头部 */
+.detail-header {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, var(--bg) 80%, transparent);
+  padding: 16px 0 20px;
+  z-index: 10;
+}
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--accent);
+  cursor: pointer;
+  margin-bottom: 14px;
+  background: none;
+  border: none;
+  padding: 4px 0;
+}
+.detail-back:active { opacity: 0.6; }
+.detail-section-num {
+  font-size: 12px;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+.detail-section-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.detail-section-time {
+  font-size: 14px;
+  color: var(--text2);
+}
+
+/* 动作卡片 */
+.exercise {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  margin-bottom: 14px;
+}
+.exercise-name {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.exercise-idx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.exercise-sets {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.exercise-points {
+  list-style: none;
+}
+.exercise-points li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text2);
+}
+.exercise-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text3);
+}
+
+/* 警告提示 */
+.exercise-warn {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(255,107,107,0.1);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1.6;
+}
+.exercise-note {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(255,159,67,0.1);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--orange);
+  line-height: 1.6;
+}
+.exercise-tip {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--accent-dim);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--accent);
+  line-height: 1.6;
+}
+
+/* 分隔提示 */
+.section-quote {
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14px;
+  color: var(--text3);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* 部分内的小标题 */
+.sub-heading {
+  font-size: 13px;
+  color: var(--text3);
+  margin: 20px 0 10px;
+  padding-left: 2px;
+  letter-spacing: 1px;
+}
+
+/* ===== 底部标签栏 ===== */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: var(--tab-h);
+  background: rgba(12,12,24,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px;
+  z-index: 100;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.tab-bar.hidden { display: none; }
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 4px;
+  min-width: 40px;
+  transition: all 0.2s;
+}
+.tab-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--card);
+  color: var(--text3);
+  transition: all 0.25s;
+}
+.tab-item.active .tab-num {
+  background: var(--accent);
+  color: #0c0c18;
+  box-shadow: 0 0 16px rgba(0,229,160,0.35);
+}
+.tab-label {
+  font-size: 9px;
+  color: var(--text3);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.tab-item.active .tab-label {
+  color: var(--accent);
+}
+.tab-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.tab-home-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background: var(--card);
+  transition: all 0.25s;
+}
+.tab-home.active .tab-home-icon {
+  background: var(--accent);
+  box-shadow: 0 0 16px rgba(0,229,160,0.35);
+}
+.tab-home-label {
+  font-size: 9px;
+  color: var(--text3);
+  transition: color 0.2s;
+}
+.tab-home.active .tab-home-label {
+  color: var(--accent);
+}
+
+/* ===== 颜色变体 ===== */
+.c1 .exercise-idx { background: rgba(0,229,160,0.15); color: var(--accent); }
+.c2 .exercise-idx { background: rgba(124,92,252,0.15); color: #7c5cfc; }
+.c3 .exercise-idx { background: rgba(74,158,255,0.15); color: var(--blue); }
+.c4 .exercise-idx { background: rgba(255,159,67,0.15); color: var(--orange); }
+.c5 .exercise-idx { background: rgba(255,107,107,0.15); color: var(--red); }
+.c6 .exercise-idx { background: rgba(255,133,200,0.15); color: #ff85c8; }
+.c7 .exercise-idx { background: rgba(255,217,61,0.15); color: #ffd93d; }
+.c8 .exercise-idx { background: rgba(107,203,119,0.15); color: #6bcb77; }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 0; }
+
+/* 安全区域 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .tab-bar { padding-bottom: env(safe-area-inset-bottom); height: calc(var(--tab-h) + env(safe-area-inset-bottom)); }
+  .home, .detail { padding-bottom: calc(var(--tab-h) + env(safe-area-inset-bottom) + 20px); }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== 首页 ===== -->
+  <div class="home" id="home">
+    <div class="home-header">
+      <div class="home-date">2026 / 05 / 09 Friday</div>
+      <div class="home-title">训练计划</div>
+      <div class="home-duration">预计总时长 <span>110 ~ 125 分钟</span></div>
+    </div>
+
+    <div class="section-grid">
+      <div class="section-card" onclick="goSection(1)">
+        <div class="card-num">PART 1</div>
+        <div class="card-name">升温与身体扫描</div>
+        <div class="card-time"><span>10</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(2)">
+        <div class="card-num">PART 2</div>
+        <div class="card-name">软组织放松</div>
+        <div class="card-time"><span>18-22</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(3)">
+        <div class="card-num">PART 3</div>
+        <div class="card-name">活动度</div>
+        <div class="card-time"><span>15-18</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(4)">
+        <div class="card-num">PART 4</div>
+        <div class="card-name">下肢控制训练</div>
+        <div class="card-time"><span>25-30</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(5)">
+        <div class="card-num">PART 5</div>
+        <div class="card-name">核心训练</div>
+        <div class="card-time"><span>15-18</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(6)">
+        <div class="card-num">PART 6</div>
+        <div class="card-name">右肩低负荷稳定</div>
+        <div class="card-time"><span>10-12</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(7)">
+        <div class="card-num">PART 7</div>
+        <div class="card-name">楼梯机</div>
+        <div class="card-time"><span>20</span> 分钟</div>
+      </div>
+      <div class="section-card" onclick="goSection(8)">
+        <div class="card-num">PART 8</div>
+        <div class="card-name">收操</div>
+        <div class="card-time"><span>5-8</span> 分钟</div>
+      </div>
+    </div>
+
+    <div class="today-theme">
+      <div class="theme-label">TODAY'S FOCUS</div>
+      <div class="theme-text">让下肢动作更稳，让右肩别继续恶化，让核心在不压肩的情况下参与训练。</div>
+      <div class="core-moves">
+        <div class="core-move"><span class="dot"></span>深蹲底部停留</div>
+        <div class="core-move"><span class="dot"></span>低台阶下蹲</div>
+        <div class="core-move"><span class="dot"></span>Pallof Press 抗旋转核心</div>
+      </div>
+    </div>
+
+    <div class="trim-tip">
+      <div class="trim-tip-title">90 分钟精简版</div>
+      <div class="trim-tip-text">删掉 TKE、Heel Tap；右肩稳定只保留弹力带外旋和墙面肩胛俯卧撑；收操缩短到 3 分钟。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 1 ===== -->
+  <div class="detail c1" id="s1">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 1 / 8</div>
+      <div class="detail-section-name">升温与身体扫描</div>
+      <div class="detail-section-time">10 分钟</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>单车或椭圆机</div>
+      <div class="exercise-sets">6 - 8 分钟</div>
+      <ul class="exercise-points">
+        <li>强度轻中等，身体微微发热即可</li>
+        <li>不要一上来就楼梯机，下肢和髋外侧有疲劳</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>动作扫描</div>
+      <div class="exercise-sets">2 分钟</div>
+      <ul class="exercise-points">
+        <li>徒手深蹲 5 次：感受脚底、膝盖、髋、腰有没有卡</li>
+        <li>右肩抬手/向后摸背 3 次：感受前侧是否紧、是否有痛</li>
+        <li>单腿站立 10 秒/侧：看左右稳定性差异</li>
+      </ul>
+      <div class="exercise-tip">这不是训练，是为了后面判断放松有没有效果。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 2 ===== -->
+  <div class="detail c2" id="s2">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 2 / 8</div>
+      <div class="detail-section-name">软组织放松</div>
+      <div class="detail-section-time">18 - 22 分钟</div>
+    </div>
+    <div class="section-quote">今天放松不追求痛，追求"放完动作更顺"</div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>足底筋膜球</div>
+      <div class="exercise-sets">1 分钟 / 侧</div>
+      <ul class="exercise-points">
+        <li>脚底前后滚动，尤其是足弓</li>
+        <li>不要压到脚底发麻</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>小腿后侧泡沫轴</div>
+      <div class="exercise-sets">1 分钟 / 侧</div>
+      <ul class="exercise-points">
+        <li>深蹲底部停留和台阶下蹲需要踝背屈，这步很重要</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>阔筋膜张肌 / 髋外侧</div>
+      <div class="exercise-sets">1 分钟 / 侧</div>
+      <ul class="exercise-points">
+        <li>位置在髋外侧偏前，不是整条髂胫束硬碾</li>
+        <li>感觉酸胀即可</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>臀中肌筋膜球</div>
+      <div class="exercise-sets">1 - 1.5 分钟 / 侧</div>
+      <ul class="exercise-points">
+        <li>侧躺或靠墙，球放在臀外侧上方</li>
+        <li>找到酸胀点后轻轻做髋内旋、外旋</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">5</span>大腿内侧中段放松</div>
+      <div class="exercise-sets">1 分钟 / 侧</div>
+      <ul class="exercise-points">
+        <li>只放松大腿内侧中段，不要压膝盖内侧附近</li>
+      </ul>
+      <div class="exercise-warn">如果出现"电、麻、刺、无法忍受"，马上停止。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">6</span>右侧胸大肌/胸小肌</div>
+      <div class="exercise-sets">1 分钟</div>
+      <ul class="exercise-points">
+        <li>筋膜球靠墙轻压胸前外侧区域</li>
+        <li>不要压锁骨下深处，不要压腋窝深处</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">7</span>右肩后侧小圆肌/冈下肌</div>
+      <div class="exercise-sets">1 分钟</div>
+      <ul class="exercise-points">
+        <li>球靠墙，小幅滚动</li>
+        <li>酸胀可以，不能有麻、电、放射到手臂</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">8</span>筋膜刀（可选）</div>
+      <div class="exercise-sets">选做</div>
+      <ul class="exercise-points">
+        <li>阔筋膜张肌 30 秒/侧</li>
+        <li>胸大肌外侧 30 秒</li>
+        <li>大腿内侧中上段 30 秒，避开膝盖附近</li>
+      </ul>
+      <div class="exercise-note">力度轻，微微发热即可，不刮出淤青。今天可以不用。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 3 ===== -->
+  <div class="detail c3" id="s3">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 3 / 8</div>
+      <div class="detail-section-name">活动度</div>
+      <div class="detail-section-time">15 - 18 分钟</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>弹力带足背屈</div>
+      <div class="exercise-sets">2 组 &times; 10 次 / 侧</div>
+      <ul class="exercise-points">
+        <li>膝盖向脚尖方向前移，脚跟不要抬</li>
+        <li>重点感受踝关节前移，不是膝盖硬顶</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>髋 90/90 转换</div>
+      <div class="exercise-sets">2 组 &times; 6 次 / 侧</div>
+      <ul class="exercise-points">
+        <li>动作慢一点</li>
+        <li>右肩不舒服时手撑高一点（瑜伽砖或凳子）</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>改良伟大拉伸</div>
+      <div class="exercise-sets">2 组 &times; 4 - 5 次 / 侧</div>
+      <ul class="exercise-points">
+        <li>前脚踩稳，后腿伸展</li>
+        <li>手撑在瑜伽砖、凳子或台阶上，不要直接撑地</li>
+        <li>旋转时重点是胸椎打开，不是用右肩硬撑</li>
+      </ul>
+      <div class="exercise-note">右肩不稳时，右手支撑那一侧要特别保守。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>Open Book 胸椎旋转</div>
+      <div class="exercise-sets">2 组 &times; 8 次 / 侧</div>
+      <ul class="exercise-points">
+        <li>比伟大拉伸更温和，更适合右肩</li>
+        <li>胸椎旋转专项版</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">5</span>门框胸肌拉伸</div>
+      <div class="exercise-sets">2 组 &times; 30 秒</div>
+      <ul class="exercise-points">
+        <li>右肩前侧不能疼</li>
+        <li>如果有前侧顶痛，降低手臂高度</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== PART 4 ===== -->
+  <div class="detail c4" id="s4">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 4 / 8</div>
+      <div class="detail-section-name">下肢控制训练</div>
+      <div class="detail-section-time">25 - 30 分钟</div>
+    </div>
+    <div class="section-quote">今天的重点部分</div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>深蹲底部停留</div>
+      <div class="exercise-sets">3 组 &times; 20 - 30 秒</div>
+      <ul class="exercise-points">
+        <li>脚跟、大脚趾根、小脚趾根都压住</li>
+        <li>膝盖朝第二、第三脚趾方向</li>
+        <li>不要膝盖内扣，不要塌腰</li>
+        <li>底部能呼吸，不追求极限深度</li>
+      </ul>
+      <div class="exercise-tip">如果底部不稳，可以扶住架子或 TRX，先练位置感。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>分腿蹲底部停留</div>
+      <div class="exercise-sets">2 - 3 组 &times; 每侧 20 秒</div>
+      <ul class="exercise-points">
+        <li>后脚在地上，不是保加利亚</li>
+        <li>前脚踩稳，前膝朝脚尖方向</li>
+        <li>骨盆不要左右歪</li>
+        <li>后侧髋有轻微拉伸感可以</li>
+      </ul>
+      <div class="exercise-note">比保加利亚更适合今天，保加利亚底部停留难度更高。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>低台阶下蹲 Step-down</div>
+      <div class="exercise-sets">3 组 &times; 每侧 6 次</div>
+      <ul class="exercise-points">
+        <li>用 10-15cm 的低台阶即可</li>
+        <li>节奏：下降 3 秒 → 脚跟轻点地 → 站回去</li>
+        <li>支撑脚脚跟不抬，膝盖不要内扣</li>
+        <li>骨盆不要塌，另一只脚只是轻点地</li>
+      </ul>
+      <div class="exercise-tip">练的是下肢力线控制：髋稳住，膝盖走正，脚底撑住。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>弹力带终末伸膝 TKE</div>
+      <div class="exercise-sets">2 组 &times; 每侧 12 - 15 次</div>
+      <ul class="exercise-points">
+        <li>弹力带套在膝后，膝盖微弯再伸直</li>
+        <li>重点感受股四头肌，尤其膝盖附近的控制</li>
+        <li>对股内侧/膝稳定比较友好</li>
+      </ul>
+      <div class="exercise-note">90 分钟版可删掉此项。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 5 ===== -->
+  <div class="detail c5" id="s5">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 5 / 8</div>
+      <div class="detail-section-name">核心训练</div>
+      <div class="detail-section-time">15 - 18 分钟</div>
+    </div>
+    <div class="section-quote">今天核心不要选肩支撑类，不做侧桥，不做动态平板</div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>Dead Bug 死虫</div>
+      <div class="exercise-sets">3 组 &times; 每侧 8 次</div>
+      <ul class="exercise-points">
+        <li>腰不要拱，肋骨不要外翻</li>
+        <li>动作慢，呼气时伸手伸腿</li>
+      </ul>
+      <div class="exercise-note">如果右肩举手不舒服，就只做下肢版本。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>Pallof Press 抗旋转推举</div>
+      <div class="exercise-sets">3 组 &times; 每侧 10 次</div>
+      <ul class="exercise-points">
+        <li>用弹力带或绳索</li>
+        <li>身体不要被弹力带拉转</li>
+        <li>骨盆正，肋骨收住，动作慢</li>
+      </ul>
+      <div class="exercise-tip">今天很适合的核心动作，练核心抗旋转但不需要右肩支撑体重。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>臀桥保持</div>
+      <div class="exercise-sets">3 组 &times; 30 秒</div>
+      <ul class="exercise-points">
+        <li>臀部发力，腰不要顶</li>
+        <li>膝盖不要向外乱开或向内夹</li>
+        <li>双脚踩稳</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>仰卧脚跟点地 Heel Tap</div>
+      <div class="exercise-sets">2 组 &times; 每侧 8 - 10 次</div>
+      <ul class="exercise-points">
+        <li>腰不能离地</li>
+      </ul>
+      <div class="exercise-note">如果死虫已经很累，可以不做。90 分钟版可删掉此项。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 6 ===== -->
+  <div class="detail c6" id="s6">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 6 / 8</div>
+      <div class="detail-section-name">右肩低负荷稳定</div>
+      <div class="detail-section-time">10 - 12 分钟</div>
+    </div>
+    <div class="section-quote">不是练肩力量，是修复右肩"撑不住"的底层能力</div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>弹力带外旋</div>
+      <div class="exercise-sets">2 - 3 组 &times; 12 次 / 侧</div>
+      <ul class="exercise-points">
+        <li>手肘夹身体，轻阻力</li>
+        <li>右侧尤其慢一点</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>弹力带划船</div>
+      <div class="exercise-sets">2 组 &times; 12 次</div>
+      <ul class="exercise-points">
+        <li>重点是肩胛向后、向下，不要耸肩</li>
+        <li>不要拉太重</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>墙面肩胛俯卧撑</div>
+      <div class="exercise-sets">2 组 &times; 10 次</div>
+      <ul class="exercise-points">
+        <li>双手撑墙，不是地面</li>
+        <li>只做肩胛前推和回收，手肘尽量不大幅弯曲</li>
+      </ul>
+      <div class="exercise-warn">如果右肩前侧有顶痛，取消。</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>墙滑 Wall Slide</div>
+      <div class="exercise-sets">2 组 &times; 8 次</div>
+      <ul class="exercise-points">
+        <li>动作慢，不要耸肩</li>
+        <li>右肩前侧不舒服就减小幅度</li>
+      </ul>
+      <div class="exercise-note">90 分钟版只保留弹力带外旋和墙面肩胛俯卧撑。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 7 ===== -->
+  <div class="detail c7" id="s7">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 7 / 8</div>
+      <div class="detail-section-name">楼梯机</div>
+      <div class="detail-section-time">20 分钟</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>楼梯机有氧</div>
+      <div class="exercise-sets">20 分钟 &middot; RPE 5-6/10</div>
+      <ul class="exercise-points">
+        <li>有点喘，但能说完整句子</li>
+        <li>不要把身体压在扶手上</li>
+        <li>膝盖朝脚尖方向，脚掌踩稳</li>
+      </ul>
+      <div class="exercise-warn">膝盖内侧、髋外侧、小腿明显紧 → 立刻降速</div>
+      <div class="exercise-note">右肩因为扶手姿势不舒服时，不要用力扶。</div>
+    </div>
+  </div>
+
+  <!-- ===== PART 8 ===== -->
+  <div class="detail c8" id="s8">
+    <div class="detail-header">
+      <button class="detail-back" onclick="goHome()">&#8592; 总览</button>
+      <div class="detail-section-num">PART 8 / 8</div>
+      <div class="detail-section-name">收操</div>
+      <div class="detail-section-time">5 - 8 分钟</div>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">1</span>髋屈肌拉伸</div>
+      <div class="exercise-sets">30 秒 / 侧</div>
+      <ul class="exercise-points"><li>标准弓步拉伸姿势</li></ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">2</span>小腿拉伸</div>
+      <div class="exercise-sets">各 30 秒 / 侧</div>
+      <ul class="exercise-points">
+        <li>膝伸直 30 秒/侧（腓肠肌）</li>
+        <li>膝微弯 30 秒/侧（比目鱼肌）</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">3</span>胸肌轻拉伸</div>
+      <div class="exercise-sets">30 秒 &times; 2 组</div>
+      <ul class="exercise-points">
+        <li>右肩不能痛</li>
+      </ul>
+    </div>
+    <div class="exercise">
+      <div class="exercise-name"><span class="exercise-idx">4</span>90/90 呼吸</div>
+      <div class="exercise-sets">1 - 2 分钟</div>
+      <ul class="exercise-points">
+        <li>仰卧，脚放凳子上</li>
+        <li>鼻吸口呼，让身体降下来</li>
+      </ul>
+      <div class="exercise-tip">收操完成，训练结束。</div>
+    </div>
+  </div>
+
+  <!-- ===== 底部标签栏 ===== -->
+  <div class="tab-bar" id="tabBar">
+    <div class="tab-home active" id="tabHome" onclick="goHome()">
+      <div class="tab-home-icon">&#9776;</div>
+      <div class="tab-home-label">总览</div>
+    </div>
+    <div class="tab-item" data-s="1" onclick="goSection(1)">
+      <div class="tab-num">1</div>
+      <div class="tab-label">升温</div>
+    </div>
+    <div class="tab-item" data-s="2" onclick="goSection(2)">
+      <div class="tab-num">2</div>
+      <div class="tab-label">放松</div>
+    </div>
+    <div class="tab-item" data-s="3" onclick="goSection(3)">
+      <div class="tab-num">3</div>
+      <div class="tab-label">活动</div>
+    </div>
+    <div class="tab-item" data-s="4" onclick="goSection(4)">
+      <div class="tab-num">4</div>
+      <div class="tab-label">下肢</div>
+    </div>
+    <div class="tab-item" data-s="5" onclick="goSection(5)">
+      <div class="tab-num">5</div>
+      <div class="tab-label">核心</div>
+    </div>
+    <div class="tab-item" data-s="6" onclick="goSection(6)">
+      <div class="tab-num">6</div>
+      <div class="tab-label">右肩</div>
+    </div>
+    <div class="tab-item" data-s="7" onclick="goSection(7)">
+      <div class="tab-num">7</div>
+      <div class="tab-label">楼梯</div>
+    </div>
+    <div class="tab-item" data-s="8" onclick="goSection(8)">
+      <div class="tab-num">8</div>
+      <div class="tab-label">收操</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let current = 0;
+
+function goSection(n) {
+  const home = document.getElementById('home');
+  const tabs = document.querySelectorAll('.tab-item');
+  const tabHome = document.getElementById('tabHome');
+  const details = document.querySelectorAll('.detail');
+
+  home.classList.add('hidden');
+  tabHome.classList.remove('active');
+
+  details.forEach(d => { d.classList.remove('active'); d.scrollTop = 0; });
+  tabs.forEach(t => t.classList.remove('active'));
+
+  const target = document.getElementById('s' + n);
+  if (target) {
+    target.classList.add('active');
+    target.scrollTop = 0;
+  }
+
+  const tab = document.querySelector('.tab-item[data-s="' + n + '"]');
+  if (tab) tab.classList.add('active');
+
+  current = n;
+}
+
+function goHome() {
+  const home = document.getElementById('home');
+  const tabs = document.querySelectorAll('.tab-item');
+  const tabHome = document.getElementById('tabHome');
+  const details = document.querySelectorAll('.detail');
+
+  details.forEach(d => d.classList.remove('active'));
+  tabs.forEach(t => t.classList.remove('active'));
+
+  home.classList.remove('hidden');
+  tabHome.classList.add('active');
+  home.scrollTop = 0;
+
+  current = 0;
+}
+
+// 左右滑动切换
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) < 60) return;
+
+  if (current === 0) {
+    if (diff > 0) goSection(1);
+    return;
+  }
+
+  if (diff > 0 && current < 8) {
+    goSection(current + 1);
+  } else if (diff < 0 && current > 1) {
+    goSection(current - 1);
+  } else if (diff < 0 && current === 1) {
+    goHome();
+  }
+});
+</script>
+</body>
+</html>
