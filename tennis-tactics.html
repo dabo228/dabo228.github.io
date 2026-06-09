@@ -37,7 +37,7 @@ body {
 /* Page container - horizontal swipe */
 .pages {
   display: flex;
-  width: 600vw;
+  width: 800vw;
   height: 100vh;
   transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
@@ -319,6 +319,8 @@ body {
   <div class="dot" data-i="3"></div>
   <div class="dot" data-i="4"></div>
   <div class="dot" data-i="5"></div>
+  <div class="dot" data-i="6"></div>
+  <div class="dot" data-i="7"></div>
 </div>
 
 <div class="pages" id="pages">
@@ -350,6 +352,14 @@ body {
         <div class="toc-item" onclick="goTo(5)">
           <div class="toc-icon">&#127942;</div>
           <div><div class="toc-label">四维度框架</div><div class="toc-desc">球质 / 站位 / 体能 / 心理</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(6)">
+          <div class="toc-icon">&#9889;</div>
+          <div><div class="toc-label">球质与提速</div><div class="toc-desc">基础球质差距、打早一点</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(7)">
+          <div class="toc-icon">&#128295;</div>
+          <div><div class="toc-label">调整与执行</div><div class="toc-desc">四个细节、执行规则、两种耐心</div></div>
         </div>
       </div>
       <div class="hint">左右滑动翻页 &larr; &rarr;</div>
@@ -559,10 +569,98 @@ body {
         <div class="card-title">练习方向</div>
         <ul>
           <li>试试上旋发球的练习</li>
+          <li>提高普通相持球的平均球质</li>
+          <li>练习识别"没那么重"的来球并站住打</li>
         </ul>
       </div>
+    </div>
+  </div>
+
+  <!-- Page 6: 球质与提速 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#9889;</div>
+      <h2>球质与提速</h2>
+      <div class="sub">基础球质差距与提速本质</div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-title">基础球质差距 <span class="tag tag-tech">核心</span></div>
+        <p>安德列娃用七八成力量打出的普通相持球，已经兼具速度、深度、上旋、过网安全性和落地后前冲力。</p>
+        <p>赫瓦林斯卡的普通球更多依靠落点、高低和节奏制造困难，但绝对穿透力较弱。</p>
+        <div class="hbox">不是比谁偶尔能打一颗更快的球，而是比谁能把有压迫性的球连续打出来。最关键的差距在于高质量动作的可重复性</div>
+      </div>
+      <div class="card">
+        <div class="card-title">战术失效的原因</div>
+        <p>赫瓦林斯卡的战术有一个前提：她必须先接住对手的球，并获得足够时间完成下一次变化。</p>
+        <p>安德列娃凭借更高的基础球质，可以直接破坏这个前提：</p>
+        <ul>
+          <li>更早接触球</li>
+          <li>把回球打得更快更深</li>
+          <li>不轻易退到底线很远</li>
+          <li>让对手没时间做切削和放短</li>
+        </ul>
+        <div class="hbox">比赛中段，她不是不知道该怎么打，而是知道要变化，却越来越没有时间和空间执行</div>
+      </div>
+      <div class="card">
+        <div class="card-title">提速的本质：打早一点 <span class="tag tag-attack">关键</span></div>
+        <p>向前半步，哪怕挥拍力量没有明显增加，回球也可能自然变快：</p>
+        <ul>
+          <li>更早接触球</li>
+          <li>利用了来球本身的速度</li>
+          <li>减少球在空中的减速时间</li>
+          <li>剥夺了对手的回位时间</li>
+        </ul>
+        <div class="hbox">打早一点，本身就是一种提速，不一定需要抡得更猛</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 7: 调整与执行 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#128295;</div>
+      <h2>调整与执行</h2>
+      <div class="sub">四个细节 + 执行规则 + 两种耐心</div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-title">1. 少退半步 <span class="tag tag-safe">站位</span></div>
+        <p>原本退到底线后两米的球，尝试只退一米半。这半步看起来很小，却能改变整个回合。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">2. 抓住没那么重的球 <span class="tag tag-attack">识别</span></div>
+        <p>把来球分两类：真正压到底线的重球先化解；稍微短半米、速度下降的球坚决站住提前打。</p>
+        <div class="hbox">主动权通常不是靠完美制胜分抢回来的，而是从一颗"本来可以不退的球"开始</div>
+      </div>
+      <div class="card">
+        <div class="card-title">3. 正手更紧凑 <span class="tag tag-tech">技术</span></div>
+        <p>不是扩大动作：更早准备、击球点保持在身体前面、腿和转体发力、用七八成力量连续执行。</p>
+        <p class="note">需要的不是偶尔一颗快球，而是把普通相持球的平均质量提高一点</p>
+      </div>
+      <div class="card">
+        <div class="card-title">4. 再深一点 <span class="tag tag-defend">深度</span></div>
+        <p>对付站近底线的对手，浅球非常危险。首先确保球落在底线前一米左右。</p>
+        <p class="note">目标不是马上赢这一拍，而是先把对手从场内赶回去，再重新使用自己的变化</p>
+      </div>
+      <div class="card">
+        <div class="card-title">五条执行规则</div>
+        <ul>
+          <li>对方回球没压到底线时，我不退</li>
+          <li>只要站稳，就优先打深中路或大斜线</li>
+          <li>连续两拍打深后，站位向前收一步</li>
+          <li>不在移动和失衡中强行变直线</li>
+          <li>只有进入底线附近，才提高正手速度</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">两种耐心</div>
+        <p><strong style="color:var(--accent)">构建这一分</strong>：不要因为对方连续压制，就想一拍反转。先打深，先限制角度，先恢复站位。</p>
+        <p><strong style="color:var(--orange)">执行调整</strong>：向前半步、提前一点、深一点，不一定立刻得分。必须坚持两三局才能观察效果。</p>
+        <div class="hbox">不要用一次猛烈击球解决整个问题，而要用连续几个半步，把比赛一点点拉回自己的控制范围</div>
+      </div>
       <div class="card" style="background:transparent; border:1px dashed var(--border); text-align:center;">
-        <p style="color:var(--text-muted); font-size:0.78rem;">来源：Roland Garros 2026<br>赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</p>
+        <p style="color:var(--text-muted); font-size:0.78rem;">来源：Roland Garros 2026<br>赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08-09 比赛分析</p>
       </div>
     </div>
   </div>
@@ -595,13 +693,21 @@ body {
     <div class="tab-icon">&#127942;</div>
     <div class="tab-label">框架</div>
   </div>
+  <div class="tab" onclick="goTo(6)">
+    <div class="tab-icon">&#9889;</div>
+    <div class="tab-label">球质</div>
+  </div>
+  <div class="tab" onclick="goTo(7)">
+    <div class="tab-icon">&#128295;</div>
+    <div class="tab-label">执行</div>
+  </div>
 </div>
 
 <script>
 const pages = document.getElementById('pages');
 const tabs = document.querySelectorAll('.tab');
 const dots = document.querySelectorAll('.dot');
-const totalPages = 6;
+const totalPages = 8;
 let current = 0;
 let startX = 0;
 let startY = 0;
