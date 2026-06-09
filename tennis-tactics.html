@@ -93,6 +93,17 @@ body {
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.rg-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #fff;
+  background: linear-gradient(135deg, #c1440e, #d4652a);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
 .cover .toc {
   width: 100%;
   max-width: 320px;
@@ -317,10 +328,11 @@ body {
     <div class="cover">
       <div class="emoji">&#127934;</div>
       <h1><span>战术速查卡</span></h1>
+      <div class="rg-badge">ROLAND GARROS 2026</div>
       <div class="meta">赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</div>
       <div class="toc">
         <div class="toc-item" onclick="goTo(1)">
-          <div class="toc-icon">&#9917;</div>
+          <div class="toc-icon">&#127919;</div>
           <div><div class="toc-label">发球局</div><div class="toc-desc">稳定/主动/追身/弱侧 四种套路</div></div>
         </div>
         <div class="toc-item" onclick="goTo(2)">
@@ -347,7 +359,7 @@ body {
   <!-- Page 1: 发球局 -->
   <div class="page">
     <div class="page-header">
-      <div class="icon">&#9917;</div>
+      <div class="icon">&#127919;</div>
       <h2>发球局</h2>
       <div class="sub">四种发球后衔接套路</div>
     </div>
@@ -550,7 +562,7 @@ body {
         </ul>
       </div>
       <div class="card" style="background:transparent; border:1px dashed var(--border); text-align:center;">
-        <p style="color:var(--text-muted); font-size:0.78rem;">来源：赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</p>
+        <p style="color:var(--text-muted); font-size:0.78rem;">来源：Roland Garros 2026<br>赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</p>
       </div>
     </div>
   </div>
@@ -564,7 +576,7 @@ body {
     <div class="tab-label">首页</div>
   </div>
   <div class="tab" onclick="goTo(1)">
-    <div class="tab-icon">&#9917;</div>
+    <div class="tab-icon">&#127919;</div>
     <div class="tab-label">发球</div>
   </div>
   <div class="tab" onclick="goTo(2)">
