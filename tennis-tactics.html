@@ -2,566 +2,644 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>网球战术速查卡</title>
 <style>
-  :root {
-    --bg: #0a1a0f;
-    --card: #12261a;
-    --card-hover: #1a3525;
-    --accent: #4ade80;
-    --accent-dim: #22c55e;
-    --accent-bg: rgba(74,222,128,0.08);
-    --text: #e8f5e9;
-    --text-dim: #a0b8a8;
-    --text-muted: #6b8a72;
-    --border: #2a4a35;
-    --tag-bg: rgba(74,222,128,0.12);
-    --orange: #fb923c;
-    --orange-bg: rgba(251,146,60,0.1);
-    --blue: #60a5fa;
-    --blue-bg: rgba(96,165,250,0.1);
-    --red: #f87171;
-    --red-bg: rgba(248,113,113,0.08);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+:root {
+  --bg: #0a1a0f;
+  --card: #12261a;
+  --accent: #4ade80;
+  --accent-dim: #22c55e;
+  --accent-bg: rgba(74,222,128,0.08);
+  --text: #e8f5e9;
+  --text-dim: #a0b8a8;
+  --text-muted: #6b8a72;
+  --border: #2a4a35;
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.1);
+  --blue: #60a5fa;
+  --blue-bg: rgba(96,165,250,0.1);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.08);
+  --tab-h: 56px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  .header {
-    padding: 2.5rem 1.5rem 1.5rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, #0f2518 0%, var(--bg) 100%);
-  }
-  .header h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
-  }
-  .header h1 span { color: var(--accent); }
-  .header .meta {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
+/* Page container - horizontal swipe */
+.pages {
+  display: flex;
+  width: 500vw;
+  height: 100vh;
+  transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.page {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 calc(var(--tab-h) + 16px) 0;
+}
 
-  .nav-bar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,26,15,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 0.6rem 1rem;
-    scrollbar-width: none;
-  }
-  .nav-bar::-webkit-scrollbar { display: none; }
-  .nav-bar a {
-    display: inline-block;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 0.35rem 0.85rem;
-    border-radius: 20px;
-    transition: all 0.2s;
-    margin-right: 0.3rem;
-  }
-  .nav-bar a:hover, .nav-bar a:active {
-    color: var(--accent);
-    background: var(--accent-bg);
-  }
+/* Page header */
+.page-header {
+  padding: 2rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #0f2518 0%, var(--bg) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.page-header .icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
+.page-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.page-header .sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
 
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 1.5rem 1.25rem 4rem;
-  }
+/* Page 0: Cover */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 40%, #0f2518 0%, var(--bg) 70%);
+}
+.cover .emoji { font-size: 3.5rem; margin-bottom: 1.5rem; }
+.cover h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.cover h1 span { color: var(--accent); }
+.cover .meta { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2.5rem; }
+.cover .hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.cover .toc {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 2rem;
+}
+.cover .toc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+.cover .toc-item:active { background: rgba(74,222,128,0.08); }
+.cover .toc-icon { font-size: 1.1rem; flex-shrink: 0; }
+.cover .toc-label { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+.cover .toc-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem; }
 
-  .section {
-    margin-bottom: 2.5rem;
-  }
-  .section-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--accent-dim);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .section-icon {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
+/* Content area */
+.content { padding: 1rem 1.25rem; }
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.15rem 1.25rem;
-    margin-bottom: 1rem;
-    transition: background 0.15s;
-  }
-  .card:active { background: var(--card-hover); }
-  .card-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .card-tag {
-    font-size: 0.68rem;
-    font-weight: 500;
-    padding: 0.15rem 0.55rem;
-    border-radius: 10px;
-    flex-shrink: 0;
-  }
-  .tag-safe { background: var(--accent-bg); color: var(--accent); }
-  .tag-attack { background: var(--orange-bg); color: var(--orange); }
-  .tag-defend { background: var(--blue-bg); color: var(--blue); }
-  .tag-tech { background: var(--red-bg); color: var(--red); }
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.85rem;
+}
+.card-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.12rem 0.5rem;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.tag-safe { background: var(--accent-bg); color: var(--accent); }
+.tag-attack { background: var(--orange-bg); color: var(--orange); }
+.tag-defend { background: var(--blue-bg); color: var(--blue); }
+.tag-tech { background: var(--red-bg); color: var(--red); }
 
-  .flow {
-    font-size: 0.88rem;
-    color: var(--text);
-    background: rgba(255,255,255,0.03);
-    border-left: 3px solid var(--accent-dim);
-    padding: 0.75rem 1rem;
-    border-radius: 0 8px 8px 0;
-    margin: 0.6rem 0;
-    line-height: 1.8;
-  }
-  .flow .arrow { color: var(--accent); font-weight: 600; }
+.flow {
+  font-size: 0.84rem;
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.65rem 0.9rem;
+  border-radius: 0 8px 8px 0;
+  margin: 0.5rem 0;
+  line-height: 1.8;
+}
+.a { color: var(--accent); font-weight: 600; }
 
-  .card p, .card .note {
-    font-size: 0.86rem;
-    color: var(--text-dim);
-    line-height: 1.7;
-    margin-top: 0.5rem;
-  }
-  .card .note {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-top: 0.4rem;
-  }
+.card p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-top: 0.4rem;
+}
+.card .note {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+.card ul {
+  list-style: none;
+  margin-top: 0.4rem;
+  padding: 0;
+}
+.card ul li {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  padding: 0.2rem 0 0.2rem 1rem;
+  position: relative;
+}
+.card ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+}
 
-  .card ul {
-    list-style: none;
-    margin-top: 0.5rem;
-    padding: 0;
-  }
-  .card ul li {
-    font-size: 0.86rem;
-    color: var(--text-dim);
-    padding: 0.25rem 0 0.25rem 1.1rem;
-    position: relative;
-  }
-  .card ul li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.7rem;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--accent-dim);
-  }
+.hbox {
+  background: var(--accent-bg);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  font-size: 0.84rem;
+  color: var(--accent);
+  font-weight: 500;
+  line-height: 1.6;
+}
 
-  .highlight-box {
-    background: var(--accent-bg);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 10px;
-    padding: 0.85rem 1.1rem;
-    margin: 0.7rem 0;
-    font-size: 0.88rem;
-    color: var(--accent);
-    font-weight: 500;
-    line-height: 1.6;
-  }
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.pros, .cons {
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.78rem;
+}
+.pros { background: var(--accent-bg); border: 1px solid rgba(74,222,128,0.15); }
+.cons { background: var(--red-bg); border: 1px solid rgba(248,113,113,0.15); }
+.pros .lb { color: var(--accent); font-weight: 600; font-size: 0.72rem; margin-bottom: 0.35rem; }
+.cons .lb { color: var(--red); font-weight: 600; font-size: 0.72rem; margin-bottom: 0.35rem; }
+.pros li::before { background: var(--accent-dim) !important; }
+.cons li::before { background: var(--red) !important; }
 
-  .dimension-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-    margin-top: 0.6rem;
-  }
-  .dimension-item {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.7rem 0.85rem;
-    text-align: center;
-  }
-  .dimension-item .num {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .dimension-item .label {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    margin-top: 0.3rem;
-  }
-  .dimension-item .desc {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: 0.15rem;
-  }
+.dim-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.dim-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  text-align: center;
+}
+.dim-item .n { font-size: 1.6rem; font-weight: 700; color: var(--accent); line-height: 1; }
+.dim-item .l { font-size: 0.82rem; color: var(--text-dim); margin-top: 0.3rem; }
+.dim-item .d { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem; }
 
-  .pros-cons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-    margin-top: 0.6rem;
-  }
-  .pros, .cons {
-    border-radius: 8px;
-    padding: 0.75rem 0.85rem;
-    font-size: 0.82rem;
-  }
-  .pros { background: var(--accent-bg); border: 1px solid rgba(74,222,128,0.15); }
-  .cons { background: var(--red-bg); border: 1px solid rgba(248,113,113,0.15); }
-  .pros .label { color: var(--accent); font-weight: 600; font-size: 0.75rem; margin-bottom: 0.4rem; }
-  .cons .label { color: var(--red); font-weight: 600; font-size: 0.75rem; margin-bottom: 0.4rem; }
-  .pros li::before { background: var(--accent-dim) !important; }
-  .cons li::before { background: var(--red) !important; }
+/* Bottom tab bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--tab-h);
+  background: rgba(10,26,15,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.tab.active { color: var(--accent); }
+.tab .tab-icon { font-size: 1.15rem; line-height: 1; }
+.tab .tab-label { font-size: 0.62rem; font-weight: 500; }
 
-  .source {
-    text-align: center;
-    padding: 2rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
-  }
-
-  @media (max-width: 420px) {
-    .header { padding: 2rem 1rem 1.2rem; }
-    .header h1 { font-size: 1.5rem; }
-    .container { padding: 1.2rem 1rem 3rem; }
-    .dimension-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .pros-cons { grid-template-columns: 1fr; }
-  }
+/* Page indicator dots */
+.dots {
+  position: fixed;
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.35rem;
+  z-index: 200;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.3;
+  transition: all 0.3s;
+}
+.dot.active {
+  opacity: 1;
+  background: var(--accent);
+  width: 18px;
+  border-radius: 3px;
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1><span>&#127934;</span> 网球战术速查卡</h1>
-  <div class="meta">
-    赫瓦林斯卡 vs 安德烈耶娃 比赛分析<br>
-    2026.06.08 整理
-  </div>
+<div class="dots">
+  <div class="dot active" data-i="0"></div>
+  <div class="dot" data-i="1"></div>
+  <div class="dot" data-i="2"></div>
+  <div class="dot" data-i="3"></div>
+  <div class="dot" data-i="4"></div>
+  <div class="dot" data-i="5"></div>
 </div>
 
-<nav class="nav-bar">
-  <a href="#serve">发球局</a>
-  <a href="#rally">底线相持</a>
-  <a href="#defend">被动化解</a>
-  <a href="#backswing">缩短引拍</a>
-  <a href="#framework">四维框架</a>
-</nav>
+<div class="pages" id="pages">
 
-<div class="container">
-
-  <!-- 发球局 -->
-  <div class="section" id="serve">
-    <div class="section-title">
-      <div class="section-icon" style="background:var(--accent-bg);">&#9917;</div>
-      发球局
+  <!-- Page 0: Cover -->
+  <div class="page">
+    <div class="cover">
+      <div class="emoji">&#127934;</div>
+      <h1><span>战术速查卡</span></h1>
+      <div class="meta">赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</div>
+      <div class="toc">
+        <div class="toc-item" onclick="goTo(1)">
+          <div class="toc-icon">&#9917;</div>
+          <div><div class="toc-label">发球局</div><div class="toc-desc">稳定/主动/追身/弱侧 四种套路</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(2)">
+          <div class="toc-icon">&#128293;</div>
+          <div><div class="toc-label">底线相持与得分</div><div class="toc-desc">节奏变化、上网、反击、关键局</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(3)">
+          <div class="toc-icon">&#128737;</div>
+          <div><div class="toc-label">被动防守与化解</div><div class="toc-desc">三种化解方式 + 总结口诀</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(4)">
+          <div class="toc-icon">&#9881;</div>
+          <div><div class="toc-label">缩短引拍</div><div class="toc-desc">好处、代价、借力的本质</div></div>
+        </div>
+        <div class="toc-item" onclick="goTo(5)">
+          <div class="toc-icon">&#127942;</div>
+          <div><div class="toc-label">四维度框架</div><div class="toc-desc">球质 / 站位 / 体能 / 心理</div></div>
+        </div>
+      </div>
+      <div class="hint">左右滑动翻页 &larr; &rarr;</div>
     </div>
+  </div>
 
-    <div class="card">
-      <div class="card-title">
-        稳定模式
-        <span class="card-tag tag-safe">关键分</span>
-      </div>
-      <div class="flow">
-        发向身体或反手附近 <span class="arrow">&rarr;</span> 第一拍打深中路或继续压同侧 <span class="arrow">&rarr;</span> 先获得中性相持 <span class="arrow">&rarr;</span> 再用高低、长短变化展开布局
-      </div>
-      <p class="note">容错高，适合关键分</p>
+  <!-- Page 1: 发球局 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#9917;</div>
+      <h2>发球局</h2>
+      <div class="sub">四种发球后衔接套路</div>
     </div>
-
-    <div class="card">
-      <div class="card-title">
-        主动模式
-        <span class="card-tag tag-attack">进攻</span>
+    <div class="content">
+      <div class="card">
+        <div class="card-title">稳定模式 <span class="tag tag-safe">关键分</span></div>
+        <div class="flow">发向身体或反手附近 <span class="a">&rarr;</span> 第一拍打深中路或继续压同侧 <span class="a">&rarr;</span> 先获得中性相持 <span class="a">&rarr;</span> 再用高低、长短变化展开布局</div>
+        <p class="note">容错高，适合关键分</p>
       </div>
-      <div class="flow">
-        外角旋转发球拉开对手 <span class="arrow">&rarr;</span> 观察对方是否快速回中 <span class="arrow">&rarr;</span> 回中早就打回头，留在外侧就打空档 <span class="arrow">&rarr;</span> 第一拍后跟进底线内
+      <div class="card">
+        <div class="card-title">主动模式 <span class="tag tag-attack">进攻</span></div>
+        <div class="flow">外角旋转发球拉开对手 <span class="a">&rarr;</span> 观察对方是否快速回中 <span class="a">&rarr;</span> 回中早就打回头，留在外侧就打空档 <span class="a">&rarr;</span> 第一拍后跟进底线内</div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        追身发球套路
-        <span class="card-tag tag-safe">稳妥</span>
+      <div class="card">
+        <div class="card-title">追身发球套路 <span class="tag tag-safe">稳妥</span></div>
+        <div class="flow">追身发球 <span class="a">&rarr;</span> 对手无法完整转体 <span class="a">&rarr;</span> 回球角度小 <span class="a">&rarr;</span> 第一拍打深中路 <span class="a">&rarr;</span> 向底线内移动一步</div>
+        <p>深中路看似不进攻，但可以限制对手打出大角度，为自己争取进入相持的时间。</p>
+        <p class="note">对发球力量有限的球员，这是最稳妥的一套。也可以：追身发球 + 下一拍打反方向。</p>
       </div>
-      <div class="flow">
-        追身发球 <span class="arrow">&rarr;</span> 对手无法完整转体 <span class="arrow">&rarr;</span> 回球角度小 <span class="arrow">&rarr;</span> 第一拍打深中路 <span class="arrow">&rarr;</span> 向底线内移动一步
+      <div class="card">
+        <div class="card-title">发向弱侧套路 <span class="tag tag-attack">压制</span></div>
+        <div class="flow">旋转发球压一侧 <span class="a">&rarr;</span> 第一拍仍然打这一侧 <span class="a">&rarr;</span> 不急着立即变线 <span class="a">&rarr;</span> 等短球出现再改变方向</div>
       </div>
-      <p>深中路看似不进攻，但可以限制对手打出大角度，为自己争取进入相持的时间。</p>
-      <p class="note">对发球力量有限的球员，这是最稳妥的一套。也可以：追身发球 + 下一拍打反方向。</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        发向弱侧套路
-        <span class="card-tag tag-attack">压制</span>
-      </div>
-      <div class="flow">
-        旋转发球压一侧 <span class="arrow">&rarr;</span> 第一拍仍然打这一侧 <span class="arrow">&rarr;</span> 不急着立即变线 <span class="arrow">&rarr;</span> 等短球出现再改变方向
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">发球球速的杠杆效应</div>
-      <div class="highlight-box">
-        足够高的球速可以把复杂战术压缩为简单两拍
-      </div>
-      <div class="flow">
-        大力一发 <span class="arrow">&rarr;</span> 接发者只能挡回来 <span class="arrow">&rarr;</span> 回球短或落点单一 <span class="arrow">&rarr;</span> 发球者站在底线内打第一拍 <span class="arrow">&rarr;</span> 整分由发球者控制
+      <div class="card">
+        <div class="card-title">发球球速的杠杆效应</div>
+        <div class="hbox">足够高的球速可以把复杂战术压缩为简单两拍</div>
+        <div class="flow">大力一发 <span class="a">&rarr;</span> 接发者只能挡回来 <span class="a">&rarr;</span> 回球短或落点单一 <span class="a">&rarr;</span> 发球者站在底线内打第一拍 <span class="a">&rarr;</span> 整分由发球者控制</div>
       </div>
     </div>
   </div>
 
-  <!-- 底线相持 -->
-  <div class="section" id="rally">
-    <div class="section-title">
-      <div class="section-icon" style="background:var(--orange-bg);">&#128293;</div>
-      底线相持与得分
+  <!-- Page 2: 底线相持 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#128293;</div>
+      <h2>底线相持与得分</h2>
+      <div class="sub">节奏变化、进攻套路、关键局心态</div>
     </div>
-
-    <div class="card">
-      <div class="card-title">落点原则</div>
-      <ul>
-        <li>多打深区中央和对手脚下</li>
-        <li>宁可用 70% 力量抢上升点，也不要退后用 100% 力量救球</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        节奏变化攻击
-        <span class="card-tag tag-attack">核心</span>
+    <div class="content">
+      <div class="card">
+        <div class="card-title">落点原则</div>
+        <ul>
+          <li>多打深区中央和对手脚下</li>
+          <li>宁可用 70% 力量抢上升点，也不要退后用 100% 力量救球</li>
+        </ul>
       </div>
-      <p>挖掘对方正手或反手哪侧击球不稳定，不要每一拍都左右调动，可以连续攻击同一侧。</p>
-      <p>连续改变同侧击球高度，比单纯左右跑动更容易破坏击球节奏：</p>
-      <div class="flow">
-        高弹球 <span class="arrow">&rarr;</span> 低切削 <span class="arrow">&rarr;</span> 再突然加速
+      <div class="card">
+        <div class="card-title">节奏变化攻击 <span class="tag tag-attack">核心</span></div>
+        <p>挖掘对方哪侧击球不稳定，连续攻击同一侧。连续改变同侧击球高度，比左右调动更容易破坏节奏：</p>
+        <div class="flow">高弹球 <span class="a">&rarr;</span> 低切削 <span class="a">&rarr;</span> 再突然加速</div>
+        <p>完整序列：</p>
+        <div class="flow">高弧线上旋 <span class="a">&rarr;</span> 低平切削 <span class="a">&rarr;</span> 较快平击球 <span class="a">&rarr;</span> 再回到高球</div>
+        <div class="hbox">不是用一记重拳打倒对手，而是让对手连续面对不同的问题</div>
       </div>
-      <p>完整序列：</p>
-      <div class="flow">
-        高弧线上旋 <span class="arrow">&rarr;</span> 低平切削 <span class="arrow">&rarr;</span> 较快的平击球 <span class="arrow">&rarr;</span> 再回到高球
+      <div class="card">
+        <div class="card-title">深球后上网 <span class="tag tag-attack">三拍</span></div>
+        <div class="flow">深球逼退 <span class="a">&rarr;</span> 短球拉前 <span class="a">&rarr;</span> 穿越或截击</div>
+        <p>不应把放短当作孤立的一拍。需要接受一定上网失误，留在底线常规对抽长期胜率更低。</p>
       </div>
-      <div class="highlight-box">
-        不是用一记重拳打倒对手，而是让对手连续面对不同的问题
+      <div class="card">
+        <div class="card-title">高球压制接短球 <span class="tag tag-attack">压制</span></div>
+        <div class="flow">高而深的上旋打到对手正手 <span class="a">&rarr;</span> 迫使她在肩部附近击球 <span class="a">&rarr;</span> 回球变短时必须马上进入底线</div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        深球后上网
-        <span class="card-tag tag-attack">三拍套路</span>
+      <div class="card">
+        <div class="card-title">防守反击模式 <span class="tag tag-defend">反击</span></div>
+        <div class="flow">对手先发力 <span class="a">&rarr;</span> 高球/深中路/切削防回 <span class="a">&rarr;</span> 迫使对手重新组织 <span class="a">&rarr;</span> 等对手偏向一侧 <span class="a">&rarr;</span> 突然打直线、反方向或放短</div>
       </div>
-      <div class="flow">
-        深球逼退 <span class="arrow">&rarr;</span> 短球拉前 <span class="arrow">&rarr;</span> 穿越或截击
+      <div class="card">
+        <div class="card-title">进攻意识</div>
+        <div class="hbox">不能只把对手打得不舒服，还必须趁对方不舒服时，主动把这一分拿下来</div>
       </div>
-      <p>不应把放短当作孤立的一拍。需要接受一定的上网失误，因为留在底线常规对抽，长期胜率更低。</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        高球压制接短球
-        <span class="card-tag tag-attack">压制</span>
-      </div>
-      <div class="flow">
-        高而深的上旋打到对手正手 <span class="arrow">&rarr;</span> 迫使她在肩部附近击球 <span class="arrow">&rarr;</span> 回球变短时必须马上进入底线
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        防守反击模式
-        <span class="card-tag tag-defend">反击</span>
-      </div>
-      <div class="flow">
-        对手先发力 <span class="arrow">&rarr;</span> 用高球、深中路或切削防回 <span class="arrow">&rarr;</span> 迫使对手重新组织 <span class="arrow">&rarr;</span> 等对手站位偏向一侧 <span class="arrow">&rarr;</span> 突然打直线、反方向或放短
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">进攻意识</div>
-      <div class="highlight-box">
-        不能只把对手打得不舒服，还必须趁对方不舒服时，主动把这一分拿下来
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        关键局策略
-        <span class="card-tag tag-safe">关键分</span>
-      </div>
-      <p>关键局不需要继续展示所有变化，重复当天成功率最高的模式，守住比分，让对手感受到压力。</p>
-    </div>
-  </div>
-
-  <!-- 被动防守 -->
-  <div class="section" id="defend">
-    <div class="section-title">
-      <div class="section-icon" style="background:var(--blue-bg);">&#128737;</div>
-      被动防守与化解
-    </div>
-
-    <div class="card">
-      <div class="card-title">核心原则</div>
-      <p>当来球又深、又快、又重时，不要强行抢直线、抡制胜分或者上网。</p>
-      <div class="highlight-box">
-        首先完成的是：把对手的进攻球降级成中性球（neutralize）
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        化解方式一：高而深的大斜线
-        <span class="card-tag tag-safe">最安全</span>
-      </div>
-      <p>斜线经过的场地更长，过网位置更低，借助上旋提高容错。目的不是反击，而是把对手推回底线，给自己更多回位时间。</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">化解方式二：深中路</div>
-      <ul>
-        <li>减少对手可利用的角度</li>
-        <li>迫使对方从中心位置重新制造方向</li>
-        <li>给自己更短的回位距离</li>
-      </ul>
-      <p class="note">被拉出边线时，打回深中路常常比赌博打反方向更合理</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">化解方式三：低切削或高吊球</div>
-      <ul>
-        <li>切削让球保持低，减少对方连续重击的舒适感</li>
-        <li>高吊球增加飞行时间，让自己回位，并把对手推离底线</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <div class="card-title">总结</div>
-      <div class="highlight-box">
-        面对重球：先让出空间，用紧凑动作打深中路或大斜线，化解对方主动；等短球出现，再收回站位
+      <div class="card">
+        <div class="card-title">关键局策略 <span class="tag tag-safe">关键分</span></div>
+        <p>关键局不需要继续展示所有变化，重复当天成功率最高的模式，守住比分，让对手感受到压力。</p>
       </div>
     </div>
   </div>
 
-  <!-- 缩短引拍 -->
-  <div class="section" id="backswing">
-    <div class="section-title">
-      <div class="section-icon" style="background:var(--red-bg);">&#9881;</div>
-      技术要点：缩短引拍
+  <!-- Page 3: 被动防守 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#128737;</div>
+      <h2>被动防守与化解</h2>
+      <div class="sub">面对重球时的三种选择</div>
     </div>
-
-    <div class="card">
-      <div class="card-title">核心原则</div>
-      <div class="highlight-box">
-        来球越快，你的动作反而越要简单；来球越慢，你才有时间完整发力
+    <div class="content">
+      <div class="card">
+        <div class="card-title">核心原则</div>
+        <p>当来球又深、又快、又重时，不要强行抢直线、抡制胜分或者上网。</p>
+        <div class="hbox">首先完成的是：把对手的进攻球降级成中性球（neutralize）</div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">好处与代价</div>
-      <div class="pros-cons">
-        <div class="pros">
-          <div class="label">&#10003; 好处</div>
-          <ul>
-            <li>更容易在身体前方击球</li>
-            <li>更容易借力</li>
-            <li>拍面更稳定</li>
-            <li>恢复更快</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <div class="label">&#10007; 代价</div>
-          <ul>
-            <li>降低绝对球速</li>
-            <li>降低强烈旋转</li>
-            <li>减少极端角度</li>
-            <li>削弱一拍致胜</li>
-          </ul>
-        </div>
+      <div class="card">
+        <div class="card-title">方式一：高而深的大斜线 <span class="tag tag-safe">最安全</span></div>
+        <p>斜线经过的场地更长，过网位置更低，借助上旋提高容错。目的不是反击，而是把对手推回底线，给自己更多回位时间。</p>
       </div>
-      <p class="note" style="margin-top:0.8rem;">不是所有球都用，是在时间和空间受压缩时，用稳定换时间</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">借力的本质</div>
-      <p>对手提供速度，你提供拍面、方向和少量加速。类似接发球：面对 200km 的一发，接发者不会做完整大引拍，而是用紧凑动作借力回球。</p>
-    </div>
-  </div>
-
-  <!-- 四维框架 -->
-  <div class="section" id="framework">
-    <div class="section-title">
-      <div class="section-icon" style="background:var(--accent-bg);">&#127942;</div>
-      四维度框架
-    </div>
-
-    <div class="card">
-      <div class="dimension-grid">
-        <div class="dimension-item">
-          <div class="num">1</div>
-          <div class="label">球质</div>
-          <div class="desc">基础</div>
-        </div>
-        <div class="dimension-item">
-          <div class="num">2</div>
-          <div class="label">战术站位</div>
-          <div class="desc">决定主动权</div>
-        </div>
-        <div class="dimension-item">
-          <div class="num">3</div>
-          <div class="label">体能</div>
-          <div class="desc">决定执行时长</div>
-        </div>
-        <div class="dimension-item">
-          <div class="num">4</div>
-          <div class="label">心理</div>
-          <div class="desc">前三项的外在表现</div>
-        </div>
+      <div class="card">
+        <div class="card-title">方式二：深中路</div>
+        <ul>
+          <li>减少对手可利用的角度</li>
+          <li>迫使对方从中心位置重新制造方向</li>
+          <li>给自己更短的回位距离</li>
+        </ul>
+        <p class="note">被拉出边线时，打回深中路常常比赌博打反方向更合理</p>
+      </div>
+      <div class="card">
+        <div class="card-title">方式三：低切削或高吊球</div>
+        <ul>
+          <li>切削让球保持低，减少对方连续重击的舒适感</li>
+          <li>高吊球增加飞行时间，让自己回位，并把对手推离底线</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">总结口诀</div>
+        <div class="hbox">面对重球：先让出空间，用紧凑动作打深中路或大斜线，化解对方主动；等短球出现，再收回站位</div>
       </div>
     </div>
   </div>
 
-  <div class="source">
-    来源：赫瓦林斯卡 vs 安德烈耶娃 比赛分析 &middot; 2026.06.08
+  <!-- Page 4: 缩短引拍 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#9881;</div>
+      <h2>缩短引拍</h2>
+      <div class="sub">时间受压时用稳定换速度</div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-title">核心原则</div>
+        <div class="hbox">来球越快，你的动作反而越要简单；来球越慢，你才有时间完整发力</div>
+      </div>
+      <div class="card">
+        <div class="card-title">好处与代价</div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="lb">&#10003; 好处</div>
+            <ul>
+              <li>容易在前方击球</li>
+              <li>更容易借力</li>
+              <li>拍面更稳定</li>
+              <li>恢复更快</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="lb">&#10007; 代价</div>
+            <ul>
+              <li>降低绝对球速</li>
+              <li>降低强烈旋转</li>
+              <li>减少极端角度</li>
+              <li>削弱一拍致胜</li>
+            </ul>
+          </div>
+        </div>
+        <p class="note">不是所有球都用，是在时间和空间受压缩时，用稳定换时间</p>
+      </div>
+      <div class="card">
+        <div class="card-title">借力的本质</div>
+        <p>对手提供速度，你提供拍面、方向和少量加速。</p>
+        <p>类似接发球：面对 200km 的一发，接发者不会做完整大引拍，而是用紧凑动作借力回球。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 5: 四维框架 -->
+  <div class="page">
+    <div class="page-header">
+      <div class="icon">&#127942;</div>
+      <h2>四维度框架</h2>
+      <div class="sub">比赛能力的四个层次</div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="dim-grid">
+          <div class="dim-item">
+            <div class="n">1</div>
+            <div class="l">球质</div>
+            <div class="d">基础</div>
+          </div>
+          <div class="dim-item">
+            <div class="n">2</div>
+            <div class="l">战术站位</div>
+            <div class="d">决定主动权</div>
+          </div>
+          <div class="dim-item">
+            <div class="n">3</div>
+            <div class="l">体能</div>
+            <div class="d">决定执行时长</div>
+          </div>
+          <div class="dim-item">
+            <div class="n">4</div>
+            <div class="l">心理</div>
+            <div class="d">前三项的外在表现</div>
+          </div>
+        </div>
+        <p style="margin-top:1rem;">发球质量与对手球质是基础，战术站位决定主动权，体能决定这种战术能执行多久，心理状态则是前三项在比赛中的外在表现。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">练习方向</div>
+        <ul>
+          <li>试试上旋发球的练习</li>
+        </ul>
+      </div>
+      <div class="card" style="background:transparent; border:1px dashed var(--border); text-align:center;">
+        <p style="color:var(--text-muted); font-size:0.78rem;">来源：赫瓦林斯卡 vs 安德烈耶娃<br>2026.06.08 比赛分析</p>
+      </div>
+    </div>
   </div>
 
 </div>
+
+<!-- Tab bar -->
+<div class="tab-bar">
+  <div class="tab active" onclick="goTo(0)">
+    <div class="tab-icon">&#127968;</div>
+    <div class="tab-label">首页</div>
+  </div>
+  <div class="tab" onclick="goTo(1)">
+    <div class="tab-icon">&#9917;</div>
+    <div class="tab-label">发球</div>
+  </div>
+  <div class="tab" onclick="goTo(2)">
+    <div class="tab-icon">&#128293;</div>
+    <div class="tab-label">相持</div>
+  </div>
+  <div class="tab" onclick="goTo(3)">
+    <div class="tab-icon">&#128737;</div>
+    <div class="tab-label">防守</div>
+  </div>
+  <div class="tab" onclick="goTo(4)">
+    <div class="tab-icon">&#9881;</div>
+    <div class="tab-label">引拍</div>
+  </div>
+  <div class="tab" onclick="goTo(5)">
+    <div class="tab-icon">&#127942;</div>
+    <div class="tab-label">框架</div>
+  </div>
+</div>
+
+<script>
+const pages = document.getElementById('pages');
+const tabs = document.querySelectorAll('.tab');
+const dots = document.querySelectorAll('.dot');
+const totalPages = 6;
+let current = 0;
+let startX = 0;
+let startY = 0;
+let isDragging = false;
+let isHorizontal = null;
+
+function goTo(i) {
+  current = Math.max(0, Math.min(i, totalPages - 1));
+  pages.style.transform = `translateX(-${current * 100}vw)`;
+  tabs.forEach((t, idx) => t.classList.toggle('active', idx === current));
+  dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+}
+
+pages.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  isDragging = true;
+  isHorizontal = null;
+  pages.style.transition = 'none';
+}, { passive: true });
+
+pages.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  const dx = e.touches[0].clientX - startX;
+  const dy = e.touches[0].clientY - startY;
+  if (isHorizontal === null) {
+    if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+      isHorizontal = Math.abs(dx) > Math.abs(dy);
+    }
+    return;
+  }
+  if (!isHorizontal) return;
+  const offset = -current * window.innerWidth + dx;
+  pages.style.transform = `translateX(${offset}px)`;
+}, { passive: true });
+
+pages.addEventListener('touchend', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  pages.style.transition = 'transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1)';
+  if (!isHorizontal) { goTo(current); return; }
+  const dx = e.changedTouches[0].clientX - startX;
+  const threshold = window.innerWidth * 0.2;
+  if (dx < -threshold) goTo(current + 1);
+  else if (dx > threshold) goTo(current - 1);
+  else goTo(current);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goTo(current + 1);
+  if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+</script>
 </body>
 </html>
