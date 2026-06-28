@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>情绪闪回急救卡 · 13 步</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #10110f;
+  --panel: #191b18;
+  --panel-2: #20231f;
+  --line: rgba(225, 218, 198, 0.14);
+  --text: #eee8d9;
+  --muted: #a7a08f;
+  --dim: #777162;
+  --green: #90b99c;
+  --green-soft: rgba(144, 185, 156, 0.16);
+  --amber: #d9b873;
+  --amber-soft: rgba(217, 184, 115, 0.16);
+  --clay: #c98d76;
+  --clay-soft: rgba(201, 141, 118, 0.15);
+  --blue: #8baeb3;
+  --blue-soft: rgba(139, 174, 179, 0.16);
+  --radius: 8px;
+  --bottom-bar: 68px;
+}
+
+html,
+body {
+  min-height: 100%;
+  background:
+    linear-gradient(90deg, rgba(238, 232, 217, 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(238, 232, 217, 0.018) 1px, transparent 1px),
+    #10110f;
+  background-size: 18px 18px;
+  color: var(--text);
+  font-family: "LXGW WenKai Screen", "Noto Serif SC", "Source Han Serif SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0 12px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 14px 0 calc(var(--bottom-bar) + 20px);
+}
+
+.safety-panel {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 12px 0 14px;
+  background: linear-gradient(180deg, #10110f 84%, rgba(16, 17, 15, 0));
+}
+
+.safety-box {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(25, 27, 24, 0.96);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+.status-card {
+  min-height: 64px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.status-card:last-child {
+  border-bottom: 0;
+}
+
+.status-label {
+  margin-bottom: 4px;
+  color: var(--dim);
+  font-size: 11px;
+}
+
+.status-text {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.status-card.safe .status-text {
+  color: var(--green);
+}
+
+.status-card.passing .status-text {
+  color: var(--amber);
+}
+
+.breath-strip {
+  padding: 14px 16px 16px;
+}
+
+.breath-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.breath-title strong {
+  font-size: 15px;
+}
+
+.breath-title span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.breath-line {
+  position: relative;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(238, 232, 217, 0.08);
+  overflow: hidden;
+}
+
+.breath-line::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 36%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+  animation: breathing 5.8s ease-in-out infinite;
+}
+
+@keyframes breathing {
+  0%, 100% { transform: translateX(-8%); width: 30%; opacity: 0.62; }
+  45% { transform: translateX(120%); width: 54%; opacity: 1; }
+}
+
+.intro {
+  padding: 18px 4px 12px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 1.18;
+  margin-bottom: 12px;
+}
+
+.intro p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.quick-grid {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 20px;
+}
+
+.quick-action {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  min-height: 66px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(32, 35, 31, 0.78);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.quick-num {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.quick-action:nth-child(2) .quick-num,
+.quick-action:nth-child(4) .quick-num {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.quick-action:nth-child(3) .quick-num,
+.quick-action:nth-child(5) .quick-num {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.quick-copy strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.quick-copy span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 26px 4px 12px;
+}
+
+.section-title h2 {
+  font-size: 18px;
+}
+
+.section-title button {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--muted);
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
+.steps {
+  display: grid;
+  gap: 8px;
+}
+
+details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(25, 27, 24, 0.92);
+  overflow: hidden;
+}
+
+details[open] {
+  border-color: rgba(144, 185, 156, 0.34);
+}
+
+summary {
+  display: grid;
+  grid-template-columns: 40px 1fr 18px;
+  gap: 10px;
+  align-items: center;
+  min-height: 66px;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.step-index {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(238, 232, 217, 0.08);
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.step-head {
+  min-width: 0;
+}
+
+.step-head strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.step-head span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.chevron {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+
+.chevron::before,
+.chevron::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 8px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--dim);
+  transition: transform 0.2s ease;
+}
+
+.chevron::before {
+  left: 0;
+  transform: rotate(45deg);
+}
+
+.chevron::after {
+  right: 0;
+  transform: rotate(-45deg);
+}
+
+details[open] .chevron::before {
+  transform: rotate(-45deg);
+}
+
+details[open] .chevron::after {
+  transform: rotate(45deg);
+}
+
+.step-body {
+  padding: 0 14px 15px 64px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.step-body b {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.step-body ul {
+  margin-top: 8px;
+  padding-left: 18px;
+}
+
+.step-body li + li {
+  margin-top: 5px;
+}
+
+.step-body .mantra {
+  margin-top: 9px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--green);
+  background: var(--green-soft);
+  color: var(--text);
+}
+
+.body-kit {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.body-tool {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: rgba(32, 35, 31, 0.62);
+}
+
+.body-tool strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.body-tool span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.route {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(25, 27, 24, 0.88);
+}
+
+.route-row {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.route-row:last-child {
+  border-bottom: 0;
+}
+
+.route-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(238, 232, 217, 0.2);
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.route-copy strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.route-copy span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.source {
+  margin: 22px 4px 0;
+  color: var(--dim);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 6;
+  width: min(430px, 100% - 24px);
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 10px 0 12px;
+  background: linear-gradient(180deg, rgba(16, 17, 15, 0), #10110f 24%);
+}
+
+.bottom-nav a,
+.bottom-nav button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(25, 27, 24, 0.96);
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.bottom-nav a {
+  display: grid;
+  place-items: center;
+}
+
+.bottom-nav button {
+  cursor: pointer;
+}
+
+.bottom-nav a:first-child {
+  background: var(--green-soft);
+  border-color: rgba(144, 185, 156, 0.34);
+  color: var(--green);
+  font-weight: 700;
+}
+
+@media (min-width: 720px) {
+  body {
+    padding: 28px 12px;
+  }
+
+  .shell {
+    min-height: calc(100vh - 56px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding-left: 14px;
+    padding-right: 14px;
+    background: rgba(16, 17, 15, 0.38);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .breath-line::after {
+    animation: none;
+  }
+
+  .chevron::before,
+  .chevron::after {
+    transition: none;
+  }
+}
+</style>
+</head>
+<body>
+<main class="shell" id="top">
+  <section class="safety-panel" aria-label="闪回急救区">
+    <div class="safety-box">
+      <div class="status-row">
+        <div class="status-card">
+          <div class="status-label">先命名</div>
+          <div class="status-text">我正在经历闪回。</div>
+        </div>
+        <div class="status-card safe">
+          <div class="status-label">再定位</div>
+          <div class="status-text">此刻我安全。</div>
+        </div>
+        <div class="status-card passing">
+          <div class="status-label">给时间</div>
+          <div class="status-text">闪回会过去。</div>
+        </div>
+      </div>
+      <div class="breath-strip">
+        <div class="breath-title">
+          <strong>先把身体放慢一点</strong>
+          <span>吸气，停一停，呼气</span>
+        </div>
+        <div class="breath-line" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="eyebrow">FLASHBACK FIRST AID</div>
+    <h1>情绪闪回急救卡</h1>
+    <p>当恐惧、羞耻、无助感突然占满身体时，不急着讲道理。先确认自己在闪回里，再一点点回到当下、身体和可选择的位置。</p>
+  </section>
+
+  <nav class="quick-grid" aria-label="快速动作">
+    <a class="quick-action" href="#body">
+      <span class="quick-num">01</span>
+      <span class="quick-copy"><strong>放松肌肉</strong><span>从肩颈、下颌、手心开始，把紧绷松一点。</span></span>
+    </a>
+    <a class="quick-action" href="#body">
+      <span class="quick-num">02</span>
+      <span class="quick-copy"><strong>慢慢呼吸</strong><span>不要屏住气，呼气可以比吸气长一点。</span></span>
+    </a>
+    <a class="quick-action" href="#body">
+      <span class="quick-num">03</span>
+      <span class="quick-copy"><strong>降低速度</strong><span>先不做重大决定，先让动作变慢。</span></span>
+    </a>
+    <a class="quick-action" href="#support">
+      <span class="quick-num">04</span>
+      <span class="quick-copy"><strong>找安全点</strong><span>灯光、毯子、水、热澡、熟悉的房间都可以。</span></span>
+    </a>
+    <a class="quick-action" href="#steps">
+      <span class="quick-num">05</span>
+      <span class="quick-copy"><strong>不逃开恐惧</strong><span>恐惧是身体能量，不需要立刻用行为麻痹它。</span></span>
+    </a>
+  </nav>
+
+  <section class="section-title">
+    <h2>13 个步骤</h2>
+    <button type="button" id="toggleAll">全部展开</button>
+  </section>
+
+  <section class="steps" id="steps">
+    <details open>
+      <summary>
+        <span class="step-index">01</span>
+        <span class="step-head"><strong>识别闪回</strong><span>先给正在发生的体验命名。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        这股无助、恐惧或羞耻可能像真的危险，但它更像过去经验被重新点亮。先告诉自己：<b>这是闪回，不是当下全部事实。</b>
+        <div class="mantra">我正在经历闪回。过去的感觉来了，但过去已经不在这里。</div>
+      </div>
+    </details>
+
+    <details open>
+      <summary>
+        <span class="step-index">02</span>
+        <span class="step-head"><strong>确认此刻安全</strong><span>把时间从过去拉回现在。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        看看房间、门、手机、灯光和自己的身体。你已经不在童年的危险里。感到害怕是真的，但害怕不等于危险正在发生。
+        <div class="mantra">此时此刻，我在这里。我可以慢慢确认安全。</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">03</span>
+        <span class="step-head"><strong>允许自己设边界</strong><span>不必承受虐待或不公平。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        如果环境真的不安全，可以离开、暂停、说不，或找人帮忙。你现在有权利保护自己，也有权利抗议不公平的对待。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">04</span>
+        <span class="step-head"><strong>安抚内在小孩</strong><span>把自己接回来，而不是责备自己。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        那个害怕的部分需要知道：他不是麻烦，不是软弱，也不是做错了。他可以向现在的你求助，你会尽量保护他。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">05</span>
+        <span class="step-head"><strong>记住闪回会过去</strong><span>无休无止感是闪回的一部分。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        闪回会让人以为自己会永远困在这里。把这当成一种症状，而不是预言。你不需要马上好起来，只需要陪它走过这一阵。
+        <div class="mantra">这会过去。我先撑过这一小段。</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">06</span>
+        <span class="step-head"><strong>调用成年人的资源</strong><span>你已经不只是那个无助的孩子。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        现在的你有身体、住处、手机、知识、朋友、伴侣、AI、离开的能力和求助的能力。感觉渺小，是闪回在说话，不是你的全部现实。
+      </div>
+    </details>
+
+    <details id="body">
+      <summary>
+        <span class="step-index">07</span>
+        <span class="step-head"><strong>慢慢回到身体</strong><span>先处理神经系统，再处理道理。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        恐惧会让人上头、麻木、放空。回到身体时不要用力拽自己，做低难度、可重复的小动作。
+        <div class="body-kit">
+          <div class="body-tool"><strong>放松肌肉</strong><span>检查下颌、肩膀、胸口、腹部和手心，把紧绷松一点。</span></div>
+          <div class="body-tool"><strong>慢慢呼吸</strong><span>吸气时不追求深，呼气时稍微长一点，不屏气。</span></div>
+          <div class="body-tool"><strong>放慢速度</strong><span>走慢一点，说慢一点，先不急着解释和决定。</span></div>
+          <div class="body-tool"><strong>找安全地点</strong><span>开灯、喝水、盖毯子、洗澡、坐到熟悉的角落。</span></div>
+          <div class="body-tool"><strong>感受恐惧</strong><span>允许它在身体里，不立刻用刷屏、争辩或麻痹把它盖住。</span></div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">08</span>
+        <span class="step-head"><strong>拦住内在批判者</strong><span>不要让灾难化和自我攻击接管。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        当脑子开始夸大危险、羞辱自己、要求自己立刻控制一切时，先喊停。把攻击自己的力气，转成对不公平评价说不。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">09</span>
+        <span class="step-head"><strong>允许哀悼</strong><span>痛苦可以被看见，不必马上被修好。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        闪回有时会带出旧日的恐惧、伤害和遗弃感。眼泪可以变成自我同情，愤怒可以变成自我保护。
+      </div>
+    </details>
+
+    <details id="support">
+      <summary>
+        <span class="step-index">10</span>
+        <span class="step-head"><strong>寻找安全关系</strong><span>需要独处，也不要被羞耻孤立。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        如果你需要人，可以发很短的信息：<b>我现在有点闪回，不用分析，陪我说两句就好。</b> 支持可以很小，但它能把你从孤立里拉出来。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">11</span>
+        <span class="step-head"><strong>识别触发因素</strong><span>找出哪些人、地方、活动或想法会点燃闪回。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        触发因素可以是现实场景，也可以是脑内过程，比如被评价、被催促、规则不可讨论、独处低电量。能避开就避开，避不开就提前准备急救动作。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">12</span>
+        <span class="step-head"><strong>理解闪回根源</strong><span>它也在提示未被满足的发展需求。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        稳下来以后，再看这次闪回连接了什么旧伤：被忽视、被羞辱、被控制、无法求助，还是没有边界。根源不是为了责备谁，而是为了知道自己现在需要补上什么。
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="step-index">13</span>
+        <span class="step-head"><strong>对康复保持耐心</strong><span>前进两步、后退一步，也仍然在路上。</span></span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+      <div class="step-body">
+        身体需要时间代谢压力反应，长期康复也需要反复练习。出现闪回不代表失败，只代表旧系统又被触发了一次。
+      </div>
+    </details>
+  </section>
+
+  <section class="section-title">
+    <h2>如果只剩一点力气</h2>
+  </section>
+
+  <section class="route" aria-label="低电量路线">
+    <div class="route-row">
+      <div class="route-mark">一</div>
+      <div class="route-copy"><strong>先说名字</strong><span>我正在闪回。这个命名能把你从“我完了”里拉开一点距离。</span></div>
+    </div>
+    <div class="route-row">
+      <div class="route-mark">二</div>
+      <div class="route-copy"><strong>再找身体</strong><span>脚踩地、手摸杯子、肩膀放下、呼气变长。</span></div>
+    </div>
+    <div class="route-row">
+      <div class="route-mark">三</div>
+      <div class="route-copy"><strong>最后找连接</strong><span>发一句低负荷求助，或打开熟悉的书、音乐、灯光，让自己不孤立。</span></div>
+    </div>
+  </section>
+
+  <p class="source">来源说明：本卡片基于 Pete Walker《不原谅也没关系：复杂性创伤后压力综合征自我疗愈圣经》中“管理情绪闪回”的相关内容整理。公开页面为个人学习改写版，不替代专业心理咨询、医疗诊断或危机干预。若出现明确自伤风险，请优先联系身边可信任的人、当地急救电话或心理危机援助热线。</p>
+</main>
+
+<nav class="bottom-nav" aria-label="底部操作">
+  <a href="#top">回到急救区</a>
+  <a href="#body">回到身体</a>
+  <button type="button" id="collapseAll">收起步骤</button>
+</nav>
+
+<script>
+(function () {
+  const toggleAll = document.getElementById('toggleAll');
+  const collapseAll = document.getElementById('collapseAll');
+  const details = Array.from(document.querySelectorAll('details'));
+
+  function setAll(open) {
+    details.forEach((item) => {
+      item.open = open;
+    });
+    toggleAll.textContent = open ? '全部收起' : '全部展开';
+  }
+
+  toggleAll.addEventListener('click', () => {
+    const shouldOpen = details.some((item) => !item.open);
+    setAll(shouldOpen);
+  });
+
+  collapseAll.addEventListener('click', () => {
+    setAll(false);
+    document.getElementById('steps').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  details.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      const allOpen = details.every((detail) => detail.open);
+      toggleAll.textContent = allOpen ? '全部收起' : '全部展开';
+    });
+  });
+})();
+</script>
+</body>
+</html>
