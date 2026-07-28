@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="全球新版小红书评论阶段洞察：800 条评论、126 篇笔记的用户关注点、内容表现与获客线索。">
+  <meta name="theme-color" content="#161817">
+  <title>全球新版｜小红书评论阶段洞察</title>
+  <style>
+    :root {
+      --ink: #171917;
+      --ink-soft: #4e514d;
+      --paper: #f4f1e9;
+      --paper-deep: #ebe6da;
+      --white: #fffdf8;
+      --line: rgba(23, 25, 23, 0.14);
+      --red: #e73546;
+      --red-dark: #b81f31;
+      --gold: #e0a23a;
+      --teal: #257d75;
+      --blue: #4668b7;
+      --muted: #8b8d87;
+      --radius: 22px;
+      --shadow: 0 24px 70px rgba(39, 35, 27, 0.10);
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 3%, rgba(231, 53, 70, 0.08), transparent 28rem),
+        radial-gradient(circle at 95% 22%, rgba(224, 162, 58, 0.10), transparent 26rem),
+        var(--paper);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: -60px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 10px;
+      transition: top 0.2s ease;
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin-inline: auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      color: var(--white);
+      background: rgba(23, 25, 23, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--red);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+      font-size: 15px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+    }
+
+    .nav-links a {
+      color: rgba(255, 253, 248, 0.72);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--white);
+    }
+
+    .print-button {
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: var(--white);
+      background: transparent;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .hero {
+      overflow: hidden;
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 42%),
+        var(--ink);
+    }
+
+    .hero-inner {
+      min-height: 620px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
+      align-items: center;
+      gap: 70px;
+      padding: 82px 0 92px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 24px;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-lede {
+      max-width: 710px;
+      margin-bottom: 32px;
+      color: rgba(255, 253, 248, 0.74);
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.7;
+    }
+
+    .hero-lede strong {
+      color: var(--white);
+      font-weight: 750;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      color: rgba(255, 253, 248, 0.72);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 12px;
+    }
+
+    .pill strong {
+      color: var(--white);
+    }
+
+    .coverage-card {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 24px;
+      padding: 38px 30px 30px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
+    }
+
+    .coverage-card::after {
+      content: "阶段样本";
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: #171917;
+      background: #f2c876;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .coverage-ring {
+      --value: 5.3%;
+      width: 188px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(var(--red) 0 var(--value), rgba(255, 255, 255, 0.11) var(--value) 100%);
+    }
+
+    .coverage-ring::before {
+      content: "";
+      width: 145px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--ink);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .coverage-value {
+      position: absolute;
+      top: 95px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .coverage-value strong {
+      display: block;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .coverage-value span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255, 253, 248, 0.62);
+      font-size: 12px;
+    }
+
+    .coverage-copy {
+      margin: 0;
+      color: rgba(255, 253, 248, 0.68);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .coverage-copy strong {
+      color: var(--white);
+    }
+
+    .caveat {
+      border-bottom: 1px solid #d9cfae;
+      background: #f2e7c4;
+    }
+
+    .caveat-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 0;
+      font-size: 14px;
+    }
+
+    .caveat-label {
+      padding: 5px 9px;
+      border-radius: 7px;
+      color: var(--white);
+      background: var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    section {
+      scroll-margin-top: 86px;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .section + .section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-dark {
+      color: var(--white);
+      background: var(--ink);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(300px, 0.45fr);
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 46px;
+    }
+
+    .section-kicker {
+      margin-bottom: 14px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(32px, 4.5vw, 54px);
+      line-height: 1.13;
+      letter-spacing: -0.035em;
+    }
+
+    .section-intro {
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+    }
+
+    .section-dark .section-intro {
+      color: rgba(255, 253, 248, 0.62);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255, 253, 248, 0.62);
+      box-shadow: var(--shadow);
+    }
+
+    .kpi {
+      min-height: 180px;
+      padding: 26px 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .kpi:last-child {
+      border-right: 0;
+    }
+
+    .kpi-number {
+      display: block;
+      margin-bottom: 13px;
+      font-size: clamp(32px, 3.8vw, 48px);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .kpi-number.red {
+      color: var(--red);
+    }
+
+    .kpi-label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .kpi-note {
+      color: var(--ink-soft);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .decision-line {
+      margin-top: 34px;
+      padding: 32px 36px;
+      border-left: 5px solid var(--red);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--white);
+      background: var(--ink);
+      font-size: clamp(20px, 2.8vw, 30px);
+      font-weight: 760;
+      line-height: 1.55;
+      letter-spacing: -0.02em;
+    }
+
+    .decision-line span {
+      color: #f1c15e;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 34px;
+      gap: 18px;
+    }
+
+    .action {
+      position: relative;
+      min-height: 212px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.56);
+    }
+
+    .action-time {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+    }
+
+    .action h3 {
+      margin-bottom: 10px;
+      font-size: 21px;
+      line-height: 1.35;
+    }
+
+    .action p {
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.74fr) minmax(0, 1.26fr);
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .panel {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.66);
+    }
+
+    .panel h3 {
+      margin-bottom: 6px;
+      font-size: 19px;
+    }
+
+    .panel-sub {
+      margin-bottom: 28px;
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .donut-row {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .donut {
+      position: relative;
+      width: 190px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          var(--red) 0 65.125%,
+          var(--muted) 65.125% 98.75%,
+          var(--gold) 98.75% 99.875%,
+          var(--teal) 99.875% 100%
+        );
+      box-shadow: inset 0 0 0 1px rgba(23, 25, 23, 0.08);
+    }
+
+    .donut::after {
+      content: "800\A条评论";
+      white-space: pre;
+      position: absolute;
+      inset: 31px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--white);
+      text-align: center;
+      font-weight: 850;
+      line-height: 1.25;
+      box-shadow: 0 8px 24px rgba(23, 25, 23, 0.10);
+    }
+
+    .legend {
+      display: grid;
+      gap: 13px;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 11px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--dot);
+    }
+
+    .legend-item strong {
+      font-size: 13px;
+    }
+
+    .funnel {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+      height: calc(100% - 56px);
+      padding: 8px 0 0;
+    }
+
+    .funnel-step {
+      width: var(--w);
+      min-width: 150px;
+      margin-inline: auto;
+      padding: 16px 20px;
+      border-radius: 12px;
+      color: var(--white);
+      background: var(--fill);
+      text-align: center;
+    }
+
+    .funnel-step strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .funnel-step span {
+      font-size: 12px;
+      opacity: 0.82;
+    }
+
+    .funnel-note {
+      margin: 10px auto 0;
+      color: var(--ink-soft);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: 0.58fr 1.42fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .distribution {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .distribution-stat {
+      display: flex;
+      min-height: 122px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--paper-deep);
+    }
+
+    .distribution-stat strong {
+      font-size: 31px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .distribution-stat span {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .top-chart {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 24px minmax(160px, 1fr) minmax(180px, 2.4fr) 34px;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .rank {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .note-link {
+      overflow: hidden;
+      font-weight: 700;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .note-link:hover,
+    .note-link:focus-visible {
+      color: var(--red);
+      text-decoration: underline;
+    }
+
+    .bar-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--paper-deep);
+    }
+
+    .bar-fill {
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #f27668);
+      transform-origin: left;
+    }
+
+    .bar-value {
+      font-weight: 850;
+      text-align: right;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .theme-card {
+      display: flex;
+      min-height: 460px;
+      flex-direction: column;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .theme-index {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 38px;
+      color: rgba(255, 253, 248, 0.48);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .theme-count {
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: var(--white);
+      background: rgba(231, 53, 70, 0.24);
+      letter-spacing: 0;
+    }
+
+    .theme-card h3 {
+      margin-bottom: 12px;
+      font-size: 27px;
+      line-height: 1.3;
+    }
+
+    .theme-card > p {
+      margin-bottom: 26px;
+      color: rgba(255, 253, 248, 0.60);
+      font-size: 13px;
+    }
+
+    .quotes {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 14px 16px;
+      border-left: 2px solid var(--red);
+      color: rgba(255, 253, 248, 0.82);
+      background: rgba(0, 0, 0, 0.14);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .privacy-note {
+      margin-top: 22px;
+      color: rgba(255, 253, 248, 0.45);
+      font-size: 11px;
+    }
+
+    .lead-highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .lead-highlight {
+      position: relative;
+      padding: 30px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      color: var(--white);
+      background: var(--red);
+      box-shadow: 0 22px 54px rgba(184, 31, 49, 0.18);
+    }
+
+    .lead-highlight::after {
+      content: "HIGH";
+      position: absolute;
+      top: 21px;
+      right: 22px;
+      color: rgba(255, 255, 255, 0.34);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+    }
+
+    .lead-highlight-label {
+      display: block;
+      margin-bottom: 32px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .lead-highlight blockquote {
+      margin-bottom: 22px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--white);
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 850;
+      letter-spacing: -0.035em;
+    }
+
+    .lead-source {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+    }
+
+    .lead-source a {
+      color: var(--white);
+      font-weight: 750;
+    }
+
+    .lead-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.62);
+      box-shadow: var(--shadow);
+    }
+
+    .lead-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 13px;
+    }
+
+    .lead-table th,
+    .lead-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .lead-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .lead-table th {
+      color: var(--ink-soft);
+      background: var(--paper-deep);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .lead-table td:first-child {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .lead-table td:nth-child(2) {
+      font-weight: 800;
+    }
+
+    .lead-table a {
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .lead-table a:hover,
+    .lead-table a:focus-visible {
+      color: var(--red);
+      text-decoration: underline;
+    }
+
+    .lead-footnote {
+      margin: 16px 0 0;
+      color: var(--ink-soft);
+      font-size: 11px;
+    }
+
+    .keyword-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.62);
+      box-shadow: var(--shadow);
+      list-style: none;
+    }
+
+    .keyword {
+      --size: 15px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--paper-deep);
+      font-size: var(--size);
+      font-weight: 760;
+    }
+
+    .keyword:nth-child(4n + 1) {
+      color: var(--red-dark);
+      background: #f7dedf;
+    }
+
+    .keyword:nth-child(5n) {
+      color: #14635d;
+      background: #dcebe7;
+    }
+
+    .keyword small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .reply-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.65fr) minmax(0, 1.35fr);
+      gap: 30px;
+    }
+
+    .reply-summary {
+      padding: 34px;
+      border-radius: var(--radius);
+      color: var(--white);
+      background: var(--red);
+      box-shadow: 0 24px 60px rgba(184, 31, 49, 0.22);
+    }
+
+    .reply-summary strong {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 72px;
+      line-height: 1;
+      letter-spacing: -0.07em;
+    }
+
+    .reply-summary h3 {
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+
+    .reply-summary p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 13px;
+    }
+
+    .reply-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .reply-item {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.55fr) 44px minmax(0, 1.45fr);
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 253, 248, 0.62);
+      font-size: 12px;
+    }
+
+    .reply-item strong {
+      font-size: 13px;
+    }
+
+    .reply-count {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--ink);
+      font-weight: 850;
+    }
+
+    .reply-item span:last-child {
+      color: var(--ink-soft);
+    }
+
+    .recommendations {
+      counter-reset: rec;
+      display: grid;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .recommendation {
+      counter-increment: rec;
+      display: grid;
+      grid-template-columns: 70px minmax(220px, 0.65fr) minmax(0, 1.35fr);
+      gap: 30px;
+      align-items: start;
+      padding: 30px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .recommendation::before {
+      content: "0" counter(rec);
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+    }
+
+    .recommendation h3 {
+      margin-bottom: 0;
+      font-size: 21px;
+      line-height: 1.45;
+    }
+
+    .recommendation p {
+      margin-bottom: 0;
+      color: rgba(255, 253, 248, 0.62);
+      font-size: 13px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .method-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 253, 248, 0.56);
+    }
+
+    .method-card h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .method-card p {
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
+    .method-card code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: var(--paper-deep);
+      font-family: ui-monospace, "Cascadia Code", monospace;
+      font-size: 11px;
+    }
+
+    footer {
+      padding: 36px 0 48px;
+      color: rgba(255, 253, 248, 0.60);
+      background: var(--ink);
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .footer-title {
+      color: var(--white);
+      font-weight: 800;
+    }
+
+    .back-top {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 1040px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 46px;
+      }
+
+      .coverage-card {
+        max-width: 520px;
+        grid-template-columns: 190px 1fr;
+        justify-items: start;
+        align-items: center;
+      }
+
+      .coverage-value {
+        left: 124px;
+      }
+
+      .coverage-copy {
+        text-align: left;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .kpi:nth-child(3) {
+        border-right: 0;
+      }
+
+      .kpi:nth-child(-n + 3) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .cluster-grid,
+      .reply-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .shell {
+        width: min(calc(100% - 28px), var(--max));
+      }
+
+      .nav-links a {
+        display: none;
+      }
+
+      .hero-inner {
+        min-height: 0;
+        padding: 64px 0 70px;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .action-grid,
+      .insight-grid,
+      .theme-grid,
+      .lead-highlight-grid,
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .donut-row {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .legend {
+        width: 100%;
+      }
+
+      .recommendation {
+        grid-template-columns: 42px 1fr;
+        gap: 18px;
+      }
+
+      .recommendation p {
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 43px;
+      }
+
+      .coverage-card {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .coverage-value {
+        top: 95px;
+        left: 50%;
+      }
+
+      .coverage-copy {
+        text-align: center;
+      }
+
+      .caveat-inner {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .caveat-label {
+        width: fit-content;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .kpi,
+      .kpi:nth-child(3) {
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .kpi:nth-child(even) {
+        border-right: 0;
+      }
+
+      .kpi:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .kpi {
+        min-height: 154px;
+        padding: 22px 18px;
+      }
+
+      .decision-line {
+        padding: 26px 24px;
+      }
+
+      .bar-row {
+        grid-template-columns: 20px minmax(0, 1fr) 34px;
+        gap: 9px;
+      }
+
+      .bar-track {
+        grid-column: 2 / 4;
+      }
+
+      .reply-item {
+        grid-template-columns: 1fr 34px;
+      }
+
+      .reply-item span:last-child {
+        grid-column: 1 / 3;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .site-nav,
+      .print-button,
+      .back-top {
+        display: none !important;
+      }
+
+      .hero-inner {
+        min-height: auto;
+        padding: 42px 0;
+      }
+
+      .section {
+        padding: 46px 0;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .panel,
+      .theme-card,
+      .kpi-grid,
+      .keyword-cloud {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <nav class="site-nav" aria-label="页面导航">
+    <div class="shell nav-inner">
+      <a class="brand" href="#top" aria-label="回到页面顶部">
+        <span class="brand-mark" aria-hidden="true">全</span>
+        <span>全球新版 · 评论洞察</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">数据概览</a>
+        <a href="#insights">核心洞察</a>
+        <a href="#leads">线索清单</a>
+        <a href="#actions">行动建议</a>
+        <button class="print-button" type="button" onclick="window.print()">打印 / 导出 PDF</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="shell hero-inner">
+      <div>
+        <div class="eyebrow">Xiaohongshu Comment Intelligence</div>
+        <h1>评论区很热，<br>但询盘还没接住。</h1>
+        <p class="hero-lede">
+          当前阶段的核心画像是<strong>“强情绪、弱询盘”</strong>：粉丝情绪占 65.1%，
+          明确购买/咨询仅 9 条，其中高意向 2 条。下一步不是只追求更多评论，
+          而是把“好看、有排面、想打卡”的情绪，接到价格、档期和合作入口。
+        </p>
+        <div class="hero-meta">
+          <span class="pill"><strong>800</strong> 条评论</span>
+          <span class="pill"><strong>126</strong> 篇已覆盖笔记</span>
+          <span class="pill">数据截至 <strong>2026-07-28 17:34</strong></span>
+          <span class="pill"><strong>公开分享版</strong> · 已隐藏昵称</span>
+        </div>
+      </div>
+
+      <aside class="coverage-card" aria-label="采集覆盖率">
+        <div class="coverage-ring" aria-hidden="true"></div>
+        <div class="coverage-value">
+          <strong>5.3%</strong>
+          <span>账号笔记覆盖率</span>
+        </div>
+        <p class="coverage-copy">
+          已完成 <strong>126 / 2364</strong> 篇。当前结果适合作为选题与回复策略的首轮方向，
+          <strong>不代表全账号最终分布</strong>。
+        </p>
+      </aside>
+    </div>
+  </header>
+
+  <div class="caveat">
+    <div class="shell caveat-inner">
+      <span class="caveat-label">阅读提示</span>
+      <span>这是阶段性样本报告。所有比例、主题排名与线索数量只代表已采集的 126 篇笔记；后续扩样后需重新校准。</span>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="section" id="overview">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">01 · Executive Snapshot</div>
+            <h2>先看五个决策数字</h2>
+          </div>
+          <p class="section-intro">
+            评论量不等于获客量。当前样本证明内容已经能调动粉丝情绪，但从兴趣到咨询的转化链路仍然很短。
+          </p>
+        </div>
+
+        <div class="kpi-grid reveal">
+          <article class="kpi">
+            <span class="kpi-number">800</span>
+            <span class="kpi-label">评论总数</span>
+            <span class="kpi-note">来自 126 篇已完成笔记</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-number red">65.1%</span>
+            <span class="kpi-label">粉丝情绪</span>
+            <span class="kpi-note">521 条，绝对主流讨论</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-number">9</span>
+            <span class="kpi-label">购买 / 咨询</span>
+            <span class="kpi-note">仅占全部评论 1.1%</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-number red">2</span>
+            <span class="kpi-label">高意向线索</span>
+            <span class="kpi-note">询价与联系方式需求</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-number">56.8%</span>
+            <span class="kpi-label">Top 10 集中度</span>
+            <span class="kpi-note">454 条评论集中在 10 篇</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-number">11</span>
+            <span class="kpi-label">优先待回复</span>
+            <span class="kpi-note">非销售，但有服务与口碑价值</span>
+          </article>
+        </div>
+
+        <div class="decision-line reveal">
+          一句话结论：内容已经赢得<strong>“情绪注意力”</strong>，
+          下一步要补上<span>“信息完整度 + 明确行动入口”</span>，才可能把热闹变成询盘。
+        </div>
+
+        <div class="action-grid">
+          <article class="action reveal">
+            <span class="action-time">今天先做</span>
+            <h3>优先接住 2 条高意向</h3>
+            <p>公开确认可提供方案，再引导私信沟通预算、城市与档期；不要让明确询价停在评论区。</p>
+          </article>
+          <article class="action reveal">
+            <span class="action-time">本周补齐</span>
+            <h3>把地点、日期、时长写进正文</h3>
+            <p>43 条地点/打卡讨论说明信息缺口真实存在。减少重复问答，也提升内容收藏与转发价值。</p>
+          </article>
+          <article class="action reveal">
+            <span class="action-time">下一轮选题</span>
+            <h3>复用高评论内容结构</h3>
+            <p>明星明确、场景稀缺、规模震撼、地点可打卡——这是当前最值得复制的四个要素。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="insights">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">02 · Comment Structure</div>
+            <h2>用户在说什么，<br>线索漏在哪里</h2>
+          </div>
+          <p class="section-intro">
+            分类结果来自 800 条已采集评论。占比按原始条数计算，显示值四舍五入。
+          </p>
+        </div>
+
+        <div class="insight-grid">
+          <article class="panel reveal">
+            <h3>五类评论占比</h3>
+            <p class="panel-sub">粉丝情绪占据近三分之二</p>
+            <div class="donut-row">
+              <div class="donut" role="img" aria-label="粉丝情绪 521 条，其他 269 条，购买咨询 9 条，求资源求返图 1 条"></div>
+              <div class="legend">
+                <div class="legend-item">
+                  <span class="dot" style="--dot: var(--red)"></span>
+                  <span>粉丝情绪</span>
+                  <strong>521 · 65.1%</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="dot" style="--dot: var(--muted)"></span>
+                  <span>其他</span>
+                  <strong>269 · 33.6%</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="dot" style="--dot: var(--gold)"></span>
+                  <span>购买咨询</span>
+                  <strong>9 · 1.1%</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="dot" style="--dot: var(--teal)"></span>
+                  <span>求资源 / 返图</span>
+                  <strong>1 · 0.1%</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="dot" style="--dot: #c9c9c9"></span>
+                  <span>同行或推广</span>
+                  <strong>0 · 0%</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel reveal">
+            <h3>从评论到高意向的漏斗</h3>
+            <p class="panel-sub">情绪互动充足，商业意图仍稀薄</p>
+            <div class="funnel" role="img" aria-label="评论线索漏斗：800 条全部评论，9 条购买或咨询意向，2 条高意向">
+              <div class="funnel-step" style="--w: 94%; --fill: #353936">
+                <strong>800</strong>
+                <span>全部评论</span>
+              </div>
+              <div class="funnel-step" style="--w: 58%; --fill: #a44f42">
+                <strong>9</strong>
+                <span>购买 / 咨询意向</span>
+              </div>
+              <div class="funnel-step" style="--w: 32%; --fill: var(--red)">
+                <strong>2</strong>
+                <span>高意向：询价 / 联系方式</span>
+              </div>
+              <p class="funnel-note">高意向仅占全部评论的 0.25%，需要在内容和回复中主动补足转化入口。</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="cluster-grid">
+          <article class="panel reveal">
+            <h3>内容分布并不平均</h3>
+            <p class="panel-sub">平均值被少数爆款明显拉高</p>
+            <div class="distribution">
+              <div class="distribution-stat">
+                <strong>6.35</strong>
+                <span>平均每篇评论</span>
+              </div>
+              <div class="distribution-stat">
+                <strong>2</strong>
+                <span>每篇评论中位数</span>
+              </div>
+              <div class="distribution-stat">
+                <strong>48</strong>
+                <span>0 评论笔记（38.1%）</span>
+              </div>
+              <div class="distribution-stat">
+                <strong>23</strong>
+                <span>10 条以上评论笔记</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel reveal" id="content">
+            <h3>评论最多的前 10 篇笔记</h3>
+            <p class="panel-sub">合计 454 条，占样本评论 56.8%；点击标题可打开原笔记</p>
+            <ol class="top-chart" aria-label="评论最多的前十篇笔记">
+              <li class="bar-row">
+                <span class="rank">01</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a4f34c200000000220185c6" target="_blank" rel="noopener">田栩宁 MISTINE 飞机横幅</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 100%"></span></span>
+                <span class="bar-value">118</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">02</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a4b370e000000001003e5d0" target="_blank" rel="noopener">虹桥机场全是刘学义</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 55.1%"></span></span>
+                <span class="bar-value">65</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">03</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a0d6226000000003502049a" target="_blank" rel="noopener">横店完全是祖鹅痛站</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 40.7%"></span></span>
+                <span class="bar-value">48</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">04</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a4c78b8000000001102c710" target="_blank" rel="noopener">巴黎郝熠然大屏</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 34.7%"></span></span>
+                <span class="bar-value">41</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">05</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/69eb3890000000001901e000" target="_blank" rel="noopener">曼谷云旗痛国</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 33.1%"></span></span>
+                <span class="bar-value">39</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">06</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6960ad5f000000000a02e8f4" target="_blank" rel="noopener">韩国文轩大屏</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 29.7%"></span></span>
+                <span class="bar-value">35</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">07</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/69febd760000000035022ba5" target="_blank" rel="noopener">大连单依纯痛车</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 28.8%"></span></span>
+                <span class="bar-value">34</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">08</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a1941f6000000003502aa2b" target="_blank" rel="noopener">弘大林珍娜</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 24.6%"></span></span>
+                <span class="bar-value">29</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">09</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/69a1886d0000000022031360" target="_blank" rel="noopener">宁艺卓米兰大屏</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 19.5%"></span></span>
+                <span class="bar-value">23</span>
+              </li>
+              <li class="bar-row">
+                <span class="rank">10</span>
+                <a class="note-link" href="https://www.xiaohongshu.com/explore/6a61aa20000000000f01e4ca" target="_blank" rel="noopener">新村现代百货通道应援</a>
+                <span class="bar-track"><span class="bar-fill" style="--w: 18.6%"></span></span>
+                <span class="bar-value">22</span>
+              </li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="themes">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">03 · What People Care About</div>
+            <h2>四个最值得经营的主题</h2>
+          </div>
+          <p class="section-intro">
+            主题命中可重叠，因此这里用于判断“用户在意什么”，不与五类主分类直接相加。
+          </p>
+        </div>
+
+        <div class="theme-grid">
+          <article class="theme-card reveal">
+            <div class="theme-index">
+              <span>THEME 01</span>
+              <span class="theme-count">220 条命中</span>
+            </div>
+            <h3>大屏效果、设计与“排面”</h3>
+            <p>画面够不够好看、屏体够不够大、现场够不够震撼，是最直接的情绪触发器。</p>
+            <div class="quotes">
+              <blockquote>“Gucci真的好会选，宁艺卓完美诠释高奢格调”</blockquote>
+              <blockquote>“纯牛奶太有实力了”</blockquote>
+              <blockquote>“照片选的很帅，应援的花墙痛店等都非常漂亮”</blockquote>
+            </div>
+          </article>
+
+          <article class="theme-card reveal">
+            <div class="theme-index">
+              <span>THEME 02</span>
+              <span class="theme-count">158 条命中</span>
+            </div>
+            <h3>明星与粉丝情绪</h3>
+            <p>喜欢、自豪、感谢、祝福和应援认同，是评论区最稳定的互动底盘。</p>
+            <div class="quotes">
+              <blockquote>“这就是真·全球代的待遇呀”</blockquote>
+              <blockquote>“蜜丝婷应援太给力啦”</blockquote>
+              <blockquote>“omg这不是地广宝宝 这是宁吧的应援”</blockquote>
+            </div>
+          </article>
+
+          <article class="theme-card reveal">
+            <div class="theme-index">
+              <span>THEME 03</span>
+              <span class="theme-count">43 条命中</span>
+            </div>
+            <h3>地点、打卡与现场可见性</h3>
+            <p>用户希望知道在哪里、什么时候能看到、能不能专程去拍，以及有没有机会遇见艺人。</p>
+            <div class="quotes">
+              <blockquote>“珠海哪个站牌？”</blockquote>
+              <blockquote>“祖儿会在下班之后悄悄过来打卡吗”</blockquote>
+              <blockquote>“什么时候抚州来一个呀？”</blockquote>
+            </div>
+          </article>
+
+          <article class="theme-card reveal">
+            <div class="theme-index">
+              <span>THEME 04</span>
+              <span class="theme-count">9 条命中</span>
+            </div>
+            <h3>价格、档期与合作入口</h3>
+            <p>数量不多，但这是最接近收入的信号。评论越短，越需要一个清晰、低摩擦的下一步。</p>
+            <div class="quotes">
+              <blockquote>“应援多少钱”</blockquote>
+              <blockquote>“你好 有联系方式吗”</blockquote>
+              <blockquote>“这个要持续多久啊？”</blockquote>
+            </div>
+          </article>
+        </div>
+        <p class="privacy-note">公开分享版已隐藏评论者昵称；引用文本均来自本阶段原始评论，未改写核心内容。</p>
+      </div>
+    </section>
+
+    <section class="section" id="leads">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">04 · Lead Signals</div>
+            <h2>9 条潜在线索，<br>先接住这 2 条</h2>
+          </div>
+          <p class="section-intro">
+            2 条高意向分别在问价格与联系方式；另外 7 条主要询问档期、展示时长和当天是否还在。公开版隐藏昵称，执行跟进时请回到内部线索表核对。
+          </p>
+        </div>
+
+        <div class="lead-highlight-grid">
+          <article class="lead-highlight reveal">
+            <span class="lead-highlight-label">高意向 01 · 询价</span>
+            <blockquote>“应援多少钱”</blockquote>
+            <div class="lead-source">
+              来源：
+              <a href="https://www.xiaohongshu.com/explore/6a4dc458000000001101dfc0" target="_blank" rel="noopener">珠海等公交也能看到罗渽民了！</a>
+            </div>
+          </article>
+          <article class="lead-highlight reveal">
+            <span class="lead-highlight-label">高意向 02 · 联系方式</span>
+            <blockquote>“你好 有联系方式吗”</blockquote>
+            <div class="lead-source">
+              来源：
+              <a href="https://www.xiaohongshu.com/explore/6a35088900000000110131dc" target="_blank" rel="noopener">香港的！太宰治大屏给我帅崩溃了</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="lead-table-wrap reveal">
+          <table class="lead-table">
+            <thead>
+              <tr>
+                <th scope="col">序号</th>
+                <th scope="col">意向</th>
+                <th scope="col">评论原文</th>
+                <th scope="col">来源笔记</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>03</td>
+                <td>档期</td>
+                <td>到什么时候</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6960ad5f000000000a02e8f4" target="_blank" rel="noopener">韩国文轩大屏</a></td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>档期</td>
+                <td>请问到什么时候？</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6a61aa20000000000f01e4ca" target="_blank" rel="noopener">新村现代百货通道应援</a></td>
+              </tr>
+              <tr>
+                <td>05</td>
+                <td>当天可见</td>
+                <td>老师，今天还有吗？</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6a4c78b8000000001102c710" target="_blank" rel="noopener">巴黎郝熠然大屏</a></td>
+              </tr>
+              <tr>
+                <td>06</td>
+                <td>展示时长</td>
+                <td>这个要持续多久啊？</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6a292e2f0000000022019ed7" target="_blank" rel="noopener">西安小寨白鹿大屏</a></td>
+              </tr>
+              <tr>
+                <td>07</td>
+                <td>档期</td>
+                <td>这个到什么时候啊[哭惹R][哭惹R][哭惹R]才去过都还没有</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6a268b61000000003600007a" target="_blank" rel="noopener">上海白鹿痛城</a></td>
+              </tr>
+              <tr>
+                <td>08</td>
+                <td>展示时长</td>
+                <td>持续几天呀</td>
+                <td><a href="https://www.xiaohongshu.com/explore/6a17d3d0000000003503b81c" target="_blank" rel="noopener">吉隆坡蔡徐坤大屏</a></td>
+              </tr>
+              <tr>
+                <td>09</td>
+                <td>当天可见</td>
+                <td>我去今天还有吗，就离我两公里[抽泣R]</td>
+                <td><a href="https://www.xiaohongshu.com/explore/69f2cc7d0000000035022bd2" target="_blank" rel="noopener">沈星回太原钟鼓楼投影</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="lead-footnote">隐私说明：页面未发布昵称、原始 CSV 或完整个人线索；高意向跟进对象可在本地 <code>potential_leads.csv</code> 中定位。</p>
+      </div>
+    </section>
+
+    <section class="section" id="keywords">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">05 · Language Signals</div>
+            <h2>高频词透露了什么</h2>
+          </div>
+          <p class="section-intro">
+            “快乐、生日、感谢、好看、应援”共同指向：用户首先消费的是情绪价值和现场想象，其次才是具体服务信息。
+          </p>
+        </div>
+
+        <ul class="keyword-cloud reveal" aria-label="高频关键词">
+          <li class="keyword" style="--size: 30px">快乐 <small>75</small></li>
+          <li class="keyword" style="--size: 29px">生日 <small>74</small></li>
+          <li class="keyword" style="--size: 22px">感谢 <small>31</small></li>
+          <li class="keyword" style="--size: 20px">好看 <small>23</small></li>
+          <li class="keyword" style="--size: 19px">应援 <small>20</small></li>
+          <li class="keyword" style="--size: 18px">厉害 <small>19</small></li>
+          <li class="keyword" style="--size: 18px">全球 <small>19</small></li>
+          <li class="keyword" style="--size: 17px">代言人 <small>17</small></li>
+          <li class="keyword" style="--size: 17px">柠檬 <small>17</small></li>
+          <li class="keyword" style="--size: 17px">闪耀 <small>17</small></li>
+          <li class="keyword" style="--size: 17px">谢谢 <small>17</small></li>
+          <li class="keyword" style="--size: 16px">粉丝 <small>16</small></li>
+          <li class="keyword" style="--size: 16px">牛奶 <small>16</small></li>
+          <li class="keyword" style="--size: 15px">好好 <small>15</small></li>
+          <li class="keyword" style="--size: 15px">好美 <small>15</small></li>
+          <li class="keyword" style="--size: 14px">好棒 <small>14</small></li>
+          <li class="keyword" style="--size: 14px">巴黎 <small>13</small></li>
+          <li class="keyword" style="--size: 14px">打卡 <small>13</small></li>
+          <li class="keyword" style="--size: 14px">实力 <small>13</small></li>
+          <li class="keyword" style="--size: 14px">值得 <small>13</small></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="replies">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">06 · Reply Queue</div>
+            <h2>除了潜客，<br>这 11 条也值得优先回</h2>
+          </div>
+          <p class="section-intro">
+            它们不是销售线索，却直接影响服务体验、信息效率和账号信任。建议作为评论区运营的第二优先级。
+          </p>
+        </div>
+
+        <div class="reply-layout">
+          <aside class="reply-summary reveal" aria-label="待回复评论摘要">
+            <strong>11</strong>
+            <h3>条高价值非销售评论</h3>
+            <p>其中活动流程、地点和 UGC 服务共占 7 条，说明“把信息说完整”本身就是最直接的运营改进。</p>
+          </aside>
+
+          <div class="reply-list reveal">
+            <div class="reply-item">
+              <strong>活动流程</strong>
+              <span class="reply-count">3</span>
+              <span>领取、兑换、登机牌打印等操作说明</span>
+            </div>
+            <div class="reply-item">
+              <strong>具体地点</strong>
+              <span class="reply-count">2</span>
+              <span>站牌、商圈、导航点与现场位置</span>
+            </div>
+            <div class="reply-item">
+              <strong>UGC / 带 ID</strong>
+              <span class="reply-count">2</span>
+              <span>明确是否提供拍摄、返图及交付规则</span>
+            </div>
+            <div class="reply-item">
+              <strong>城市需求</strong>
+              <span class="reply-count">2</span>
+              <span>收集用户主动点名的城市，反哺选址投票</span>
+            </div>
+            <div class="reply-item">
+              <strong>当地用词纠错</strong>
+              <span class="reply-count">1</span>
+              <span>致谢并修正文案，避免地域称呼误解</span>
+            </div>
+            <div class="reply-item">
+              <strong>口碑与信任风险</strong>
+              <span class="reply-count">1</span>
+              <span>用户质疑评论被删除，需要先核实再解释</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="actions">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">07 · Action Plan</div>
+            <h2>接下来怎么做</h2>
+          </div>
+          <p class="section-intro">
+            建议按“先接线索、再补信息、最后复制结构”的顺序推进，避免只增加发布量却没有增加有效咨询。
+          </p>
+        </div>
+
+        <div class="recommendations">
+          <article class="recommendation">
+            <h3>先回复购买咨询</h3>
+            <p>问价格、档期、地点、时长与联系方式的评论设为最高优先级。公开回复明确下一步，预算和联系方式再引导私信。</p>
+          </article>
+          <article class="recommendation">
+            <h3>固定“地点 + 实拍 + 打卡”栏目</h3>
+            <p>每篇写清城市、商圈、屏体、播放日期与建议拍摄时段，既减少重复问答，也提升收藏与转发价值。</p>
+          </article>
+          <article class="recommendation">
+            <h3>多做可复制的案例拆解</h3>
+            <p>采用“大屏有多大、为什么有排面、素材如何适配、最终现场效果”四段式，兼顾粉丝情绪与客户判断。</p>
+          </article>
+          <article class="recommendation">
+            <h3>建立返图与素材交付机制</h3>
+            <p>统一说明带 ID、返图与视频的服务边界，并将可公开素材放进固定合集，减少评论区重复沟通。</p>
+          </article>
+          <article class="recommendation">
+            <h3>给线索闭环留痕</h3>
+            <p>每周记录来源笔记、需求城市、预算/档期与跟进状态，再反推哪些题材真正带来询盘，而不只带来热闹。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">08 · Method &amp; Scope</div>
+            <h2>数据口径与可信边界</h2>
+          </div>
+          <p class="section-intro">
+            这份网页用于内部决策分享。公开页面不包含原始 CSV、完整昵称和可识别线索清单。
+          </p>
+        </div>
+
+        <div class="method-grid">
+          <article class="method-card">
+            <h3>数据来源</h3>
+            <p>分析只使用本阶段 <code>comments_raw.csv</code> 的 800 条记录，未补写文件外评论。评论时间跨度为 2026-01-09 至 2026-07-25。</p>
+          </article>
+          <article class="method-card">
+            <h3>质量校验</h3>
+            <p>原始与分类记录均为 800 条，重复记录 0 条；报告 36 条原文引用均可在原始 CSV 中逐字找到。</p>
+          </article>
+          <article class="method-card">
+            <h3>解释限制</h3>
+            <p>目前仅覆盖账号 2364 篇笔记中的 126 篇。分类为首版语义规则辅助判断，扩样后应复核主题排序与商业意图边界。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div>
+        <div class="footer-title">全球新版 · 小红书评论阶段洞察</div>
+        <div>公开分享版｜数据截至 2026-07-28 17:34:36（Asia/Shanghai）</div>
+      </div>
+      <a class="back-top" href="#top">返回顶部 ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var nodes = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        nodes.forEach(function (node) { node.classList.add("visible"); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      nodes.forEach(function (node) { observer.observe(node); });
+    })();
+  </script>
+</body>
+</html>
